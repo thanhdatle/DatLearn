@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>03 · Building a Mediation Group — AdMob — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <article class="lesson">
+    <nav class="lesson-nav">
+      <a href="../../index.html">DatLearn</a><span class="sep">/</span>
+      <a href="../index.html">AdMob</a><span class="sep">/</span>
+      <span>Lesson 03</span>
+    </nav>
+
+    <header class="lesson-header">
+      <p class="kicker">AdMob · Lesson 03 · ~7 min</p>
+      <h1>Building a Mediation Group</h1>
+      <p class="lesson-lede">Concepts become a control panel. A <em>mediation group</em> is the box where
+      bidding and waterfall sources are assembled into one line-up — and where the three numbers from
+      Lesson&nbsp;02 turn into decisions.</p>
+    </header>
+
+    <div class="lesson-body">
+
+      <p class="opening">You now have the mental model (<a href="0001-waterfall-vs-bidding.html">Lesson&nbsp;01</a>)
+      and the numbers (<a href="0002-ecpm-match-rate-latency.html">Lesson&nbsp;02</a>). This lesson is the
+      thing that actually holds them: the <strong>mediation group</strong>. Everything you configure in
+      AdMob's mediation tab happens inside one of these, so knowing its anatomy means the console stops
+      being a maze.</p>
+
+      <aside class="sidenote">
+        <span class="num">No console needed.</span> You don't need an AdMob account open to follow this —
+        we're learning the <em>shape</em> so it's familiar when you build one for real. Bring your own
+        eCPM numbers later; for now the figures are illustrative.
+      </aside>
+
+      <h2>What a group actually is</h2>
+      <p>A <strong>mediation group</strong> is a configured set of ad sources scoped to <em>one ad format
+      and a targeting rule</em> — the container where you decide who competes and how.<a href="#" class="cite">1</a>
+      That scoping matters: a group is never "all your ads." It's, say, <em>"Interstitial · users in the
+      US · Android."</em> You'll have several groups, each tuned to its own slice.</p>
+
+      <aside class="sidenote">
+        <span class="num">1.</span> “A mediation group is a configured set of ad sources for a given ad
+        format and targeting.” <a href="https://support.google.com/admob/answer/13411971?hl=en">About mediation groups</a> (R4).
+      </aside>
+
+      <p>A group has three moving parts you set:</p>
+      <table>
+        <thead>
+          <tr><th>Part</th><th>What it is</th><th>The number it leans on</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Targeting</strong></td><td>Format + platform + geo/segment the group applies to</td><td>—</td></tr>
+          <tr><td><strong>Bidding sources</strong></td><td>Networks that price each impression live</td><td>Real-time bid</td></tr>
+          <tr><td><strong>Waterfall sources</strong></td><td>Networks called in order, each with an eCPM you assign</td><td>eCPM you set (Lesson&nbsp;02)</td></tr>
+        </tbody>
+      </table>
+
+      <h2>An annotated hybrid group</h2>
+      <p>Here's what one interstitial group might look like. This is the <em>hybrid</em> setup from
+      Lesson&nbsp;01 — bidding and waterfall living together:</p>
+
+      <table>
+        <thead>
+          <tr><th>Ad source</th><th>Type</th><th>eCPM</th><th>How it's ordered</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Meta Audience Network</td><td>Bidding</td><td class="mono">live</td><td>Auction, before the waterfall</td></tr>
+          <tr><td>AdMob Network</td><td>Bidding</td><td class="mono">live</td><td>Auction, before the waterfall</td></tr>
+          <tr><td>Network X</td><td>Waterfall</td><td class="mono">$6.50</td><td>1st — highest set eCPM</td></tr>
+          <tr><td>Network Y</td><td>Waterfall</td><td class="mono">$3.20</td><td>2nd</td></tr>
+          <tr><td>AdMob (backfill)</td><td>Waterfall</td><td class="mono">$0.10</td><td>Last — always fills</td></tr>
+        </tbody>
+      </table>
+
+      <aside class="sidenote">
+        <span class="num">Backfill.</span> The lowest, always-available source at the bottom exists to
+        protect <strong>match rate</strong> (Lesson&nbsp;02): better a cheap ad than an empty slot.
+      </aside>
+
+      <h2>How one request flows through it</h2>
+      <p>This is where Lessons 01 and 02 snap together. For a single interstitial request:<a href="#" class="cite">2</a></p>
+      <ol>
+        <li>The <strong>bidding</strong> sources are called simultaneously — a live auction produces one winning bid.</li>
+        <li>That winner is dropped into the <strong>waterfall</strong> at the eCPM it actually bid.</li>
+        <li>The whole line-up — bidding winner + your manual sources — is sorted by eCPM, high to low.</li>
+        <li>AdMob walks it top-down until a source fills. First fill wins; the rest are never called.</li>
+      </ol>
+
+      <aside class="sidenote">
+        <span class="num">2.</span> The bidding winner “is then placed in the mediation waterfall
+        alongside your waterfall ad sources” and competes on price (R1, R4). Ordering and tuning of the
+        waterfall portion: <a href="https://support.google.com/admob/answer/7374110?hl=en">Optimize waterfall ad sources</a> (R14).
+      </aside>
+
+      <p class="pull">Bidding decides its price by auction; waterfall decides its price by what you typed.
+      In a hybrid group they're finally judged on the same scale — real dollars.</p>
+
+      <p>So a bidding source paying <strong>$7.10</strong> live would jump <em>above</em> Network X's
+      hand-set $6.50 and win. But if the best live bid were only $2.00, Network X's $6.50 still leads —
+      <em>provided</em> Network X fills. That "provided it fills" is the waterfall's permanent risk, and
+      why you keep a backfill at the bottom.</p>
+
+      <h2>Tuning it: the manual/auto choice</h2>
+      <p>For the waterfall sources, you either maintain those eCPM numbers by hand or let AdMob optimize
+      them from observed data.<a href="#" class="cite">3</a> Manual gives control and drift; auto-optimization
+      tracks reality but hands over the wheel. Most people start manual to learn the levers, then let
+      AdMob optimize once they trust the numbers.</p>
+
+      <aside class="sidenote">
+        <span class="num">3.</span> Manual vs. optimized eCPM ordering and its trade-offs are covered in
+        R14. Bidding sources need no eCPM tuning — the auction prices them (Lesson&nbsp;02, observed eCPM).
+      </aside>
+
+      <div class="callout">
+        <span class="kicker">Where the platforms diverge</span>
+        <p>The group itself is built <strong>once in the AdMob console</strong> — it isn't Android or iOS
+        code. What <em>is</em> per-platform: every non-AdMob source you enable needs its <strong>mediation
+        adapter</strong> compiled into your app — added via Gradle on <strong>Android/Kotlin</strong> (R5)
+        and via CocoaPods or SwiftPM on <strong>iOS/Swift</strong> (R6). Miss an adapter and that source
+        silently never fills on that platform — a classic hidden match-rate leak. We'll wire real
+        adapters up in the SDK lesson.</p>
+      </div>
+
+      <div class="callout warn">
+        <span class="kicker">Don't over-stack</span>
+        <p>It's tempting to add every network to raise your eCPM ceiling. But each extra <em>waterfall</em>
+        source is another sequential call — more latency (Lesson&nbsp;02), the retention tax. Prefer moving
+        demand into the parallel <em>bidding</em> side, and keep the waterfall short. A lean group with
+        strong bidding usually beats a deep waterfall on the numbers that matter.</p>
+      </div>
+
+      <div class="callout good">
+        <span class="kicker">The one thing to remember</span>
+        <p>A mediation group = <strong>one format + one targeting rule + a mix of bidding and waterfall
+        sources</strong>. Bidding auctions first, its winner joins the waterfall, everyone is ranked by
+        real eCPM, and AdMob takes the first fill top-down. Build the group in the console; add each
+        source's adapter per platform.</p>
+      </div>
+
+      <!-- Retrieval practice: recall, don't recognize -->
+      <section class="quiz" id="quiz" aria-labelledby="quiz-q">
+        <span class="kicker">Check yourself · retrieval practice</span>
+        <p class="quiz-q" id="quiz-q">In a hybrid mediation group, when does the bidding auction happen
+        relative to the waterfall?</p>
+        <ul class="quiz-options" role="list">
+          <li><button class="quiz-option" data-correct="true">First — its winner then joins the waterfall by price</button></li>
+          <li><button class="quiz-option">Last — only if every waterfall source fails to fill</button></li>
+          <li><button class="quiz-option">Never together — a group is one or the other</button></li>
+          <li><button class="quiz-option">In parallel with each waterfall step, one per step</button></li>
+        </ul>
+        <p class="quiz-feedback" id="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+    </div>
+
+    <footer class="lesson-foot">
+      <h3>Read the primary source</h3>
+      <a class="primary-source" href="https://support.google.com/admob/answer/13411971?hl=en">
+        <strong>About AdMob mediation groups</strong><br>
+        support.google.com — the definitive page on group structure, ad sources, and eCPM ordering.
+        Pair it with <a href="https://support.google.com/admob/answer/7374110?hl=en">Optimize waterfall ad sources</a> (R14) for the tuning half.
+      </a>
+
+      <h3>Next</h3>
+      <p style="margin:0 0 var(--space-3)">Lesson 04 — <strong>Ad formats &amp; where they belong</strong>:
+      interstitial, rewarded, app-open, banner — and the placement rules that decide whether each earns or
+      annoys. Then Lesson 05 turns to <strong>frequency caps</strong>, the retention payoff. <em>(planned)</em></p>
+
+      <p class="ask-teacher">I'm your teacher for this — if you want to walk through building a real group
+      in your own AdMob console, or reason about how many sources <em>your</em> app should run, just ask
+      and we'll do it against your actual numbers.</p>
+    </footer>
+  </article>
+
+  <script src="../../assets/theme.js"></script>
+  <script>
+    // Quiz: reveal correctness on choice; encourage a second try when wrong.
+    (function () {
+      const opts = document.querySelectorAll('#quiz .quiz-option');
+      const fb = document.getElementById('quiz-feedback');
+      let done = false;
+      opts.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (done) return;
+          const correct = btn.dataset.correct === 'true';
+          if (correct) {
+            btn.classList.add('correct');
+            fb.textContent = 'Right — bidding runs first; its winning bid is placed into the waterfall and ranked against your manual sources by real eCPM.';
+            fb.dataset.state = 'correct';
+            done = true;
+            opts.forEach(function (b) { b.disabled = true; });
+          } else {
+            btn.classList.add('wrong');
+            btn.disabled = true;
+            fb.textContent = 'Not quite — bidding is not a fallback and not one-per-step. Recall the flow from Lesson 01’s hybrid setup. Try again.';
+            fb.dataset.state = 'wrong';
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

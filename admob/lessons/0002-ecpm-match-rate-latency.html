@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>02 · eCPM, Match Rate &amp; Latency — AdMob — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <article class="lesson">
+    <nav class="lesson-nav">
+      <a href="../../index.html">DatLearn</a><span class="sep">/</span>
+      <a href="../index.html">AdMob</a><span class="sep">/</span>
+      <span>Lesson 02</span>
+    </nav>
+
+    <header class="lesson-header">
+      <p class="kicker">AdMob · Lesson 02 · ~6 min</p>
+      <h1>eCPM, Match Rate &amp; Latency</h1>
+      <p class="lesson-lede">Waterfall and bidding aren't fighting over nothing — they're trading three
+      concrete numbers against each other. Learn to read them and mediation stops being folklore.</p>
+    </header>
+
+    <div class="lesson-body">
+
+      <p class="opening">In <a href="0001-waterfall-vs-bidding.html">Lesson&nbsp;01</a> you saw <em>how</em>
+      networks compete: sequentially (waterfall) or all at once (bidding). This lesson is about
+      <em>what</em> they compete over. Every mediation decision — which sources, what order, waterfall
+      or bidding — is really a bet on three numbers: <strong>how much you earn per impression</strong>,
+      <strong>how often a request actually gets an ad</strong>, and <strong>how long the user waits</strong>.
+      Get fluent with these and the rest of the course is bookkeeping.</p>
+
+      <aside class="sidenote">
+        <span class="num">Recall first.</span> Before reading on — from Lesson&nbsp;01, in a waterfall,
+        what decides the <em>order</em> sources are called in? (Answer near the end. Retrieving it now,
+        from memory, is what makes it stick.)
+      </aside>
+
+      <h2>1 · eCPM — what an impression is worth</h2>
+      <p><strong>eCPM</strong> is <em>effective cost per mille</em> — your estimated earnings for every
+      <strong>1,000</strong> impressions. AdMob computes it by dividing estimated earnings by impressions,
+      then multiplying by 1,000.<a href="#" class="cite">1</a></p>
+
+      <aside class="sidenote">
+        <span class="num">1.</span> Google: eCPM is “the estimated earnings accrued for every 1000
+        impressions,” found by “dividing estimated earnings by the number of impressions received, then
+        multiplying by 1000.” <a href="https://support.google.com/admob/table/9462111?hl=en">Reports glossary</a> (R12).
+      </aside>
+
+      <p class="mono" style="text-align:center; font-size:var(--text-lg)">
+        eCPM = (earnings ÷ impressions) × 1000
+      </p>
+
+      <p>Google's own worked example: an ad unit earning <strong>$180</strong> from <strong>45,000</strong>
+      impressions has an eCPM of ($180 ÷ 45,000) × 1000 = <strong>$4.00</strong>.<a href="#" class="cite">2</a>
+      That single number lets you compare a banner against a rewarded video against a whole app — it
+      normalizes away how much traffic each one has.</p>
+
+      <aside class="sidenote">
+        <span class="num">2.</span> Example figures are Google's, from the eCPM help documentation (R12).
+        Treat all eCPM values as <em>estimates</em> — they move with geography, demand, and season.
+      </aside>
+
+      <div class="callout">
+        <span class="kicker">Careful: two different eCPMs</span>
+        <p>The eCPM you <em>type into a waterfall</em> to rank a source is a prediction. The eCPM in your
+        <em>reports</em> is measured after the fact. Waterfall's weakness (Lesson&nbsp;01) is exactly the
+        gap between those two. Bidding sidesteps it by letting a network name its real price live —
+        AdMob calls a third party's historical estimate its <strong>observed eCPM</strong>.<a href="#" class="cite">3</a></p>
+      </div>
+
+      <aside class="sidenote">
+        <span class="num">3.</span> “Observed eCPM: a third-party ad network's estimated average eCPM
+        calculated using historical revenue data.” (R12)
+      </aside>
+
+      <h2>2 · Match rate — did the request get an ad?</h2>
+      <p>A high eCPM is worthless if the slot comes back empty. <strong>Match rate</strong> is the share of
+      ad <em>requests</em> that a source actually answered with an ad.<a href="#" class="cite">4</a></p>
+
+      <aside class="sidenote">
+        <span class="num">4.</span> “Match rate: the percentage of ad requests that received a response
+        from an ad source.” <a href="https://support.google.com/admob/answer/9654749?hl=en">Match rate</a> (R13).
+        This is what people loosely call <em>fill rate</em>.
+      </aside>
+
+      <p class="pull">A request is not an impression. AdMob splits the journey into two ratios — and a
+      leak in either one is lost money.</p>
+
+      <p>AdMob deliberately separates the pipeline into two measured steps, not one:<a href="#" class="cite">5</a></p>
+
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>Formula</th><th>Answers</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Match rate</strong></td><td class="mono">matched requests ÷ requests</td><td>Did a network <em>return</em> an ad?</td></tr>
+          <tr><td><strong>Show rate</strong></td><td class="mono">impressions ÷ matched requests</td><td>Did that returned ad get <em>shown</em>?</td></tr>
+        </tbody>
+      </table>
+
+      <aside class="sidenote">
+        <span class="num">5.</span> Match rate = (matched requests / requests) × 100%; show rate =
+        (impressions / matched requests) × 100%. “Not all matched requests result in an impression.” (R12)
+      </aside>
+
+      <p>Why it matters to you: a <em>low match rate</em> points at demand — no network wanted the
+      slot (thin fill in a region, a mis-set eCPM floor).<a href="#" class="cite">6</a> A <em>low show rate</em>
+      points at <em>your code</em> — you loaded an ad but never displayed it, or loaded far too early.
+      Same symptom ("we're not earning"), opposite fixes.</p>
+
+      <aside class="sidenote">
+        <span class="num">6.</span> Causes of thin fill are catalogued in
+        <a href="https://support.google.com/admob/answer/9655701?hl=en">Common reasons for low match rate</a> (R15).
+      </aside>
+
+      <h2>3 · Latency — the number your users feel</h2>
+      <p><strong>Latency</strong> is the time between requesting an ad and showing it. It earns nothing on
+      its own — but it is the one number here the <em>user</em> experiences directly, and your mission is
+      the revenue-vs-retention balance. This is where the two collide.</p>
+
+      <p>Recall the mechanism from Lesson&nbsp;01: a waterfall calls sources <em>one at a time</em>. Each
+      network that fails to fill adds its own round-trip before the next is even asked. A ten-deep
+      waterfall can stack ten sequential timeouts. Bidding runs one parallel round, so its latency is
+      roughly the slowest single bidder — not the sum.</p>
+
+      <div class="callout warn">
+        <span class="kicker">Where revenue and retention actually trade</span>
+        <p>Chasing eCPM by piling more sources onto a waterfall raises your <em>ceiling</em> — but each
+        extra step adds latency, and a slow interstitial or app-open ad is precisely what makes users
+        bounce. So the three numbers are not independent: <strong>pushing eCPM up via a longer waterfall
+        pushes latency up too.</strong> Bidding is attractive because it lifts price discovery
+        <em>without</em> paying that latency tax. We'll measure the retention side directly in a later lesson.</p>
+      </div>
+
+      <h2>How the three move together</h2>
+      <table>
+        <thead>
+          <tr><th>Lever</th><th>eCPM</th><th>Match rate</th><th>Latency</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Add more waterfall sources</td><td>↑ ceiling</td><td>↑ (more chances to fill)</td><td>↑↑ (more sequential calls)</td></tr>
+          <tr><td>Shift sources to bidding</td><td>↑ (real prices)</td><td>↑ / flat</td><td>↓ (one parallel round)</td></tr>
+          <tr><td>Raise an eCPM floor</td><td>↑ per impression</td><td>↓ (some requests go unfilled)</td><td>—</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout good">
+        <span class="kicker">The one thing to remember</span>
+        <p>Three numbers, three questions: <strong>eCPM</strong> — what's an impression worth?
+        <strong>Match rate</strong> — did the request get an ad? <strong>Latency</strong> — how long did
+        the user wait? Every mediation change trades at least two of them against each other; there is no
+        free lift.</p>
+      </div>
+
+      <p style="color:var(--ink-mute); font-family:var(--font-ui); font-size:var(--text-sm)">
+        <em>Recall answer:</em> a waterfall is ordered by the average eCPM <em>you set</em> — not by what
+        a source will actually pay. (Lesson&nbsp;01.)</p>
+
+      <!-- Retrieval practice: recall, don't recognize -->
+      <section class="quiz" id="quiz" aria-labelledby="quiz-q">
+        <span class="kicker">Check yourself · retrieval practice</span>
+        <p class="quiz-q" id="quiz-q">Your reports show a healthy <strong>match rate</strong> but a very
+        low <strong>show rate</strong>. Where is the problem most likely to be?</p>
+        <ul class="quiz-options" role="list">
+          <li><button class="quiz-option" data-correct="true">In your app — ads are returned but not shown</button></li>
+          <li><button class="quiz-option">In demand — no network will fill the slot</button></li>
+          <li><button class="quiz-option">Your eCPM floor is set too low</button></li>
+          <li><button class="quiz-option">Latency — the waterfall is too deep</button></li>
+        </ul>
+        <p class="quiz-feedback" id="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+    </div>
+
+    <footer class="lesson-foot">
+      <h3>Read the primary source</h3>
+      <a class="primary-source" href="https://support.google.com/admob/table/9462111?hl=en">
+        <strong>AdMob reports glossary — metric definitions</strong><br>
+        support.google.com — every metric in this lesson, with its exact formula. Bookmark it; you'll
+        reread it the first time a report confuses you.
+      </a>
+
+      <h3>Next</h3>
+      <p style="margin:0 0 var(--space-3)">Lesson 03 — <strong>Building a mediation group</strong>: the
+      container where you put these three numbers to work, combining bidding and waterfall sources into
+      one line-up. <em>(coming next)</em></p>
+
+      <p class="ask-teacher">I'm your teacher for this — if a formula feels slippery, or you want to see
+      where match rate and show rate live in a real AdMob report (or how eCPM differs across Android and
+      iOS traffic), just ask and we'll take it apart together.</p>
+    </footer>
+  </article>
+
+  <script src="../../assets/theme.js"></script>
+  <script>
+    // Quiz: reveal correctness on choice; encourage a second try when wrong.
+    (function () {
+      const opts = document.querySelectorAll('#quiz .quiz-option');
+      const fb = document.getElementById('quiz-feedback');
+      let done = false;
+      opts.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (done) return;
+          const correct = btn.dataset.correct === 'true';
+          if (correct) {
+            btn.classList.add('correct');
+            fb.textContent = 'Right — match rate is fine (ads came back), so the leak is show rate: your app loaded but never displayed them.';
+            fb.dataset.state = 'correct';
+            done = true;
+            opts.forEach(function (b) { b.disabled = true; });
+          } else {
+            btn.classList.add('wrong');
+            btn.disabled = true;
+            fb.textContent = 'Not quite — match rate is healthy, so demand and floors are fine. Think about which ratio uses impressions. Try again.';
+            fb.dataset.state = 'wrong';
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

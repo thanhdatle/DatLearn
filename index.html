@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DatLearn — a workshop for learning</title>
+  <link rel="stylesheet" href="assets/course.css">
+  <style>
+    /* page-local: nothing that belongs in the shared system */
+    .footnote { max-width: 60ch; margin-top: var(--space-8); color: var(--ink-mute);
+      font-family: var(--font-ui); font-size: var(--text-sm); }
+    .footnote code { font-size: .85em; }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme">
+    <span id="themeLabel">Dark</span>
+  </button>
+
+  <main class="hub">
+    <header class="hub-head">
+      <p class="kicker">DatLearn · a personal workshop</p>
+      <h1 class="hub-title">Learn things<br><em>properly.</em></h1>
+      <p class="hub-sub">
+        One workshop, many subjects. Each topic below is its own workspace —
+        grounded in a mission, built from short lessons and printable references,
+        designed to build lasting memory, not the illusion of it.
+      </p>
+    </header>
+
+    <section aria-labelledby="topics-heading">
+      <h2 id="topics-heading" class="kicker" style="margin-bottom:var(--space-2)">Topics</h2>
+      <div class="topic-grid">
+
+        <a class="topic-card" href="admob/index.html" style="--chip:#0a8a6f">
+          <p class="kicker">Mobile monetization</p>
+          <span class="topic-name">AdMob</span>
+          <p class="topic-desc">
+            Mediation &amp; the balance of revenue against retention —
+            waterfall vs. bidding, multiple networks, ad placement that
+            doesn't cost you users.
+          </p>
+          <div class="topic-meta">
+            <span><b>1</b> lesson</span>
+            <span><b>Android</b> · iOS</span>
+            <span>Active</span>
+          </div>
+        </a>
+
+        <div class="topic-card is-empty">
+          <p class="kicker" style="color:var(--ink-mute)">Next</p>
+          <span class="topic-name" style="color:var(--ink-mute)">Add a topic</span>
+          <p class="topic-desc">
+            Run <code class="mono">/teach &lt;subject&gt;</code> and I'll scaffold a new
+            workspace here — its own mission, resources, and first lesson.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <p class="footnote">
+      Each topic folder holds its own <code>MISSION.md</code>, <code>RESOURCES.md</code>,
+      <code>lessons/</code> and <code>reference/</code>. The look is shared from one
+      stylesheet (<code>assets/course.css</code>) so every lesson reads as one course.
+      See <a href="HUB.md">HUB.md</a> for how the space is organized.
+    </p>
+  </main>
+
+  <script>
+    // Self-contained theme toggle. Persists choice; falls back to OS setting.
+    (function () {
+      const root = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+      const label = document.getElementById('themeLabel');
+      const saved = localStorage.getItem('datlearn-theme');
+      if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
+
+      function current() {
+        const t = root.getAttribute('data-theme');
+        if (t === 'light' || t === 'dark') return t;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      function render() { label.textContent = current() === 'dark' ? 'Light' : 'Dark'; }
+      btn.addEventListener('click', function () {
+        const next = current() === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('datlearn-theme', next);
+        render();
+      });
+      render();
+    })();
+  </script>
+</body>
+</html>

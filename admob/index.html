@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdMob — DatLearn</title>
+  <link rel="stylesheet" href="../assets/course.css">
+  <style>
+    .topic-hero { max-width: 52ch; margin-bottom: var(--space-6); }
+    .topic-hero h1 { font-size: var(--text-hero); font-weight: 600; letter-spacing: -0.02em;
+      line-height: 1.02; margin: .3rem 0 var(--space-2); }
+    .topic-hero h1 em { font-style: italic; color: var(--accent); }
+    .lesson-list { list-style: none; padding: 0; margin: var(--space-2) 0 0; display: grid; gap: var(--space-2); }
+    .lesson-list a { display: flex; gap: var(--space-3); align-items: baseline;
+      text-decoration: none; padding: var(--space-2) var(--space-3);
+      border: var(--rule) solid var(--border); border-radius: var(--radius-lg);
+      background: var(--surface); transition: border-color var(--duration) var(--ease), transform var(--duration) var(--ease); }
+    .lesson-list a:hover { border-color: var(--border-strong); transform: translateX(3px); }
+    .lesson-list a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .lesson-num { font-family: var(--font-mono); color: var(--accent); font-size: var(--text-sm); }
+    .lesson-title { font-size: var(--text-lg); font-weight: 600; }
+    .lesson-desc { color: var(--ink-soft); font-family: var(--font-ui); font-size: var(--text-sm); margin: .2rem 0 0; }
+    .lesson-list li.planned a { opacity: .6; border-style: dashed; pointer-events: none; }
+    .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: var(--space-3); }
+    .mini { font-family: var(--font-ui); }
+    .mini h2 { font-family: var(--font-ui); font-size: var(--text-base); font-weight:600;
+      text-transform: uppercase; letter-spacing:.08em; color: var(--ink-mute); margin: 0 0 var(--space-1); }
+    .mini ul { margin: 0; padding-left: 1.1em; color: var(--ink-soft); font-size: var(--text-sm); line-height:1.6; }
+    .mini a { text-decoration-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="lesson">
+    <nav class="lesson-nav">
+      <a href="../index.html">← All topics</a>
+    </nav>
+
+    <header class="topic-hero">
+      <p class="kicker" style="color:#0a8a6f">Mobile monetization</p>
+      <h1>AdMob:<br>earn without <em>losing users</em>.</h1>
+      <p class="hub-sub">
+        Mediation is the machine that makes ad networks compete for every impression —
+        and the dial that decides whether ads pay off or drive people away. This course
+        builds the mental model first, then the hands-on setup, for Android and iOS.
+      </p>
+    </header>
+
+    <section aria-labelledby="lessons-h">
+      <h2 id="lessons-h" class="kicker">Lessons</h2>
+      <ol class="lesson-list">
+        <li>
+          <a href="lessons/0001-waterfall-vs-bidding.html">
+            <span class="lesson-num">01</span>
+            <span>
+              <span class="lesson-title">Waterfall vs. Bidding</span>
+              <p class="lesson-desc">The core mental model of mediation. ~6 min + one quiz.</p>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="lessons/0002-ecpm-match-rate-latency.html">
+            <span class="lesson-num">02</span>
+            <span>
+              <span class="lesson-title">eCPM, Match Rate &amp; Latency</span>
+              <p class="lesson-desc">The three numbers mediation trades against each other. ~6 min + one quiz.</p>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="lessons/0003-building-a-mediation-group.html">
+            <span class="lesson-num">03</span>
+            <span>
+              <span class="lesson-title">Building a Mediation Group</span>
+              <p class="lesson-desc">Assembling bidding + waterfall sources into one line-up. ~7 min + one quiz.</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">04</span>
+            <span>
+              <span class="lesson-title">Ad formats &amp; where they belong</span>
+              <p class="lesson-desc">Interstitial, rewarded, app-open, banner — placement rules. (planned)</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">05</span>
+            <span>
+              <span class="lesson-title">Frequency caps &amp; the retention cost</span>
+              <p class="lesson-desc">Where the revenue-vs-UX balance is actually won. (planned)</p>
+            </span>
+          </a>
+        </li>
+      </ol>
+    </section>
+
+    <section class="two-col" style="margin-top:var(--space-6)">
+      <div class="mini">
+        <h2>Reference</h2>
+        <ul>
+          <li><a href="reference/glossary.html">Mediation glossary</a> — printable, one page.</li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h2>The mission</h2>
+        <ul>
+          <li>Master mediation &amp; the revenue-vs-retention balance.</li>
+          <li>Platforms: Android (Kotlin) + iOS (Swift).</li>
+          <li><a href="MISSION.md">MISSION.md</a> · <a href="RESOURCES.md">RESOURCES.md</a></li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h2>Primary sources</h2>
+        <ul>
+          <li><a href="https://support.google.com/admob/answer/13420272?hl=en">Guide to AdMob Mediation</a></li>
+          <li><a href="https://support.google.com/admob/answer/9234488?hl=en">Overview of bidding</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="../assets/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdMob Mediation — Glossary — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="ref">
+    <nav class="lesson-nav">
+      <a href="../../index.html">DatLearn</a><span class="sep">/</span>
+      <a href="../index.html">AdMob</a><span class="sep">/</span>
+      <span>Reference · Glossary</span>
+    </nav>
+
+    <p class="kicker">Reference — keep this open while you work</p>
+    <h1>Mediation glossary</h1>
+    <p class="ref-sub">The vocabulary of AdMob mediation, defined once so every lesson uses the same
+    words. Prints cleanly to one or two pages (⌘/Ctrl-P).</p>
+
+    <dl class="glossary">
+      <dt>Mediation</dt>
+      <dd>The system that decides which ad network is asked to fill each ad request, and in what
+        order — so multiple networks compete instead of relying on one. The umbrella this whole topic
+        sits under.</dd>
+
+      <dt>Ad source <span class="tag">= network</span></dt>
+      <dd>A demand partner that can serve an ad into your slot (AdMob itself, Meta Audience Network,
+        Liftoff, Unity Ads, etc.). Mediation ranks and calls ad sources.</dd>
+
+      <dt>Mediation group</dt>
+      <dd>A configured set of ad sources for a given ad format and targeting. The container where you
+        decide who competes and how (R4).</dd>
+
+      <dt>Waterfall</dt>
+      <dd>Mediation that calls ad sources <em>sequentially</em>, ordered by the average eCPM you set —
+        each source is tried only if the ones above it fail to fill (R1).</dd>
+
+      <dt>Bidding <span class="tag">= real-time bidding</span></dt>
+      <dd>Mediation that calls all participating sources <em>simultaneously</em> in a live auction; the
+        highest actual bid wins (R2). Prices per impression instead of by your estimate.</dd>
+
+      <dt>Hybrid setup</dt>
+      <dd>A mediation group using both: the bidding auction runs first, and its winner is placed into
+        the waterfall alongside your manually-ranked sources (R1).</dd>
+
+      <dt>eCPM <span class="tag">effective cost per mille</span></dt>
+      <dd>Estimated earnings per <strong>1,000</strong> impressions. In waterfall it's the number
+        <em>you</em> set to order sources; overall it's the headline efficiency metric for a placement.</dd>
+
+      <dt>Fill rate</dt>
+      <dd>Share of ad requests that actually return an ad (impressions ÷ requests). Low fill = empty
+        slots = lost revenue; a job mediation exists to raise.</dd>
+
+      <dt>Impression</dt>
+      <dd>One actual display of an ad to a user. The unit everything is priced and capped in.</dd>
+
+      <dt>Frequency cap</dt>
+      <dd>A limit on how many times ads (app-wide or per ad unit) are shown to one user in a time
+        window — the main dial for protecting retention (R7).</dd>
+
+      <dt>Ad formats</dt>
+      <dd><strong>Banner</strong> (persistent strip), <strong>interstitial</strong> (full-screen at
+        breaks), <strong>rewarded</strong> (opt-in for a reward), <strong>app-open</strong> (on
+        launch/return). Each has different placement rules (R8, R9).</dd>
+
+      <dt>Latency</dt>
+      <dd>Time between requesting an ad and showing it. Long waterfalls add latency step by step;
+        bidding runs one parallel round. High latency is a retention risk, not just an annoyance.</dd>
+    </dl>
+
+    <p class="ref-sub" style="margin-top:var(--space-6)">
+      Sources: R1 <a href="https://support.google.com/admob/answer/13420272?hl=en">Guide to Mediation</a> ·
+      R2 <a href="https://support.google.com/admob/answer/9234488?hl=en">Overview of bidding</a> ·
+      R4 <a href="https://support.google.com/admob/answer/13411971?hl=en">Mediation groups</a> ·
+      R7 <a href="https://support.google.com/admob/answer/6244508?hl=en">Frequency caps</a> ·
+      R8 <a href="https://support.google.com/admob/answer/9341964?hl=en">App open guidance</a>.
+      Full list in <a href="../RESOURCES.md">RESOURCES.md</a>.
+    </p>
+  </main>
+
+  <script src="../../assets/theme.js"></script>
+</body>
+</html>

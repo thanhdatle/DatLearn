@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>01 · Waterfall vs. Bidding — AdMob — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <article class="lesson">
+    <nav class="lesson-nav">
+      <a href="../../index.html">DatLearn</a><span class="sep">/</span>
+      <a href="../index.html">AdMob</a><span class="sep">/</span>
+      <span>Lesson 01</span>
+    </nav>
+
+    <header class="lesson-header">
+      <p class="kicker">AdMob · Lesson 01 · ~6 min</p>
+      <h1>Waterfall vs. Bidding</h1>
+      <p class="lesson-lede">The one mental model the rest of mediation hangs from: how do competing
+      ad networks actually get asked to fill a single ad slot?</p>
+    </header>
+
+    <div class="lesson-body">
+
+      <p class="opening">Every time your app shows an ad, it is holding a tiny auction. You have one
+      slot and several ad networks that might pay to fill it. <strong>Mediation</strong> is how AdMob
+      decides which network gets asked, and in what order. There are two ways to run that contest —
+      <em>waterfall</em> and <em>bidding</em> — and almost every optimization decision you will ever make
+      comes down to understanding the difference.</p>
+
+      <aside class="sidenote">
+        <span class="num">Why this first.</span> Your mission is the balance of revenue against
+        retention. Both live here: the contest method sets how much you earn <em>and</em> how long the
+        user waits for an ad to appear.
+      </aside>
+
+      <h2>Waterfall: ask one at a time</h2>
+      <p>In <strong>waterfall</strong> mediation, AdMob lines your ad sources up in order of the
+      <strong>average eCPM you tell it to expect</strong>, then calls them one by one. The first source
+      is offered the impression; if it can't fill it, the request falls to the next, and the next —
+      like water spilling down a series of steps.<a href="#c1" class="cite">1</a></p>
+
+      <aside class="sidenote">
+        <span class="num">1.</span> Google: waterfall “calls ad sources one-by-one based on the
+        average eCPM you set, not what the ad source is willing to pay.”
+        <a href="https://support.google.com/admob/answer/13420272?hl=en">Guide to AdMob Mediation</a> (R1).
+      </aside>
+
+      <p>The catch is in that italicized phrase. The order is based on a <em>number you configured</em>,
+      not on what a network would actually pay for <em>this</em> user right now. A network that would
+      happily pay more today still waits its turn if its configured eCPM is low. That gap between
+      "expected" and "actual" is money left on the table — and the reason bidding exists.</p>
+
+      <h2>Bidding: ask everyone at once</h2>
+      <p>In <strong>bidding</strong> (also called real-time bidding or header bidding), AdMob calls all
+      participating ad sources <strong>simultaneously</strong> and they compete in a live auction to fill
+      the request. The highest actual bid wins.<a href="#c2" class="cite">2</a> No hand-set eCPM ordering,
+      no waiting in line — each source names its real price for that specific impression.</p>
+
+      <aside class="sidenote">
+        <span class="num">2.</span> Google: bidding “calls all participating ad sources simultaneously”
+        in a real-time auction, helping “ensure you get the highest revenue for your impressions.”
+        <a href="https://support.google.com/admob/answer/9234488?hl=en">Overview of bidding</a> (R2).
+      </aside>
+
+      <p class="pull">Waterfall trusts the eCPM you predicted. Bidding asks the networks what
+      they'll actually pay — right now, for this user.</p>
+
+      <h2>Side by side</h2>
+      <table>
+        <thead>
+          <tr><th>Dimension</th><th>Waterfall</th><th>Bidding</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>How sources are called</td><td>Sequentially, one at a time</td><td>All at once, in parallel</td></tr>
+          <tr><td>Order decided by</td><td>Average eCPM <em>you</em> set</td><td>Real-time bids from sources</td></tr>
+          <tr><td>Pricing accuracy</td><td>Estimated, can be stale</td><td>Actual, per impression</td></tr>
+          <tr><td>Manual tuning</td><td>High — you maintain eCPMs</td><td>Low — auction self-prices</td></tr>
+          <tr><td>Latency risk</td><td>Grows with each fallback step</td><td>One parallel round</td></tr>
+        </tbody>
+      </table>
+
+      <h2>You don't have to choose: hybrid</h2>
+      <p>AdMob lets you run <strong>both in one mediation group</strong>. The bidding auction happens
+      first, in real time; its winner is then dropped into the waterfall alongside your manually-ranked
+      sources, and the whole line-up competes.<a href="#c3" class="cite">3</a> In practice this is the
+      common setup — bidding for price discovery, waterfall for networks that don't yet support bidding.</p>
+
+      <aside class="sidenote">
+        <span class="num">3.</span> “The bidding ad source that wins the auction is then placed in the
+        mediation waterfall alongside your waterfall ad sources.” (R1)
+      </aside>
+
+      <div class="callout warn">
+        <span class="kicker">Why this touches retention</span>
+        <p>A long waterfall means many sequential network calls before an ad shows — each adds delay.
+        A slow interstitial or app-open ad is exactly what makes users bounce. Bidding collapses that
+        into one parallel round, so favoring bidding isn't only a revenue move — it's a
+        <strong>UX move</strong>. We'll measure this directly in a later lesson.</p>
+      </div>
+
+      <div class="callout good">
+        <span class="kicker">The one thing to remember</span>
+        <p>Waterfall = sequential, priced by <em>your</em> eCPM estimate. Bidding = simultaneous,
+        priced by <em>real</em> bids. Hybrid runs both. Everything else in mediation is detail on top
+        of this.</p>
+      </div>
+
+      <!-- Retrieval practice: recall, don't recognize -->
+      <section class="quiz" id="quiz" aria-labelledby="quiz-q">
+        <span class="kicker">Check yourself · retrieval practice</span>
+        <p class="quiz-q" id="quiz-q">In <em>waterfall</em> mediation, how are your ad sources contacted for a single ad request?</p>
+        <ul class="quiz-options" role="list">
+          <li><button class="quiz-option" data-correct="true">One at a time, by eCPM</button></li>
+          <li><button class="quiz-option">All at once, single auction</button></li>
+          <li><button class="quiz-option">Randomly, ignoring expected value</button></li>
+          <li><button class="quiz-option">Only whichever responds first</button></li>
+        </ul>
+        <p class="quiz-feedback" id="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+    </div>
+
+    <footer class="lesson-foot">
+      <h3>Read the primary source</h3>
+      <a class="primary-source" href="https://support.google.com/admob/answer/13420272?hl=en">
+        <strong>Guide to AdMob Mediation (bidding &amp; waterfall)</strong><br>
+        support.google.com — the most authoritative single page on this lesson. 10 minutes, worth it.
+      </a>
+
+      <h3>Next</h3>
+      <p style="margin:0 0 var(--space-3)">Lesson 02 — <strong>eCPM, fill rate &amp; latency</strong>:
+      the three numbers waterfall and bidding are really trading against each other. <em>(coming next session)</em></p>
+
+      <p class="ask-teacher">I'm your teacher for this — if anything here is fuzzy (what eCPM even
+      means, how to see this in the AdMob console, how it differs on Android vs iOS), just ask and
+      we'll take it apart together.</p>
+    </footer>
+  </article>
+
+  <script src="../../assets/theme.js"></script>
+  <script>
+    // Quiz: reveal correctness on choice; encourage a second try when wrong.
+    (function () {
+      const opts = document.querySelectorAll('#quiz .quiz-option');
+      const fb = document.getElementById('quiz-feedback');
+      let done = false;
+      opts.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (done) return;
+          const correct = btn.dataset.correct === 'true';
+          if (correct) {
+            btn.classList.add('correct');
+            fb.textContent = 'Right — waterfall walks your sources top-down by the eCPM you set.';
+            fb.dataset.state = 'correct';
+            done = true;
+            opts.forEach(function (b) { b.disabled = true; });
+          } else {
+            btn.classList.add('wrong');
+            btn.disabled = true;
+            fb.textContent = 'Not quite — that describes bidding or randomness. Try again.';
+            fb.dataset.state = 'wrong';
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
