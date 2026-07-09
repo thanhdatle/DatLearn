@@ -77,6 +77,55 @@ Lessons cite these by tag (R1, R2, …).
   **Use for:** authoritative definitions — the overload principle, the maximal/repeated/
   submaximal effort methods, periodisation theory. Not for day-to-day numbers.
 
+### Exercise technique & joint health (added 2026-07-09, for the exercise library)
+
+All fetched and confirmed. These are the sources that **corrected three claims I had already made** to
+the learner — see `reference/exercise-library.html`.
+
+- **R15.** Escamilla RF, et al. **Effects of technique variations on knee biomechanics during the squat and leg press.** *Med Sci Sports Exerc*, 2001. [PubMed 11528346](https://pubmed.ncbi.nlm.nih.gov/11528346/)
+  **Use for:** the leg-press foot-placement question. High vs low placement showed **no significant
+  difference** in patellofemoral or tibiofemoral force. *Refutes the "feet high spares the knee" cue I
+  originally taught.*
+
+- **R16.** Fry AC, Smith JC, Schilling BK. **Effect of knee position on hip and knee torques during the barbell squat.** *J Strength Cond Res*, 2003. [PubMed 14636100](https://pubmed.ncbi.nlm.nih.gov/14636100/)
+  **Use for:** "knees past toes." Restricting forward travel cut knee torque ~22% but raised hip torque
+  roughly tenfold. *Caveat: n=7, torque modelling, not an injury study.*
+
+- **R17.** Hartmann H, Wirth K, Klusemann M. **Analysis of the load on the knee joint and vertebral column with changes in squatting depth and weight load.** *Sports Med*, 2013. [PubMed 23821469](https://pubmed.ncbi.nlm.nih.gov/23821469/)
+  **Use for:** squat depth. Cruciate loads are highest in *partial* ranges. *Narrative review; assumes
+  competent technique and healthy tissue.*
+
+- **R18.** Silbernagel KG, Thomeé R, Eriksson BI, Karlsson J. **Continued sports activity, using a pain-monitoring model, during rehabilitation.** *Am J Sports Med*, 2007. [PubMed 17307888](https://pubmed.ncbi.nlm.nih.gov/17307888/)
+  **The single best-evidenced clinical principle in this workspace.** The origin of the pain-monitoring
+  model. **Use for:** the knee tripwire. *Note: the trial permits pain up to **5/10**, on Achilles
+  tendons. Our 3/10 knee threshold is a conservative extrapolation — say so every time.*
+
+- **R19.** Alfredson H, et al. **Heavy-load eccentric calf muscle training for chronic Achilles tendinosis.** *Am J Sports Med*, 1998. [PubMed 9617396](https://pubmed.ncbi.nlm.nih.gov/9617396/)
+  **Use for:** slow eccentrics. Evidenced for *treating diagnosed tendinopathy*, **not** for preventing
+  pain in a healthy joint. *Refutes my "two-second descent is knee insurance" claim.*
+
+- **R20.** Song Y, et al. **Effects of step length on lower-limb biomechanics during the Bulgarian split squat.** *Front Bioeng Biotechnol*, 2023. [Frontiers](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2023.1277493/full)
+  **Use for:** the long-stride cue. 50%→120% leg length: hip moment **+15.7%**, knee moment **−15.1%**.
+  *The one knee cue in this course with real numbers behind it.*
+
+- **R21.** Saraceni N, et al. **To flex or not to flex? Lumbar spine flexion during lifting and low back pain.** *JOSPT*, 2020. [PubMed 31775556](https://pubmed.ncbi.nlm.nih.gov/31775556/)
+  **Use for:** "never round your back." Only **low-quality** evidence, and it did *not* support lumbar
+  flexion as a risk factor. Teach the brace as skill, not law.
+
+- **R22.** McGill SM, Norman RW, Sharratt MT. **The effect of an abdominal belt on trunk muscle activity and intra-abdominal pressure during squat lifts.** *Ergonomics*, 1990. [PubMed 2141312](https://pubmed.ncbi.nlm.nih.gov/2141312/)
+  **Use for:** the belt myth. Raised intra-abdominal pressure; did **not** reduce trunk-muscle EMG.
+
+- **R23.** Fransen M, et al. **Exercise for osteoarthritis of the knee.** Cochrane review, 2015. [PubMed 26405113](https://pubmed.ncbi.nlm.nih.gov/26405113/)
+  **Use for:** warm-up honesty. Land-based exercise reduces knee pain, but the review evaluates whole
+  programmes and **never isolates the warm-up**. *This is why the bike is "sensible," not "proven."*
+
+- **R24.** Barbell Medicine technique guides — [squat](https://www.barbellmedicine.com/blog/how-to-squat/),
+  [bench](https://www.barbellmedicine.com/blog/how-to-bench-press/),
+  [lat pulldown](https://www.barbellmedicine.com/blog/lat-pulldown-hypertrophy/),
+  [seated cable row](https://www.barbellmedicine.com/blog/seated-cable-row-hypertrophy/),
+  [chest-supported row](https://www.barbellmedicine.com/blog/chest-supported-row-hypertrophy/).
+  **Use for:** cues. All **expert consensus**, none RCT-backed on the cue itself. Label accordingly.
+
 ## Wisdom (communities)
 
 Learner has opted **in** to online communities; in-person not requested.

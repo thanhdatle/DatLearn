@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="strength">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Exercise Library — Strength — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/strength.css">
+  <style>
+    .ex { margin-top: var(--space-4); padding: var(--space-3); background: var(--surface);
+      border: var(--rule) solid var(--border); border-left: 3px solid var(--topic);
+      border-radius: var(--radius-lg); break-inside: avoid; scroll-margin-top: var(--space-3); }
+    .ex h3 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700;
+      letter-spacing: .01em; margin: 0 0 .2rem; }
+    .ex .role { font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); margin: 0; }
+    .ex h4 { font-family: var(--font-ui); font-size: var(--text-sm); font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase; color: var(--ink-mute);
+      margin: var(--space-2) 0 .3rem; }
+    .ex ol, .ex ul { margin: 0; padding-left: 1.2em; }
+    .ex li { margin-bottom: .25rem; }
+    .ex .why { font-style: italic; color: var(--ink-soft); margin: .2rem 0 0; }
+    .ev { font-family: var(--font-ui); font-size: var(--text-xs); margin-top: var(--space-2);
+      padding-top: var(--space-1); border-top: var(--rule) solid var(--border); color: var(--ink-mute); }
+    .ev b { font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+    .ev .peer { color: var(--good); }
+    .ev .heur { color: var(--warn); }
+    .knee-note { border-left: 3px solid var(--accent); padding-left: var(--space-2);
+      margin-top: var(--space-2); font-size: var(--text-sm); font-family: var(--font-ui); }
+    .knee-note b { color: var(--accent); }
+    .toc { columns: 2; column-gap: var(--space-4); font-family: var(--font-ui);
+      font-size: var(--text-sm); padding-left: 1.1em; }
+    @media (max-width: 600px) { .toc { columns: 1; } }
+    .print-hint { font-family: var(--font-ui); font-size: var(--text-sm); color: var(--ink-mute); }
+    @media print { .print-hint, .toc { display: none; } .ex { border: none; border-left: 2px solid #000; } }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="ref">
+    <nav class="lesson-nav">
+      <a href="../../index.html">DatLearn</a><span class="sep">/</span>
+      <a href="../index.html">Strength</a><span class="sep">/</span>
+      <span>Reference</span>
+    </nav>
+
+    <p class="kicker">Reference · every movement in your programme</p>
+    <h1>Exercise Library</h1>
+    <p class="ref-sub">Cues, errors, benefits, harms — and, for each, how much of it is actually
+    known. The <a href="../sessions/S01-lower-squat.html">session lessons</a> link straight into these
+    entries rather than restating them.</p>
+
+    <div class="callout warn">
+      <span class="kicker">Read the evidence labels, or this page will mislead you</span>
+      <p>Almost no technique cue in lifting has been tested against <em>injury outcomes</em> in a
+      randomised trial. What exists is biomechanics (torque models), EMG (which measures momentary
+      muscle activation — not growth, not injury), and expert consensus. Each entry below is labelled
+      <strong>Peer-reviewed</strong> — a study supports this specific claim — or
+      <strong>Heuristic</strong> — coaching consensus and sound mechanical reasoning, with no study on
+      the cue itself.</p>
+      <p style="margin-top:var(--space-1)">A heuristic is not worthless. It is just not a fact, and you
+      deserve to know which is which.</p>
+    </div>
+
+    <h2>Six things gyms teach that the evidence doesn't support</h2>
+
+    <p>Three of these I told you myself before I checked. They're corrected here and in your
+    <a href="five-day-split.html">programme</a>.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>The claim</th><th>Verdict</th><th>What's actually true</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>"Feet high on the leg press spares the knee"</td>
+            <td class="low">Not supported</td>
+            <td>Escamilla (2001) compared high vs low directly: <strong>no significant difference</strong> in patellofemoral or tibiofemoral force at matched load. High placement does reduce how far the knee bends — use it for comfort, not as protection.<a href="#s1" class="cite">1</a></td>
+          </tr>
+          <tr>
+            <td>"Knees must never pass the toes"</td>
+            <td class="low">Myth</td>
+            <td>Restricting forward knee travel cut knee torque ~22% but raised <strong>hip torque roughly tenfold</strong>. The load doesn't vanish; it moves to your hips and lower back.<a href="#s2" class="cite">2</a></td>
+          </tr>
+          <tr>
+            <td>"Deep squats destroy your knees"</td>
+            <td class="low">Myth</td>
+            <td>Cruciate ligament loads are <strong>highest in partial ranges</strong> and fall as you descend. Heavy quarter-squats may be the worse long-term bet.<a href="#s3" class="cite">3</a></td>
+          </tr>
+          <tr>
+            <td>"Slow eccentrics protect a healthy knee"</td>
+            <td class="low">Not supported</td>
+            <td>Heavy slow eccentrics are proven for <strong>rehabilitating a diagnosed tendinopathy</strong>, not for preventing pain in an asymptomatic joint.<a href="#s4" class="cite">4</a></td>
+          </tr>
+          <tr>
+            <td>"Belts weaken your core"</td>
+            <td class="low">Myth</td>
+            <td>A belt raised intra-abdominal pressure and <strong>did not reduce trunk-muscle activity</strong>. It gives the core something to brace against.<a href="#s5" class="cite">5</a></td>
+          </tr>
+          <tr>
+            <td>"Any pain means stop"</td>
+            <td class="low">Myth</td>
+            <td>The validated pain-monitoring model permits loading pain <strong>up to 5/10</strong>, provided it doesn't climb week to week and returns to baseline by next morning.<a href="#s6" class="cite">6</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="kicker">Your pain threshold, and why yours is stricter than the study's</span>
+      <p>Silbernagel's randomised trial — the origin of the pain-monitoring model — allowed pain up to
+      <strong>5/10</strong>. Your programme says <strong>3/10</strong>. That gap is deliberate, and you
+      should know it is <em>my</em> choice, not the study's finding.</p>
+      <p style="margin-top:var(--space-1)">Two reasons. The trial ran on <strong>Achilles
+      tendons</strong> — load-tolerant tissue — not knees, so applying its numbers to your joint is
+      already an extrapolation. And your mission is twenty more years of lifting, not a fast return to
+      running. When you extrapolate, extrapolate conservatively. Stay at 3.</p>
+    </div>
+
+    <h2>Contents</h2>
+    <ul class="toc">
+      <li><a href="#back-squat">Back squat</a></li>
+      <li><a href="#front-squat">Front squat</a></li>
+      <li><a href="#conventional-deadlift">Conventional deadlift</a></li>
+      <li><a href="#romanian-deadlift">Romanian deadlift</a></li>
+      <li><a href="#leg-press">Leg press</a></li>
+      <li><a href="#bulgarian-split-squat">Bulgarian split squat</a></li>
+      <li><a href="#leg-curl">Leg curl (seated &amp; lying)</a></li>
+      <li><a href="#standing-calf-raise">Standing calf raise</a></li>
+      <li><a href="#bench-press">Barbell bench press</a></li>
+      <li><a href="#incline-dumbbell-press">Incline &amp; flat dumbbell press</a></li>
+      <li><a href="#overhead-press">Overhead press</a></li>
+      <li><a href="#close-grip-bench-press">Close-grip bench press</a></li>
+      <li><a href="#weighted-pull-up">Weighted pull-up</a></li>
+      <li><a href="#lat-pulldown">Lat pulldown</a></li>
+      <li><a href="#chest-supported-row">Chest-supported row</a></li>
+      <li><a href="#seated-cable-row">Seated cable row</a></li>
+      <li><a href="#face-pull">Face pull</a></li>
+      <li><a href="#lateral-raise">Lateral raise</a></li>
+      <li><a href="#rear-delt-fly">Rear delt fly</a></li>
+      <li><a href="#barbell-curl">Curls (barbell, incline, hammer)</a></li>
+      <li><a href="#triceps-pushdown">Triceps (pushdown &amp; overhead)</a></li>
+      <li><a href="#hanging-leg-raise">Hanging leg raise</a></li>
+      <li><a href="#cable-crunch">Cable crunch</a></li>
+    </ul>
+
+    <h2>Lower body</h2>
+
+    <section class="ex" id="back-squat">
+      <p class="role">Main lift · Monday</p>
+      <h3>Back squat</h3>
+      <p class="why">The most bar weight your knees will see all week. It is on Monday because
+      technique degrades with fatigue.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Brace before you descend — breathe into the belly, stack the ribcage over the pelvis.</li>
+        <li>Hips back <em>and</em> knees forward. Knees track over the toes; they do not cave inward.</li>
+        <li>Lead out of the hole with the chest. Hips and shoulders rise together.</li>
+        <li>Tripod foot: big toe, little toe, heel. Nothing lifts.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul>
+        <li>Hips rising faster than the shoulders — the squat becomes a good morning.</li>
+        <li><strong>Knee valgus</strong> (knees collapsing inward). The one error worth stopping a set for.</li>
+        <li>Heels or toes lifting off the floor.</li>
+      </ul>
+
+      <h4>Buys you</h4>
+      <ul><li>Quads, glutes, adductors, spinal erectors — and the bulk of your lower-body strength.</li></ul>
+
+      <h4>Costs you</h4>
+      <ul><li>The highest systemic fatigue of any lift except the deadlift. Knee valgus under load is the genuine injury mechanism here, not depth.</li></ul>
+
+      <div class="knee-note">
+        <b>Your knee.</b> Squat to the deepest position that stays painless — and understand that depth
+        itself is not the villain. Cruciate loads are highest in <em>partial</em> ranges, so a
+        controlled full squat is not more dangerous than a quarter squat.<a href="#s3" class="cite">3</a>
+        Forcing your knees back behind your toes merely dumps the load on your hips and lumbar
+        spine.<a href="#s2" class="cite">2</a> What actually matters: don't let the knee cave.
+      </div>
+
+      <p class="ev"><b class="heur">Heuristic</b> for the cues (expert consensus —
+      <a href="https://www.barbellmedicine.com/blog/how-to-squat/">Barbell Medicine</a>).
+      <b class="peer">Peer-reviewed</b> for the depth and knee-travel claims.<a href="#s2" class="cite">2</a><a href="#s3" class="cite">3</a></p>
+    </section>
+
+    <section class="ex" id="front-squat">
+      <p class="role">Secondary compound · Wednesday</p>
+      <h3>Front squat</h3>
+      <p class="why">Quad work with an upright torso, so your lower back gets a break on the day you
+      deadlift.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>The bar sits on your shoulders. Your hands guide it; they do not hold it.</li>
+        <li>Elbows up and driven forward, the whole set.</li>
+        <li>Stay upright. Chest up.</li>
+        <li>Brace hard against the rack position.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul>
+        <li>Elbows drop → chest tips → the bar rolls off.</li>
+        <li>Upper back rounds under the rack.</li>
+        <li>Hips shoot back, turning it into a low-bar squat you cannot hold.</li>
+      </ul>
+
+      <h4>Buys you</h4><ul><li>Quads, upper back, and a brutally honest signal the moment your bracing fails.</li></ul>
+      <h4>Costs you</h4><ul><li>Wrist and elbow mobility demands. Much lighter loads than the back squat.</li></ul>
+
+      <div class="knee-note">
+        <b>Your knee.</b> An upright torso shifts work toward the quads and the knee — that is the
+        point of the lift, not a defect. Your programme picked it over the hack squat, but be clear:
+        <strong>that swap is my judgement, not a finding.</strong> No study compares them for knee
+        health. If the front squat bothers the knee and the hack squat doesn't, believe your knee.
+      </div>
+
+      <p class="ev"><b class="heur">Heuristic</b> — expert consensus
+      (<a href="https://www.jtsstrength.com/pillars-of-front-squat/">Juggernaut</a>). The
+      front-squat-over-hack-squat choice is unsupported by direct evidence.</p>
+    </section>
+
+    <section class="ex" id="conventional-deadlift">
+      <p class="role">Main lift · Wednesday</p>
+      <h3>Conventional deadlift</h3>
+      <p class="why">The heaviest thing you will pick up. Placed two days after squats so your lower
+      back has cleared.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Bar over midfoot — roughly over your shoelaces — <em>before</em> you touch it.</li>
+        <li>Set the lats and "pull the slack out" of the bar before it moves.</li>
+        <li>Brace, then hinge down to the bar. Your hip height is your own; there is no universal position.</li>
+        <li>Push the floor away. Finish tall — don't lean back at the top.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul>
+        <li>Bar drifting forward, away from the shins.</li>
+        <li>Hips shooting up first, leaving the bar behind.</li>
+        <li>Jerking the bar off the floor instead of pulling the slack out.</li>
+      </ul>
+
+      <h4>Buys you</h4><ul><li>Posterior chain, grip, spinal erectors — more total systemic strength per rep than anything else in the gym.</li></ul>
+      <h4>Costs you</h4><ul><li>The most fatigue of any lift in the programme. It is why the guardrails exist.</li></ul>
+
+      <div class="callout warn" style="margin-top:var(--space-2)">
+        <span class="kicker">On "never round your back"</span>
+        <p>The honest version: a systematic review found <strong>only low-quality evidence</strong>, and
+        it did <em>not</em> support lumbar flexion during lifting as a cause of back
+        pain.<a href="#s7" class="cite">7</a> The blanket prohibition is not proven. Brace to a
+        near-neutral spine anyway — it is the most efficient way to move heavy loads and it buys you
+        margin. Treat it as a skill, not a law.</p>
+      </div>
+
+      <p class="ev"><b class="heur">Heuristic</b> for cues
+      (<a href="https://www.strongerbyscience.com/how-to-deadlift/">Stronger By Science</a>).
+      <b class="peer">Peer-reviewed</b>, and contested, on lumbar flexion.<a href="#s7" class="cite">7</a></p>
+    </section>
+
+    <section class="ex" id="romanian-deadlift">
+      <p class="role">Secondary compound · Monday</p>
+      <h3>Romanian deadlift</h3>
+      <p class="why">Hamstrings and glutes under a long, loaded stretch — with almost nothing asked of
+      the knee.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Hips travel <em>straight back</em>. The knee bends slightly, once, and holds that angle.</li>
+        <li>Drag the bar down your thighs. It stays in contact.</li>
+        <li>Stop at the end of the hamstring stretch — not at a fixed depth, and never past the point where your back rounds.</li>
+        <li>Neutral spine, lats engaged, bar close.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul>
+        <li>Bending the knees progressively — it becomes a stiff-legged squat.</li>
+        <li>Chasing depth past the point where the lumbar spine rounds.</li>
+        <li>Letting the bar drift away from the legs.</li>
+      </ul>
+
+      <h4>Buys you</h4><ul><li>Hamstrings at long muscle length, glutes, erectors, and a hinge pattern that transfers straight to the deadlift.</li></ul>
+      <h4>Costs you</h4><ul><li>Lower-back fatigue that carries into Wednesday if you push it.</li></ul>
+
+      <div class="knee-note">
+        <b>Your knee.</b> One of the best exercises available to you: near-zero knee flexion under
+        load, large hamstring and glute return. If a lower day has to lose an exercise, this is not
+        the one.
+      </div>
+
+      <p class="ev"><b class="heur">Heuristic</b> — coaching consensus; the loaded-stretch rationale
+      aligns with long-muscle-length hypertrophy research
+      (<a href="https://rpstrength.com/blogs/articles/hamstring-hypertrophy-training-tips">RP</a>).</p>
+    </section>
+
+    <section class="ex" id="leg-press">
+      <p class="role">Accessory · Monday</p>
+      <h3>Leg press</h3>
+      <p class="why">Quad volume without asking anything of your spine or your balance.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Set depth by <strong>your pelvis, not the machine</strong>. Stop the moment your hips or
+        lower back begin peeling off the pad.</li>
+        <li>Knees track over the toes with a slight toe-out. They do not cave.</li>
+        <li>Reach full extension under control. Don't snap into the stop, and don't force the knee past neutral.</li>
+        <li>Whole foot stays on the platform.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul>
+        <li>Going so deep the pelvis tucks and the lumbar spine rounds under load.</li>
+        <li>Bouncing into lockout.</li>
+        <li>Enormous weight through four inches of range.</li>
+      </ul>
+
+      <div class="callout warn" style="margin-top:var(--space-2)">
+        <span class="kicker">I told you feet-high protects the knee. It doesn't.</span>
+        <p>Escamilla (2001) put ten experienced lifters through high and low foot placement with 3D
+        motion capture, EMG, and a joint model. Patellofemoral compression, tibiofemoral compression,
+        and PCL force were <strong>not significantly different</strong> between them.<a href="#s1" class="cite">1</a></p>
+        <p style="margin-top:var(--space-1)">What high placement <em>does</em> do is reduce how far the
+        knee bends. That is a real reason to use it if deep knee flexion is what irritates you — it is
+        simply not the load-shedding I claimed. <strong>Keep your feet high if it feels better. Don't
+        believe it is body armour.</strong></p>
+      </div>
+
+      <p class="ev"><b class="peer">Peer-reviewed</b> on foot placement.<a href="#s1" class="cite">1</a>
+      <b class="heur">Heuristic</b> on the lockout caution — no study on leg-press lockout injury exists at all.</p>
+    </section>
+
+    <section class="ex" id="bulgarian-split-squat">
+      <p class="role">Accessory · Wednesday</p>
+      <h3>Bulgarian split squat</h3>
+      <p class="why">Unilateral leg work you can steer toward the hip and away from the knee — and
+      unlike most such claims, this one has numbers behind it.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li><strong>Plant the front foot far forward</strong> — far enough that the shin is close to
+        vertical at the bottom. This is the single adjustment that matters for you.</li>
+        <li>Allow a slight forward torso lean. Let the hip take the work.</li>
+        <li>Keep the front glute engaged so the knee does not cave inward.</li>
+        <li>Control the descent; drive through the whole front foot, not the back one.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul>
+        <li>Stride too short plus an upright torso → the knee travels far forward and eats the load.</li>
+        <li>Front knee caving in.</li>
+        <li>Pushing off the rear foot, which turns it into a bad lunge.</li>
+      </ul>
+
+      <div class="knee-note">
+        <b>Your knee — and here the evidence agrees with me.</b> Increasing step length from 50% to
+        120% of leg length raised the peak hip-extension moment by <strong>15.7%</strong> and dropped
+        the peak knee-extension moment by <strong>15.1%</strong>, with more glute and hamstring
+        involvement.<a href="#s8" class="cite">8</a> A longer stride measurably moves load off the
+        knee. It reduces knee load; it does not abolish it. If it still bites, swap to a
+        <strong>B-stance Romanian deadlift</strong> — nearly all the glute, almost no knee flexion.
+      </div>
+
+      <p class="ev"><b class="peer">Peer-reviewed</b> for the stride-length load shift. Acute
+      biomechanics: the load shift is measured, the clinical benefit inferred.<a href="#s8" class="cite">8</a></p>
+    </section>
+
+    <section class="ex" id="leg-curl">
+      <span id="seated-leg-curl"></span><span id="lying-leg-curl"></span>
+      <p class="role">Accessory · Monday (seated) &amp; Wednesday (lying)</p>
+      <h3>Leg curl</h3>
+      <p class="why">Direct hamstring work with no spinal load and no knee compression. Two variants,
+      two sessions, so the hamstrings get trained at different hip angles.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Full range, especially the stretched end — start from straight knees.</li>
+        <li>Control the eccentric. Do not bounce out of the bottom; that is where hamstrings tear.</li>
+        <li>Strap in tight so your hips cannot lift.</li>
+        <li>Ignore toe angle. "Point your toes in for the inner hamstring" is folklore.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul>
+        <li>Bouncing at the stretched position.</li>
+        <li>Half reps at the top.</li>
+        <li>Hips lifting off the pad to cheat the last few reps.</li>
+      </ul>
+
+      <div class="knee-note">
+        <b>Your knee.</b> Open-chain, minimal joint compression. One of the safest things in the
+        building for you, and it directly counterbalances all the quad work.
+      </div>
+
+      <p class="ev"><b class="heur">Heuristic</b> — coaching consensus
+      (<a href="https://rpstrength.com/blogs/articles/hamstring-hypertrophy-training-tips">RP</a>),
+      where the toe-angle myth is explicitly rejected.</p>
+    </section>
+
+    <section class="ex" id="standing-calf-raise">
+      <p class="role">Accessory · Monday</p>
+      <h3>Standing calf raise</h3>
+      <p class="why">The one muscle your programme knowingly under-trains — three sets a week is
+      maintenance, and you were told so.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Full range: heel below the platform at the bottom, all the way up at the top.</li>
+        <li><strong>Pause two seconds in the stretch</strong> to kill the Achilles bounce.</li>
+        <li>Control the descent.</li>
+        <li>Knees roughly straight, to bias the gastrocnemius.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul><li>Bouncing on the Achilles through a short range.</li><li>Half reps.</li><li>Moving so fast nothing is loaded.</li></ul>
+
+      <p class="ev"><b class="heur">Heuristic</b> — consensus. The full-range, stretched-position
+      emphasis is consistent with long-muscle-length hypertrophy research, but no trial tests the
+      pause cue itself.</p>
+    </section>
+
+    <h2>Push</h2>
+
+    <section class="ex" id="bench-press">
+      <p class="role">Main lift · Tuesday</p>
+      <h3>Barbell bench press</h3>
+      <p class="why">Your main horizontal press, and the one upper-body lift where a spotter or safety
+      pins are not optional.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Consistent grip, consistent touch point, repeatable bar path. Repeatability <em>is</em> the technique.</li>
+        <li>Shoulder blades back and down; a moderate arch.</li>
+        <li>Feet planted, legs driving into the floor.</li>
+        <li>Bar starts over the shoulder, touches the lower chest, presses back over the shoulder — a slight diagonal, not straight up.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul>
+        <li>Chasing a textbook style that fights your own anatomy. Barbell Medicine's central warning.</li>
+        <li>Elbows flaring to 90° while the bar drifts toward the face.</li>
+        <li>Bouncing the bar off the ribcage.</li>
+      </ul>
+
+      <h4>Buys you</h4><ul><li>Chest, front delts, triceps — and the clearest strength number in the gym.</li></ul>
+      <h4>Costs you</h4><ul><li>Shoulder wear, if the bar path and elbow angle fight each other week after week.</li></ul>
+
+      <p class="ev"><b class="heur">Heuristic</b> — expert consensus
+      (<a href="https://www.barbellmedicine.com/blog/how-to-bench-press/">Barbell Medicine</a>).</p>
+    </section>
+
+    <section class="ex" id="incline-dumbbell-press">
+      <span id="dumbbell-bench-press"></span>
+      <p class="role">Accessory · Tuesday (incline) &amp; Thursday (flat)</p>
+      <h3>Incline &amp; flat dumbbell press</h3>
+      <p class="why">Chest volume where each shoulder is free to find its own path — which a barbell
+      does not allow.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Incline bench at about <strong>30°</strong>. Steeper turns it into a shoulder press.</li>
+        <li>Retract and depress the shoulder blades <em>before</em> the first rep, and hold it there.</li>
+        <li>Full range, each arm on the path that suits that shoulder.</li>
+        <li>Touch around the upper chest. Don't clang the bells together at the top.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul>
+        <li>Bench at 45° or more — now it is a delt exercise you are calling a chest exercise.</li>
+        <li>Losing the scapular set halfway through the set.</li>
+        <li>Over-lowering into a stretch the shoulder objects to.</li>
+      </ul>
+
+      <p class="ev"><b class="peer">Peer-reviewed</b> (weakly) on the 30° angle — from EMG studies,
+      which measure activation, not growth. <b class="heur">Heuristic</b> for everything else.</p>
+    </section>
+
+    <section class="ex" id="overhead-press">
+      <p class="role">Main lift · Thursday</p>
+      <h3>Standing overhead press</h3>
+      <p class="why">The lift that exposes whether your bracing is real, because there is no bench to
+      lie to you.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Grip just outside shoulder width, heel of the hand under the bar.</li>
+        <li>Elbows slightly in front at the start — pointing toward each other, not flared out.</li>
+        <li>Get your head "through the window" so the bar finishes over your midfoot.</li>
+        <li>Brace the glutes and abs. <strong>Do not hyperextend the lower back</strong> to fake a vertical bar path.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul>
+        <li>Leaning back and pressing off an arched lumbar spine.</li>
+        <li>Elbows flaring wide.</li>
+        <li>Bar drifting forward at lockout, finishing in front of the shoulders.</li>
+      </ul>
+
+      <h4>Costs you</h4><ul><li>Lower-back extension load if you lean back. This, not the shoulder, is where the overhead press hurts people.</li></ul>
+
+      <p class="ev"><b class="heur">Heuristic</b> — expert consensus
+      (<a href="https://www.trainuntamed.com/how-to-overhead-press/">Untamed Strength</a>).</p>
+    </section>
+
+    <section class="ex" id="close-grip-bench-press">
+      <p class="role">Accessory · Friday</p>
+      <h3>Close-grip bench press</h3>
+      <p class="why">The heaviest triceps work you will do, and half a chest exercise for free.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Grip about <strong>shoulder width</strong> — roughly a fist narrower than your bench grip.
+        Hands touching is not "closer grip"; it is a wrist injury with no extra triceps.</li>
+        <li>Tuck the elbows to about 45°.</li>
+        <li>Bar touches lower on the torso, following the tucked elbows.</li>
+        <li>Wrists stacked over the elbows, neutral.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul><li>Grip far too narrow — wrists and elbows pay, triceps gain nothing.</li><li>Flaring elbows, which hands the set back to the chest.</li><li>Forcing a high touch point.</li></ul>
+
+      <p class="ev"><b class="heur">Heuristic</b> — expert consensus. The "no extra triceps from an
+      ultra-narrow grip" claim is widely taught and, as far as I can find, untested.</p>
+    </section>
+
+    <h2>Pull</h2>
+
+    <section class="ex" id="weighted-pull-up">
+      <p class="role">Secondary compound · Thursday</p>
+      <h3>Weighted pull-up</h3>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Earn it at bodyweight first. Added load amplifies every flaw you have.</li>
+        <li>Initiate from the shoulder blades — depress and retract before the elbows bend.</li>
+        <li>Full range: dead hang to chin clearly over the bar.</li>
+        <li>Control the descent. A tight core kills the swing.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul><li>Adding weight too early, which buys you kipping and half reps.</li><li>Skipping the scapular set, making it a biceps exercise.</li><li>Dropping out of the eccentric.</li></ul>
+
+      <p class="ev"><b class="heur">Heuristic</b> — coaching consensus, no trial.</p>
+    </section>
+
+    <section class="ex" id="lat-pulldown">
+      <p class="role">Accessory · Tuesday · <em>calibration test, week 1</em></p>
+      <h3>Lat pulldown</h3>
+      <p class="why">Vertical pulling volume — and, in week one, the safe place to find out whether
+      your RPE is honest.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Reach a full overhead position every rep, arms near-straight, slight stretch.</li>
+        <li>Lead the descent by pulling the elbows <em>down and in</em>, about 10–15° from the torso.</li>
+        <li>Chest up, torso angle fixed for the whole set.</li>
+        <li>Grip width barely matters. Pick one and progress it.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul><li>Leaning back further each rep to keep the set alive.</li><li>Cutting the top range short.</li><li>Chasing "lat feel" instead of load, effort, and progression.</li></ul>
+
+      <div class="callout" style="margin-top:var(--space-2)">
+        <span class="kicker">Week 1: this is where you go to failure</span>
+        <p>Predict your reps-to-failure, write it down, then take the last set to <em>actual</em>
+        failure and compare. A machine, no spotter, nothing to drop. Never run this test on the squat,
+        the deadlift, or the overhead press.</p>
+      </div>
+
+      <p class="ev"><b class="heur">Heuristic</b> — expert consensus
+      (<a href="https://www.barbellmedicine.com/blog/lat-pulldown-hypertrophy/">Barbell Medicine</a>).</p>
+    </section>
+
+    <section class="ex" id="chest-supported-row">
+      <p class="role">Secondary compound · Tuesday</p>
+      <h3>Chest-supported row</h3>
+      <p class="why">Back thickness without asking your erectors to hold you up — which is exactly why
+      it, and not a barbell row, follows a week containing Romanian deadlifts.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Drive the elbows back and up. Do not curl the handle toward you.</li>
+        <li>Let the shoulder blades protract at the bottom and retract at the top.</li>
+        <li>Chest stays glued to the pad the entire set.</li>
+        <li>A one-to-two second pause at the top, if you like.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul><li>Peeling off the pad to generate momentum.</li><li>Range shortening as the set gets hard.</li><li>Stopping several reps short of a hard set.</li></ul>
+
+      <p class="ev"><b class="heur">Heuristic</b> — expert consensus
+      (<a href="https://www.barbellmedicine.com/blog/chest-supported-row-hypertrophy/">Barbell Medicine</a>).</p>
+    </section>
+
+    <section class="ex" id="seated-cable-row">
+      <p class="role">Accessory · Thursday · <em>calibration test, week 1</em></p>
+      <h3>Seated cable row</h3>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Drive the elbows back. You are not "pulling the handle to your body."</li>
+        <li>Stay near vertical — 10–15° of lean, not a rowing-machine heave.</li>
+        <li>Repeatable path, repeatable end position.</li>
+        <li>Let the shoulder blades protract at the stretch, retract at the finish.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul><li>Progressively more torso English as fatigue arrives.</li><li>Range shortening.</li><li>Stopping short of a genuinely hard set.</li></ul>
+
+      <p class="ev"><b class="heur">Heuristic</b> — expert consensus
+      (<a href="https://www.barbellmedicine.com/blog/seated-cable-row-hypertrophy/">Barbell Medicine</a>).</p>
+    </section>
+
+    <section class="ex" id="face-pull">
+      <p class="role">Accessory · Tuesday</p>
+      <h3>Face pull</h3>
+      <p class="why">Rear delts and external rotators — the counterweight to a programme with a lot of
+      pressing in it.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Elbows lead, high and wide, toward your eyes. Finish with external rotation.</li>
+        <li>Keep the traps quiet. No shrug.</li>
+        <li>Light load, controlled, higher reps. This is not a strength lift.</li>
+        <li>Cable set at roughly face height.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul><li>Shrugging, so the traps do the work.</li><li>Loading it heavily enough that it becomes a high row.</li><li>No external rotation at the finish, which removes the point of the exercise.</li></ul>
+
+      <p class="ev"><b class="heur">Heuristic</b> for the cues. No EMG study exists on the "face pull"
+      as such — though the two actions it blends (external rotation and prone horizontal abduction) are
+      strongly supported for infraspinatus and posterior deltoid recruitment.<a href="#s9" class="cite">9</a></p>
+    </section>
+
+    <section class="ex" id="lateral-raise">
+      <span id="cable-lateral-raise"></span><span id="dumbbell-lateral-raise"></span>
+      <p class="role">Accessory · Tuesday (cable) &amp; Thursday (dumbbell)</p>
+      <h3>Lateral raise</h3>
+      <p class="why">Your side delts sit at about six sets a week — maintenance, not growth. If they
+      matter to you, we move sets from elsewhere. We do not add time.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Lead with the elbow. Raise to about shoulder height, no higher.</li>
+        <li>Keep tension constant — a cable, or a slight forward lean, loads the bottom where dumbbells go slack.</li>
+        <li>Minimal swing. Control the way down.</li>
+        <li>Don't shrug.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul><li>Swinging the weight up with traps and hips.</li><li>Too heavy, so it becomes a shrug-row.</li><li>Dropping the eccentric entirely.</li></ul>
+
+      <p class="ev"><b class="peer">Peer-reviewed</b> (weakly): the lateral raise produced the highest
+      medial-deltoid activation among the exercises tested.<a href="#s10" class="cite">10</a> That is
+      acute EMG — activation, not growth. The cues are <b class="heur">heuristic</b>.</p>
+    </section>
+
+    <section class="ex" id="rear-delt-fly">
+      <p class="role">Accessory · Thursday</p>
+      <h3>Rear delt fly</h3>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Horizontal abduction with a slight elbow bend. Lead with elbows and pinkies; stop at about shoulder height.</li>
+        <li>A neutral or thumbs-down grip may bias the posterior delt slightly.</li>
+        <li><strong>Don't hard-retract the shoulder blades first</strong> — that turns it into a rhomboid exercise.</li>
+        <li>Light, controlled, chest-supported if you have the option.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul><li>Torso swing.</li><li>Converting it into a scapular-retraction row.</li><li>Too heavy → high row.</li></ul>
+
+      <p class="ev"><b class="heur">Heuristic</b>, with weak EMG support for the grip effect. Treat the
+      grip detail as marginal.</p>
+    </section>
+
+    <h2>Arms</h2>
+
+    <section class="ex" id="barbell-curl">
+      <span id="incline-dumbbell-curl"></span><span id="hammer-curl"></span>
+      <p class="role">Accessory · Friday</p>
+      <h3>Curls — barbell, incline dumbbell, hammer</h3>
+      <p class="why">Three curls, three shoulder and elbow positions. The incline variant trains the
+      biceps at long muscle length; the hammer variant hits brachialis and brachioradialis.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>The upper arm stays fixed at your side. Elbow drift hands the work to your front delt.</li>
+        <li>No torso swing, no hip drive.</li>
+        <li>Control the eccentric. Full stretch at the bottom — especially on the incline curl, which exists for exactly that.</li>
+        <li>Neutral wrist. Your wrists and elbows have to last twenty years too.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul><li>Elbows drifting forward as the set gets hard.</li><li>Swinging the body.</li><li>Cutting the bottom of the range — the half that matters.</li></ul>
+
+      <p class="ev"><b class="heur">Heuristic</b> — expert consensus and mechanical reasoning. The
+      popular "elbows forward means less biceps" demonstration rests on one coach's EMG clip, not a trial.</p>
+    </section>
+
+    <section class="ex" id="triceps-pushdown">
+      <span id="overhead-triceps-extension"></span>
+      <p class="role">Accessory · Friday</p>
+      <h3>Triceps — pushdown &amp; overhead extension</h3>
+      <p class="why">Both, not either. This is the one place your programme's exercise <em>pairing</em>
+      is doing real work.</p>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Upper arms pinned to your sides. Only the forearm moves.</li>
+        <li>Full lockout, brief squeeze, controlled eccentric.</li>
+        <li><strong>Pair the pushdown with an overhead extension.</strong> The pushdown never lengthens
+        the long head of the triceps; the overhead extension does.</li>
+        <li>Spreading the rope at the bottom is, at best, marginal.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul><li>Elbows travelling forward — now it is a press.</li><li>Leaning over the stack and pushing with bodyweight.</li><li>Doing only pushdowns, then wondering why the long head never grows.</li></ul>
+
+      <p class="ev"><b class="peer">Peer-reviewed</b>, and the reason both movements sit in your
+      Friday: training the triceps at long muscle length (overhead) beats short-length work
+      (pushdown) for growth.<a href="#s11" class="cite">11</a></p>
+    </section>
+
+    <h2>Core</h2>
+
+    <section class="ex" id="hanging-leg-raise">
+      <p class="role">Accessory · Wednesday</p>
+      <h3>Hanging leg raise</h3>
+
+      <h4>Cues</h4>
+      <ol>
+        <li><strong>Tilt the pelvis backwards before the legs rise.</strong> Curl the tailbone toward
+        the ribs. This is the whole exercise; without it you are training hip flexors.</li>
+        <li>Think "ribs toward pelvis," not "lift the legs."</li>
+        <li>No swinging.</li>
+        <li>Arms relatively straight.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul>
+        <li>Hip-flexor dominance: thighs swing up, pelvis never tilts.</li>
+        <li>Pendulum swinging between reps.</li>
+        <li>Lumbar hyperextension. If you cannot hold the tilt, regress to a bent-knee raise. Your back will thank you in a decade.</li>
+      </ul>
+
+      <p class="ev"><b class="heur">Heuristic</b> — rests on functional anatomy. No study isolates the
+      pelvic-tilt cue.</p>
+    </section>
+
+    <section class="ex" id="cable-crunch">
+      <p class="role">Accessory · Friday</p>
+      <h3>Cable crunch</h3>
+
+      <h4>Cues</h4>
+      <ol>
+        <li>Flex the <strong>spine</strong>, not the hips. Curl the sternum toward the pubic bone.</li>
+        <li>Lock the hips. Thighs stay vertical and still.</li>
+        <li>Hands fixed relative to your head — let the abs pull you down, don't drag the rope with your arms.</li>
+        <li><strong>Actively round the back.</strong> This is the one lift where a rigid neutral spine
+        is wrong — it is the opposite of the deadlift.</li>
+      </ol>
+
+      <h4>Common errors</h4>
+      <ul><li>Hinging at the hips instead of flexing the spine. The number-one error.</li><li>Pulling with the arms and lats.</li><li>Holding a rigid spine, then wondering why nothing happens.</li></ul>
+
+      <p class="ev"><b class="heur">Heuristic</b> — consensus grounded in the fact that the rectus
+      abdominis is a trunk flexor. No trial verifies the cues.</p>
+    </section>
+
+    <h2>Sources</h2>
+    <ol style="font-family:var(--font-ui);font-size:var(--text-sm);padding-left:1.3em;line-height:1.6">
+      <li id="s1">Escamilla RF, et al. Effects of technique variations on knee biomechanics during the squat and leg press. <em>Med Sci Sports Exerc</em>, 2001. <a href="https://pubmed.ncbi.nlm.nih.gov/11528346/">PubMed 11528346</a></li>
+      <li id="s2">Fry AC, Smith JC, Schilling BK. Effect of knee position on hip and knee torques during the barbell squat. <em>J Strength Cond Res</em>, 2003. <a href="https://pubmed.ncbi.nlm.nih.gov/14636100/">PubMed 14636100</a></li>
+      <li id="s3">Hartmann H, Wirth K, Klusemann M. Analysis of the load on the knee joint and vertebral column with changes in squatting depth and weight load. <em>Sports Med</em>, 2013. <a href="https://pubmed.ncbi.nlm.nih.gov/23821469/">PubMed 23821469</a></li>
+      <li id="s4">Alfredson H, et al. Heavy-load eccentric calf muscle training for the treatment of chronic Achilles tendinosis. <em>Am J Sports Med</em>, 1998. <a href="https://pubmed.ncbi.nlm.nih.gov/9617396/">PubMed 9617396</a></li>
+      <li id="s5">McGill SM, Norman RW, Sharratt MT. The effect of an abdominal belt on trunk muscle activity and intra-abdominal pressure during squat lifts. <em>Ergonomics</em>, 1990. <a href="https://pubmed.ncbi.nlm.nih.gov/2141312/">PubMed 2141312</a></li>
+      <li id="s6">Silbernagel KG, Thomeé R, Eriksson BI, Karlsson J. Continued sports activity, using a pain-monitoring model, during rehabilitation. <em>Am J Sports Med</em>, 2007. <a href="https://pubmed.ncbi.nlm.nih.gov/17307888/">PubMed 17307888</a></li>
+      <li id="s7">Saraceni N, et al. To flex or not to flex? Is there a relationship between lumbar spine flexion during lifting and low back pain? <em>JOSPT</em>, 2020. <a href="https://pubmed.ncbi.nlm.nih.gov/31775556/">PubMed 31775556</a></li>
+      <li id="s8">Song Y, et al. Effects of step length on lower-limb biomechanics during the Bulgarian split squat. <em>Front Bioeng Biotechnol</em>, 2023. <a href="https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2023.1277493/full">Frontiers</a></li>
+      <li id="s9">Reinold MM, et al. Electromyographic analysis of the rotator cuff during common shoulder external rotation exercises. <em>JOSPT</em>, 2004. <a href="https://pubmed.ncbi.nlm.nih.gov/15296366/">PubMed 15296366</a></li>
+      <li id="s10">Coratella G, et al. An electromyographic analysis of the deltoid muscle during shoulder exercises. <em>Int J Environ Res Public Health</em>, 2020. <a href="https://pubmed.ncbi.nlm.nih.gov/33312291/">PubMed 33312291</a></li>
+      <li id="s11">Stronger By Science. Research Spotlight: triceps training at long muscle lengths. <a href="https://www.strongerbyscience.com/research-spotlight-triceps/">strongerbyscience.com</a></li>
+    </ol>
+
+    <footer class="lesson-foot">
+      <h3>Related</h3>
+      <p style="margin:0 0 var(--space-3)">
+        <a href="five-day-split.html">The five-day split</a> · <a href="two-week-block.html">The two-week block</a> ·
+        <a href="progression-protocol.html">Progression protocol</a>
+      </p>
+      <p class="ask-teacher">If a cue here contradicts something a coach told you in person, believe
+      the coach who can see you move. This page is general; you are specific. And if any movement
+      provokes the knee, tell me which and where — we change the exercise, not your resolve.</p>
+    </footer>
+  </main>
+
+  <script src="../../assets/theme.js"></script>
+</body>
+</html>

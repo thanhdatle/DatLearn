@@ -57,6 +57,30 @@ A Codex review found the original five-row table was neither mutually exclusive 
 **ordered** rules, first match wins, which is provably total. All four drills were re-verified to
 have exactly one correct answer under the ordering. If you ever restate the rule, restate the order.
 
+## Two parallel streams (requested 2026-07-09)
+The workspace now teaches on two tracks. Don't merge them.
+
+| Stream | Directory | Unit | Revisited? |
+|--------|-----------|------|-----------|
+| **Concept** | `lessons/` | `0001-…`, `0002-…` | Rarely. How training *works*. |
+| **Session** | `sessions/` | `S01-…` … `S05-…` | Weekly. One per workout day, teaching that day's *movements*. |
+
+The exercise knowledge lives **once**, in `reference/exercise-library.html`, anchored per movement
+(`#back-squat`, `#romanian-deadlift`, …). Session lessons link to those anchors; they do not restate
+cues. Five sessions sharing one library beats five copies drifting apart — the same DRY rule
+`HUB.md` applies to the stylesheet.
+
+The five sessions are stable across a block. Only the RPE cap and the loading change week to week,
+which is why `reference/two-week-block.html` links the *same* five session pages for both weeks.
+
+## Block cadence
+- **Block 1: Mon 13 – Fri 24 July 2026.** Week 1 caps main lifts at RPE 7 and *establishes* loads
+  (no kilograms were ever logged — see [[0003-first-session-executed]]). Week 2 caps at RPE 8 and
+  runs the ordered rule live. Review Sunday 26 July.
+- Week 1 carries the **RPE calibration test** on two machine exercises (Tue lat pulldown, Thu seated
+  cable row): predict reps-to-failure, then go to failure, compare. Never on squat/deadlift/OHP.
+  This finally answers the standing "can he rate RPE?" question while producing the loads.
+
 ## Teaching plan (rough, revise freely)
 1. ✅ **0001 — Double progression & RIR.** The ordered rule. Four drills, one per branch.
    Cited R4/R5/R6/R9/R10/R11/R12. Failure debate flagged as contested.
