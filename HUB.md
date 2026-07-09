@@ -14,7 +14,8 @@ DatLearn/
 ├── HUB.md                ← this file
 ├── assets/               ← shared design system (reused by ALL topics)
 │   ├── course.css        ← editorial / Tufte look, light+dark, print-friendly
-│   └── theme.js          ← shared light/dark toggle
+│   ├── theme.js          ← shared light/dark toggle
+│   └── quiz.js           ← shared retrieval-practice quiz engine (many per page)
 └── <topic>/              ← one full teach workspace per topic
     ├── index.html        ← the topic's landing page (lessons + reference)
     ├── MISSION.md        ← WHY the user is learning it (the compass)
@@ -31,6 +32,7 @@ DatLearn/
 | Topic | Mission | Status |
 |-------|---------|--------|
 | [AdMob](admob/index.html) | Master mediation & the revenue-vs-retention balance (Android + iOS) | 1 lesson live |
+| [Strength](strength/index.html) | Still lifting, still strong, in twenty years — progression without grinding | 1 lesson live |
 
 ## Adding a topic
 
@@ -47,6 +49,11 @@ Newsreader (serif reading) + Public Sans (labels) + JetBrains Mono (figures), a 
 ink palette with a rust accent, per-topic color chips, full light + dark, and print styles for
 the reference docs. Reusable components in `course.css`: `.lesson-body` + `.sidenote`, `.callout`,
 `.quiz`, `.pull`, comparison tables, `.glossary`, `.topic-card`. **Reuse these before adding CSS.**
+
+Behaviour lives in two shared scripts: `assets/theme.js` (light/dark toggle) and `assets/quiz.js`
+(wires every `.quiz` on a page, so a lesson can hold several drills). New lessons should link
+`quiz.js` rather than inlining quiz logic — the AdMob lessons predate it and each inline their own
+single-quiz script.
 
 ## Viewing
 
