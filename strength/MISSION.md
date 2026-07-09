@@ -16,10 +16,15 @@ guessing is what stalls people and, eventually, hurts them.
 
 ## Constraints
 - Monday–Friday, **45–60 minutes** per session, full commercial gym.
-- Intermediate: 6 months–2 years of consistent lifting.
+- Intermediate: 6 months–2 years of consistent lifting. Age **30–45** — recovery is a real budget, not an afterthought.
+- **Knee history, currently pain-free.** Nothing medically flagged. Every knee-loaded movement carries a modification and a monitoring rule; see `reference/five-day-split.html`.
 - Longevity is the goal, so **a plan that trades injury risk for a PR is a bad plan** — this rules out routinely training to failure on heavy compounds.
 - I learn by doing and revisit material later, so lessons must be short, interactive, and self-contained.
 - Wants online communities for form checks and programme critique.
+
+## Not a clinician
+Nothing in this workspace is medical advice. Persistent pain, swelling, or anything that fails the
+knee monitoring rule goes to a physiotherapist, not to a lesson.
 
 ## Out of scope (for now)
 - Competitive powerlifting and meet peaking.

@@ -1,0 +1,230 @@
+/* ============================================================
+   Strength topic — athletic skin over the shared design system.
+
+   Loaded AFTER ../../assets/course.css and scoped to
+   <html data-topic="strength">, so it can never leak into the hub
+   or the AdMob topic. course.css is the base and is NOT forked.
+
+   What this layer changes:
+     · Display type -> Barlow Condensed (athletic), UI/labels -> Barlow
+     · Reading prose stays Newsreader (long-form legibility)
+     · Reference docs switch to sans — they're read on a phone, in a gym
+     · Topic colour becomes a token with a real dark-mode variant
+       (the old inline #5560b8 failed contrast on dark backgrounds)
+     · Tabular figures everywhere numbers are compared in a column
+     · Day cards, main-lift row emphasis, evidence badges
+     · Fixes carried up from the UX audit: disabled states, focus rings,
+       citation tap targets, table overflow containment
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap');
+
+/* ---------- Tokens ---------- */
+:root[data-topic="strength"] {
+  --font-display: 'Barlow Condensed', 'Public Sans', system-ui, sans-serif;
+  --font-ui: 'Barlow', 'Public Sans', system-ui, sans-serif;
+
+  /* Topic colour. Light value: 6.2:1 on --paper. */
+  --topic: #4a56a6;
+  --topic-tint: color-mix(in oklab, var(--topic) 8%, transparent);
+  --topic-edge: color-mix(in oklab, var(--topic) 30%, var(--border));
+}
+
+/* Dark value: 7.9:1 on --paper. Set for BOTH the explicit toggle and the
+   OS preference, mirroring how course.css declares its dark tokens. */
+:root[data-topic="strength"][data-theme="dark"] { --topic: #9aa2e8; }
+@media (prefers-color-scheme: dark) {
+  :root[data-topic="strength"]:not([data-theme="light"]) { --topic: #9aa2e8; }
+}
+
+/* ---------- Display type ---------- */
+[data-topic="strength"] .hub-title,
+[data-topic="strength"] .topic-hero h1,
+[data-topic="strength"] .lesson-header h1,
+[data-topic="strength"] .ref h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* The topic hero earns uppercase; nothing else does. */
+[data-topic="strength"] .topic-hero h1 {
+  text-transform: uppercase;
+  line-height: 0.92;
+}
+[data-topic="strength"] .topic-hero h1 em { font-style: italic; }
+
+[data-topic="strength"] .lesson-body h2,
+[data-topic="strength"] .ref h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: calc(var(--text-xl) * 1.1);
+  letter-spacing: 0.01em;
+}
+
+[data-topic="strength"] .kicker { color: var(--topic); }
+
+/* ---------- Reading vs reference ----------
+   Lesson prose keeps the serif: it is read once, slowly, at a desk.
+   Reference docs go sans: they are read mid-set, on a phone, sweating. */
+[data-topic="strength"] .ref,
+[data-topic="strength"] .ref p,
+[data-topic="strength"] .ref li,
+[data-topic="strength"] .ref dd {
+  font-family: var(--font-ui);
+}
+[data-topic="strength"] .ref-sub { font-family: var(--font-ui); font-style: normal; color: var(--ink-mute); }
+
+/* ---------- Numbers ----------
+   Any column of compared figures gets tabular figures, so digits align
+   and rows don't shift width as values change. */
+[data-topic="strength"] table,
+[data-topic="strength"] .log {
+  font-variant-numeric: tabular-nums;
+}
+[data-topic="strength"] .num-cell { font-weight: 500; }
+
+/* ---------- Tables ----------
+   Wide tables must scroll inside their own container, never the page.
+   Every table in this topic is wrapped in .table-wrap. */
+.table-wrap {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  margin: var(--space-3) 0;
+  border-radius: var(--radius);
+}
+.table-wrap > table { margin: 0; min-width: 32rem; }
+.table-wrap:focus-visible { outline: 2px solid var(--topic); outline-offset: 2px; }
+
+[data-topic="strength"] th,
+[data-topic="strength"] td { padding: .55rem .8rem; }
+[data-topic="strength"] tbody tr:last-child td { border-bottom: none; }
+
+/* The row you actually load, rate, and progress. */
+[data-topic="strength"] .main-lift td { background: var(--topic-tint); }
+[data-topic="strength"] .main-lift td:first-child {
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--topic);
+}
+
+/* Decision-table verdict column */
+[data-topic="strength"] .rule-table td:last-child {
+  font-weight: 600;
+  font-family: var(--font-ui);
+}
+
+/* ---------- Day cards (five-day-split) ---------- */
+.day {
+  margin-top: var(--space-4);
+  padding: var(--space-3);
+  background: var(--surface);
+  border: var(--rule) solid var(--border);
+  border-left: 3px solid var(--topic);
+  border-radius: var(--radius-lg);
+  break-inside: avoid;
+}
+.day h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .8ch;
+  margin: 0;
+  padding-top: 0;
+}
+.day h2 .dow {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--topic);
+}
+.day-focus {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--ink-mute);
+  margin: .3rem 0 var(--space-1);
+}
+.ss {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: .85em;
+  font-weight: 500;
+}
+.low { color: var(--warn); font-weight: 600; }
+
+/* ---------- Evidence badges (progression-protocol) ---------- */
+.evidence {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.evidence.peer { color: var(--good); }
+.evidence.coach { color: var(--warn); }
+
+/* ---------- Log line (lesson drills) ---------- */
+.log {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  background: var(--paper);
+  border: var(--rule) solid var(--border);
+  border-left: 3px solid var(--topic-edge);
+  border-radius: var(--radius);
+  padding: .55rem .75rem;
+  margin: 0 0 var(--space-2);
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+.log b { color: var(--ink); font-weight: 600; }
+.drill-set { display: grid; gap: var(--space-2); }
+
+/* ---------- UX audit fixes ---------- */
+
+/* course.css disables every option once the quiz is answered, but never
+   styles the disabled state — a dead button looked identical to a live one.
+   Fade the untaken options; keep the ones the learner actually touched vivid. */
+[data-topic="strength"] .quiz-option:disabled { opacity: .45; cursor: not-allowed; }
+[data-topic="strength"] .quiz-option.correct:disabled,
+[data-topic="strength"] .quiz-option.wrong:disabled { opacity: 1; cursor: default; }
+
+/* Links had no visible focus ring — keyboard users were flying blind. */
+[data-topic="strength"] a:focus-visible {
+  outline: 2px solid var(--topic);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Superscript citations were ~10px tap targets. Grow the hit area without
+   moving the glyph. */
+[data-topic="strength"] .cite {
+  padding: .5em .45em;
+  margin: -.5em -.2em;
+}
+
+/* Sidenote rules follow the topic, not the global accent. */
+[data-topic="strength"] .sidenote { border-left-color: var(--topic); }
+[data-topic="strength"] .sidenote .num { color: var(--topic); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  [data-topic="strength"] .topic-hero h1 { line-height: 0.98; }
+  .day { padding: var(--space-2); }
+  .table-wrap > table { min-width: 28rem; }
+}
+
+/* ---------- Print ----------
+   Reference docs must print on one page. Kill the scroll containers and
+   the card chrome; keep the main-lift emphasis as a rule, not a fill. */
+@media print {
+  .table-wrap { overflow: visible; }
+  .table-wrap > table { min-width: 0; }
+  .day { border: none; border-left: 2px solid #000; padding: 0 0 0 .6rem; background: none; }
+  .day h2 .dow { color: #000; }
+  [data-topic="strength"] .main-lift td { background: none; }
+  [data-topic="strength"] .main-lift td:first-child { box-shadow: inset 2px 0 0 #000; }
+  .evidence.peer, .evidence.coach { color: #000; }
+}

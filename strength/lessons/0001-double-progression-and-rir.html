@@ -1,25 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="">
+<html lang="en" data-theme="" data-topic="strength">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>01 · Double Progression &amp; Reps in Reserve — Strength — DatLearn</title>
   <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/strength.css">
   <style>
-    /* page-local: the decision rule wants a touch more room than the base table */
-    .rule-table td:last-child { font-weight: 600; }
-    .drill-set { display: grid; gap: var(--space-2); }
-    .log {
-      font-family: var(--font-mono);
-      font-size: var(--text-sm);
-      background: var(--paper);
-      border: var(--rule) solid var(--border);
-      border-radius: var(--radius);
-      padding: .5rem .7rem;
-      margin: 0 0 var(--space-2);
-      color: var(--ink-soft);
-    }
-    .log b { color: var(--ink); font-weight: 600; }
+    .rule-n { font-family: var(--font-mono); color: var(--topic); font-weight: 600; }
   </style>
 </head>
 <body>
@@ -33,7 +21,7 @@
     </nav>
 
     <header class="lesson-header">
-      <p class="kicker" style="color:#5560b8">Strength · Lesson 01 · ~9 min + 4 drills</p>
+      <p class="kicker">Strength · Lesson 01 · ~9 min + 4 drills</p>
       <h1>Double Progression &amp; Reps in Reserve</h1>
       <p class="lesson-lede">You already have the programme. It isn't the programme that makes you
       stronger — it's what you decide to do with the bar next Monday.</p>
@@ -68,21 +56,25 @@
         <a href="https://www.barbellmedicine.com/blog/autoregulation-and-rpe-part-i/">Autoregulation &amp; RPE, Part I</a> (R4).
       </aside>
 
-      <table>
-        <thead>
-          <tr><th>RPE</th><th>Reps in reserve</th><th>What it feels like</th></tr>
-        </thead>
-        <tbody>
-          <tr><td class="num-cell">10</td><td class="num-cell">0</td><td>Nothing left. The bar stopped moving.</td></tr>
-          <tr><td class="num-cell">9</td><td class="num-cell">1</td><td>One more, maybe. Not two.</td></tr>
-          <tr><td class="num-cell">8</td><td class="num-cell">2</td><td>Two clean reps left. Speed still good.</td></tr>
-          <tr><td class="num-cell">7</td><td class="num-cell">3</td><td>Three left. Clearly submaximal.</td></tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>RPE</th><th>Reps in reserve</th><th>What it feels like</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num-cell">10</td><td class="num-cell">0</td><td>No reps left; another good-form rep would fail.</td></tr>
+            <tr><td class="num-cell">9</td><td class="num-cell">1</td><td>One more, maybe. Not two.</td></tr>
+            <tr><td class="num-cell">8</td><td class="num-cell">2</td><td>Two clean reps left. Speed still good.</td></tr>
+            <tr><td class="num-cell">7</td><td class="num-cell">3</td><td>Three left. Clearly submaximal.</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-      <p>Counting hard sets is a defensible way to measure your training, not just a convenience —
-      total hard sets holds up as a volume metric whenever reps sit in the 6–20+ range.<a href="#c2" class="cite">2</a>
-      That licence is what lets the rest of this course say "ten sets a week" and mean something.</p>
+      <p>Counting hard sets is a defensible way to measure training, not just a convenience — total
+      hard sets holds up as a volume metric for sets in roughly the 6–20+ rep range.<a href="#c2" class="cite">2</a>
+      Note the honest catch: your main lifts sit at <em>4–6</em> reps, just below that validated band.
+      We still count them, because they are hard hypertrophic work — but the weekly audit is an
+      approximation, not a measurement the literature has blessed.</p>
 
       <aside class="sidenote">
         <span class="num">2.</span> Baz-Valle et al., <em>J Strength Cond Res</em> 2021 —
@@ -92,10 +84,10 @@
 
       <h2>You do not have to reach failure</h2>
 
-      <p>This is the part that protects you. A 2023 meta-analysis found that training <em>to</em>
-      momentary failure was <strong>not superior</strong> to stopping short of it for muscle growth
-      (effect size 0.12, p = 0.343).<a href="#c3" class="cite">3</a> The extra pain bought nothing
-      measurable — while costing fatigue, recovery, and, on a heavy squat, safety.</p>
+      <p>This is the part that protects you. A 2023 meta-analysis found that training to
+      <em>momentary</em> failure was <strong>not superior</strong> to stopping short of it for muscle
+      growth (effect size 0.12, p = 0.343).<a href="#c3" class="cite">3</a> The extra pain bought
+      nothing measurable — while costing fatigue, recovery, and, on a heavy squat, safety.</p>
 
       <aside class="sidenote">
         <span class="num">3.</span> Refalo et al., <em>Sports Medicine</em> 2023 —
@@ -138,96 +130,110 @@
       without exceeding the cap — you've <em>earned</em> the weight. Add load, drop back to the bottom
       of the range, and climb again.</p>
 
-      <table class="rule-table">
-        <thead>
-          <tr><th>What happened last session</th><th>What it means</th><th>Do this next</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>All sets hit <span class="num-cell">6</span> reps, RPE ≤ 8</td>
-            <td>You earned the weight</td>
-            <td>Add load, reset reps</td>
-          </tr>
-          <tr>
-            <td>Reps inside the range (<span class="num-cell">4–5</span>), RPE ≤ 8</td>
-            <td>Still climbing</td>
-            <td>Add reps, keep load</td>
-          </tr>
-          <tr>
-            <td>Reps at the top, but RPE <span class="num-cell">9</span>+</td>
-            <td>Reps are there; effort is over cap</td>
-            <td>Repeat load and reps</td>
-          </tr>
-          <tr>
-            <td>Below the range, or RPE <span class="num-cell">10</span></td>
-            <td>Too heavy today</td>
-            <td>Drop load, rebuild up</td>
-          </tr>
-          <tr>
-            <td>Identical for <span class="num-cell">3</span> sessions</td>
-            <td>A genuine stall</td>
-            <td>Drop load, rebuild up</td>
-          </tr>
-        </tbody>
-      </table>
+      <h3>Walk the rules in order. Stop at the first match.</h3>
 
-      <p>"Add load" means <strong>+2.5&nbsp;kg upper body, +5&nbsp;kg lower body</strong> — the
-      smallest jump the plates allow. Note this increment is a practical convention, not something
-      the research prescribes; the principle it serves is that the load should follow demonstrated
-      adaptation, never lead it.<a href="#c5" class="cite">5</a></p>
+      <p>The ordering is not decoration. Two conditions can be true of the same session, and without an
+      order you would not know which to obey.<a href="#c5" class="cite">5</a></p>
 
       <aside class="sidenote">
-        <span class="num">5.</span> Feigenbaum calls this loading <em>reactive, not proactive</em> —
+        <span class="num">5.</span> The first version of this table listed five independent conditions.
+        <code>6,6,6,6 @ RPE 10</code> matched two rows; <code>5,4,4,4 @ RPE 9</code> in week one matched
+        none. Ordering fixes both.
+      </aside>
+
+      <div class="table-wrap">
+        <table class="rule-table">
+          <thead>
+            <tr><th>#</th><th>If…</th><th>Then</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="rule-n">1</td>
+              <td>Any set fell below <span class="num-cell">4</span> reps, <em>or</em> last set hit RPE <span class="num-cell">10</span></td>
+              <td>Drop load, rebuild up</td>
+            </tr>
+            <tr>
+              <td class="rule-n">2</td>
+              <td>Same load, no rep added, <span class="num-cell">3</span> sessions running</td>
+              <td>Drop load, rebuild up</td>
+            </tr>
+            <tr>
+              <td class="rule-n">3</td>
+              <td>Every set hit <span class="num-cell">6</span> reps, RPE ≤ <span class="num-cell">8</span></td>
+              <td>Add load, reset reps</td>
+            </tr>
+            <tr>
+              <td class="rule-n">4</td>
+              <td>Last set hit RPE <span class="num-cell">9</span></td>
+              <td>Repeat load and reps</td>
+            </tr>
+            <tr>
+              <td class="rule-n">5</td>
+              <td>Otherwise — every set <span class="num-cell">4–6</span>, RPE ≤ <span class="num-cell">8</span>, not all at 6</td>
+              <td>Add reps, keep load</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>"Add load" means <strong>+2.5&nbsp;kg upper body, +5&nbsp;kg lower body</strong> — the
+      smallest jump the plates allow. That increment is a practical convention, not something the
+      research prescribes; the principle it serves is that load should follow demonstrated adaptation,
+      never lead it.<a href="#c6" class="cite">6</a></p>
+
+      <aside class="sidenote">
+        <span class="num">6.</span> Feigenbaum calls this loading <em>reactive, not proactive</em> —
         <a href="https://www.barbellmedicine.com/blog/progressive-loading/">Progressive Loading</a> (R5).
       </aside>
 
       <h2>Now you decide</h2>
 
       <p>Four logs from your own programme. Don't scroll back to the table — pull the rule out of
-      memory. Getting one wrong and retrying is the point; that effort is what makes it stick.</p>
+      memory, top to bottom, and stop at the first line that fires. Getting one wrong and retrying is
+      the point; that effort is what makes it stick.</p>
 
       <div class="drill-set">
 
-        <section class="quiz" data-correct-msg="Right. Range filled, effort under the cap — that's a weight you earned. Add load, drop back to 4 reps.">
+        <section class="quiz" data-correct-msg="Right. Rules 1 and 2 don't fire, so rule 3 does: range filled, effort under the cap. That's a weight you earned.">
           <span class="kicker">Drill 1 of 4</span>
           <p class="quiz-q">Bench press, programmed 4 × 4–6 @ RPE 8.</p>
           <p class="log">Tue · Bench · <b>70 kg</b> × 6, 6, 6, 6 · last set <b>RPE 8</b></p>
           <ul class="quiz-options" role="list">
             <li><button class="quiz-option" data-correct="true">Add load, reset reps</button></li>
             <li><button class="quiz-option" data-msg="There are no reps left to add — 6 is the top of the range. You've finished climbing.">Add reps, keep load</button></li>
-            <li><button class="quiz-option" data-msg="Repeating would waste a session. The range is full and RPE 8 is exactly at cap, not over it.">Repeat load and reps</button></li>
-            <li><button class="quiz-option" data-msg="Nothing went wrong here. Dropping load throws away progress you demonstrably earned.">Drop load, rebuild up</button></li>
+            <li><button class="quiz-option" data-msg="Rule 4 needs RPE 9. You were at 8, exactly at cap, not over it. Repeating wastes a session.">Repeat load and reps</button></li>
+            <li><button class="quiz-option" data-msg="Rule 1 didn't fire: no set fell below 4, and RPE was 8, not 10. Dropping load throws away earned progress.">Drop load, rebuild up</button></li>
           </ul>
           <p class="quiz-feedback" role="status" aria-live="polite"></p>
         </section>
 
-        <section class="quiz" data-correct-msg="Correct. You're mid-range and under the cap — climb the reps before you touch the plates.">
+        <section class="quiz" data-correct-msg="Correct. Rules 1–4 all pass by, so rule 5 catches it: every set is 4–6, under the cap, and not all at 6. Climb the reps before you touch the plates.">
           <span class="kicker">Drill 2 of 4</span>
           <p class="quiz-q">Back squat, programmed 4 × 4–6 @ RPE 8.</p>
           <p class="log">Mon · Squat · <b>100 kg</b> × 6, 5, 5, 4 · last set <b>RPE 8</b></p>
           <ul class="quiz-options" role="list">
-            <li><button class="quiz-option" data-msg="Too early. You only filled the range on the first set — three sets still have reps left in them.">Add load, reset reps</button></li>
+            <li><button class="quiz-option" data-msg="Rule 3 needs EVERY set at 6. Only the first was — three sets still have reps left in them.">Add load, reset reps</button></li>
             <li><button class="quiz-option" data-correct="true">Add reps, keep load</button></li>
-            <li><button class="quiz-option" data-msg="Repeating identically forfeits progress that is available to you. You're under the RPE cap, so reps are there to be taken.">Repeat load and reps</button></li>
-            <li><button class="quiz-option" data-msg="Nothing is wrong. Reps are inside the range and effort is at cap — this is a normal, productive session.">Drop load, rebuild up</button></li>
+            <li><button class="quiz-option" data-msg="Rule 4 needs a last set at RPE 9. You finished at 8, so there is room to take the reps.">Repeat load and reps</button></li>
+            <li><button class="quiz-option" data-msg="Rule 1 didn't fire — nothing fell below 4 reps and you weren't at RPE 10. This was a normal, productive session.">Drop load, rebuild up</button></li>
           </ul>
           <p class="quiz-feedback" role="status" aria-live="polite"></p>
         </section>
 
-        <section class="quiz" data-correct-msg="Yes — the subtle one. Reps are full but the effort is above cap, so the weight isn't earned yet. Repeat it and let adaptation bring the RPE down.">
+        <section class="quiz" data-correct-msg="Yes — the subtle one. Rule 3 wants RPE ≤ 8, so it passes. Rule 4 fires: the reps are full but the effort is over cap. The weight isn't earned yet.">
           <span class="kicker">Drill 3 of 4</span>
           <p class="quiz-q">Overhead press, programmed 4 × 4–6 @ RPE 8.</p>
           <p class="log">Thu · OHP · <b>45 kg</b> × 6, 6, 6, 6 · last set <b>RPE 9</b></p>
           <ul class="quiz-options" role="list">
-            <li><button class="quiz-option" data-msg="This is the trap. You hit the reps, but at RPE 9 — one rep from failure. Adding load now pushes you to RPE 10 next week.">Add load, reset reps</button></li>
+            <li><button class="quiz-option" data-msg="This is the trap. Rule 3 requires RPE ≤ 8; you were at 9, one rep from failure. Adding load now puts you at RPE 10 next week.">Add load, reset reps</button></li>
             <li><button class="quiz-option" data-msg="There are no reps left to add; 6 is the top of the range. The problem here is the effort, not the reps.">Add reps, keep load</button></li>
             <li><button class="quiz-option" data-correct="true">Repeat load and reps</button></li>
-            <li><button class="quiz-option" data-msg="Too drastic. One session over the RPE cap isn't a stall — you hit every rep. Repeat before you retreat.">Drop load, rebuild up</button></li>
+            <li><button class="quiz-option" data-msg="Too drastic. Rule 1 needs a set below 4 or an RPE 10, and rule 2 needs three identical sessions. Neither happened.">Drop load, rebuild up</button></li>
           </ul>
           <p class="quiz-feedback" role="status" aria-live="polite"></p>
         </section>
 
-        <section class="quiz" data-correct-msg="Exactly. Three identical sessions is a stall, not bad luck. Reset to about 90% and climb back — this is the decision that keeps you uninjured.">
+        <section class="quiz" data-correct-msg="Exactly. Rule 1 passes — nothing below 4 reps, no RPE 10. Rule 2 fires: three identical sessions is a stall, not bad luck. Reset to ~90% and climb back. This is the decision that keeps you uninjured.">
           <span class="kicker">Drill 4 of 4 · the one that matters</span>
           <p class="quiz-q">Deadlift, programmed 4 × 4–6 @ RPE 8. Third week running.</p>
           <p class="log">Wed · Deadlift · <b>140 kg</b> × 5, 4, 4, 4 · last set <b>RPE 9</b><br>
@@ -235,7 +241,7 @@
           <ul class="quiz-options" role="list">
             <li><button class="quiz-option" data-msg="You haven't filled the range, and you're over the cap. Adding load here is precisely the grind that ends in an injury.">Add load, reset reps</button></li>
             <li><button class="quiz-option" data-msg="You've tried that for three weeks and the reps have not come. Repeating the attempt is the definition of grinding.">Add reps, keep load</button></li>
-            <li><button class="quiz-option" data-msg="Close, but you already repeated it — twice. A third identical session is what defines this as a stall rather than a bad day.">Repeat load and reps</button></li>
+            <li><button class="quiz-option" data-msg="Rule 4 would say so — but rule 2 comes first, and it fires. You already repeated this twice. A third identical session is a stall.">Repeat load and reps</button></li>
             <li><button class="quiz-option" data-correct="true">Drop load, rebuild up</button></li>
           </ul>
           <p class="quiz-feedback" role="status" aria-live="polite"></p>
@@ -260,26 +266,38 @@
 
       <h2>Why your accessories only rest 60–90 seconds</h2>
 
-      <p>The rule above explains the main lift. Rest time explains how the whole thing fits in
+      <p>The rule above governs the main lift. Rest time explains how the whole thing fits in
       50 minutes. For <em>strength</em>, trained lifters need more than two minutes between sets to
-      express it.<a href="#c6" class="cite">6</a> For <em>growth</em>, rest beyond about 90 seconds
-      adds nothing appreciable.<a href="#c7" class="cite">7</a></p>
+      express it.<a href="#c7" class="cite">7</a> For <em>growth</em>, resting past about 90 seconds
+      showed no clearly detected additional benefit.<a href="#c8" class="cite">8</a></p>
 
       <aside class="sidenote">
-        <span class="num">6.</span> Grgic et al., <em>Sports Medicine</em> 2018 —
+        <span class="num">7.</span> Grgic et al., <em>Sports Medicine</em> 2018 —
         <a href="https://pubmed.ncbi.nlm.nih.gov/28933024/">rest interval duration and strength</a> (R10).
       </aside>
 
       <aside class="sidenote">
-        <span class="num">7.</span> Singer et al., <em>Front Sports Act Living</em> 2024 —
+        <span class="num">8.</span> Singer et al., <em>Front Sports Act Living</em> 2024 —
         <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11349676/">Bayesian meta-analysis on rest
-        and hypertrophy</a> (R11).
+        and hypertrophy</a> (R11). Note the phrasing: <em>no detected</em> benefit is not the same as
+        <em>no</em> benefit.
       </aside>
 
       <p>So the session splits cleanly: <strong>rest 2–3 minutes on the main lift</strong>, where the
-      goal is strength, and <strong>60–90 seconds on accessories</strong>, where the goal is size.
-      That is the entire reason the accessories in your programme are supersetted — it isn't a
-      time-saving hack bolted on, it's what the evidence permits.</p>
+      goal is strength, and <strong>60–90 seconds on accessories</strong>, where the goal is size. That
+      is why the accessories in your programme are supersetted. If reps or load fall off a cliff between
+      supersetted sets, take longer — the clock serves the training, not the other way round.</p>
+
+      <div class="callout">
+        <span class="kicker">Your knee changes three things</span>
+        <p>You told me you have a knee history with no current pain. The rule above is unchanged, but
+        the <em>movements</em> it governs are not — see the
+        <a href="../reference/five-day-split.html">five-day split</a> for the swaps, and the
+        <a href="../reference/progression-protocol.html">progression protocol</a> for the
+        monitoring rule that tells you when to back off. Short version: pain ≤ 3/10, back to baseline
+        within 24 hours, no swelling. Any of those fails, you regress the movement before you regress
+        the weight.</p>
+      </div>
 
       <div class="callout good">
         <span class="kicker">The one thing to remember</span>
@@ -292,9 +310,9 @@
         <span class="kicker">Come back to this in two days</span>
         <p>Don't reread this now — it will feel easy, and that feeling is a liar. Instead, on Thursday,
         open the <a href="../reference/progression-protocol.html">progression protocol</a> with the
-        answers covered and try to reconstruct the five-row decision table from memory. Recalling it
-        cold builds retention in a way that rereading never does. Then log your Monday session and
-        apply it for real.</p>
+        answers covered and try to reconstruct the five ordered rules from memory, in order. Recalling
+        them cold builds retention in a way that rereading never does. Then log your Monday session and
+        apply them for real.</p>
       </div>
 
     </div>
@@ -308,10 +326,10 @@
 
       <h3>Keep at hand</h3>
       <p style="margin:0 0 var(--space-3)">
-        <a href="../reference/progression-protocol.html">Progression protocol</a> — the decision table,
-        the RPE scale, and the stall reset, on one printable page.<br>
+        <a href="../reference/progression-protocol.html">Progression protocol</a> — the ordered rule,
+        the RPE scale, the knee monitoring rule, on one printable page.<br>
         <a href="../reference/five-day-split.html">The five-day split</a> — your actual programme, with
-        every lift's rep range and RPE cap written in.
+        every lift's rep range, RPE cap, and knee-aware swap written in.
       </p>
 
       <h3>Next</h3>
@@ -321,7 +339,8 @@
 
       <p class="ask-teacher">I'm your trainer here — if any of this is fuzzy, ask. Especially if you
       can't yet tell RPE 8 from RPE 9 on a heavy set. That calibration is a skill in itself, it takes
-      most people a few months, and there's a way to test yourself on it. Just say the word.</p>
+      most people a few months, and the whole rule above reads its input from it. There's a way to test
+      yourself. Just say the word.</p>
     </footer>
   </article>
 

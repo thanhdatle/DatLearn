@@ -10,6 +10,15 @@
     .footnote { max-width: 60ch; margin-top: var(--space-8); color: var(--ink-mute);
       font-family: var(--font-ui); font-size: var(--text-sm); }
     .footnote code { font-size: .85em; }
+
+    /* Topic chips are used as kicker TEXT, so they must clear 4.5:1 in both
+       themes. No single hex can do that against both #fbfaf6 and #15140f,
+       so each theme gets its own value. */
+    .topic-card.t-strength { --chip: #4a56a6; }
+    :root[data-theme="dark"] .topic-card.t-strength { --chip: #9aa2e8; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .topic-card.t-strength { --chip: #9aa2e8; }
+    }
   </style>
 </head>
 <body>
@@ -47,7 +56,7 @@
           </div>
         </a>
 
-        <a class="topic-card" href="strength/index.html" style="--chip:#5560b8">
+        <a class="topic-card t-strength" href="strength/index.html">
           <p class="kicker">Training &amp; longevity</p>
           <span class="topic-name">Strength</span>
           <p class="topic-desc">
