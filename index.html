@@ -11,13 +11,27 @@
       font-family: var(--font-ui); font-size: var(--text-sm); }
     .footnote code { font-size: .85em; }
 
-    /* Topic chips are used as kicker TEXT, so they must clear 4.5:1 in both
-       themes. No single hex can do that against both #fbfaf6 and #15140f,
-       so each theme gets its own value. */
+    /* Topic chips are used as kicker TEXT on --surface (#fff light, #1d1c16
+       dark), so they must clear 4.5:1 in BOTH themes. No single hex can do
+       that, so each theme gets its own value.
+
+       Colours below are measured, not guessed. Chips must also stay >= 40deg
+       apart in hue, or two topics read as one on the grid.
+         admob    167deg   5.08:1 light   7.96:1 dark
+         strength 232deg   6.62:1 light   7.08:1 dark
+         llm      295deg   8.24:1 light   6.94:1 dark
+       admob previously carried one inline hex (#0a8a6f): 4.31:1 light and
+       3.97:1 dark. Both failed the rule stated directly above them. Fixed. */
+    .topic-card.t-admob    { --chip: #0a7d65; }
     .topic-card.t-strength { --chip: #4a56a6; }
+    .topic-card.t-llm      { --chip: #86198f; }
+    :root[data-theme="dark"] .topic-card.t-admob    { --chip: #2fc79f; }
     :root[data-theme="dark"] .topic-card.t-strength { --chip: #9aa2e8; }
+    :root[data-theme="dark"] .topic-card.t-llm      { --chip: #e879f9; }
     @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .topic-card.t-admob    { --chip: #2fc79f; }
       :root:not([data-theme="light"]) .topic-card.t-strength { --chip: #9aa2e8; }
+      :root:not([data-theme="light"]) .topic-card.t-llm      { --chip: #e879f9; }
     }
   </style>
 </head>
@@ -41,7 +55,7 @@
       <h2 id="topics-heading" class="kicker" style="margin-bottom:var(--space-2)">Topics</h2>
       <div class="topic-grid">
 
-        <a class="topic-card" href="admob/index.html" style="--chip:#0a8a6f">
+        <a class="topic-card t-admob" href="admob/index.html">
           <p class="kicker">Mobile monetization</p>
           <span class="topic-name">AdMob</span>
           <p class="topic-desc">
@@ -67,6 +81,21 @@
           <div class="topic-meta">
             <span><b>1</b> lesson</span>
             <span><b>5</b> days/week</span>
+            <span>Active</span>
+          </div>
+        </a>
+
+        <a class="topic-card t-llm" href="llm/index.html">
+          <p class="kicker">Machine learning</p>
+          <span class="topic-name">LLM Foundations</span>
+          <p class="topic-desc">
+            Open the black box by building one — tokeniser, transformer,
+            training loop — small enough to run on this Mac. The gap to GLM
+            is a number, not a mystery.
+          </p>
+          <div class="topic-meta">
+            <span><b>2</b> lessons</span>
+            <span><b>Apple</b> Silicon</span>
             <span>Active</span>
           </div>
         </a>

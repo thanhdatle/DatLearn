@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="llm">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>02 · The Model Never Sees Letters — LLM — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/llm.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <article class="lesson">
+    <nav class="lesson-nav">
+      <a href="../../index.html">DatLearn</a><span class="sep">/</span>
+      <a href="../index.html">LLM</a><span class="sep">/</span>
+      <span>Lesson 02</span>
+    </nav>
+
+    <header class="lesson-header">
+      <p class="kicker">LLM · Lesson 02 · ~12 min + 3 drills</p>
+      <h1>The Model Never Sees Letters</h1>
+      <p class="lesson-lede">Stage one of the pipeline you're here to build. You'll train a real
+      tokeniser — the same algorithm GPT-2 uses — and watch it spell a word it has never seen.</p>
+    </header>
+
+    <div class="lesson-body">
+
+      <p class="opening">Last lesson I let something slide. I said your model reads <em>tokens</em>, then
+      quietly used words as tokens because it kept the counting legible. Real models don't do that, and
+      the reason they don't is the whole of this lesson. Before a single parameter is learned, before
+      any neural network exists, text has to become numbers. That conversion is a separate program with
+      its own training run, and its choices are permanent.</p>
+
+      <aside class="sidenote">
+        <span class="num">Its own stage.</span> The <a href="../reference/glossary.html#tokenizer">tokeniser</a>
+        is trained <em>before</em> the model, on its own corpus, with its own algorithm — no gradients, no
+        neural network. In <a href="https://github.com/karpathy/nanochat">nanochat</a> it is literally the
+        first script you run.
+      </aside>
+
+      <h2>Two obvious ideas, both wrong</h2>
+
+      <p>You need to turn <code>the cat sat</code> into a list of integers. There are two things anyone
+      would try first.</p>
+
+      <p><strong>One token per character.</strong> Tiny vocabulary — a hundred or so symbols, and every
+      word in every language is spellable. But now <code>the cat sat</code> is eleven tokens instead of
+      three, and a page of text is thousands. Since the model's cost grows with sequence length, and its
+      <a href="../reference/glossary.html#context">context</a> is a fixed number of tokens, you have just
+      made every document several times more expensive and cut your effective memory to a fraction.</p>
+
+      <p><strong>One token per word.</strong> Short sequences, but the vocabulary is now every word anyone
+      has ever written — millions, and still growing. Worse: the first time a user types a word you never
+      saw, you have no token for it at all. That's the
+      <a href="../reference/glossary.html#oov">out-of-vocabulary</a> problem, and it is fatal. There is no
+      integer for <code>lowest</code> if <code>lowest</code> wasn't in your list.</p>
+
+      <div class="pull">Characters generalise but are long. Words are short but break. The answer is to
+      let the <em>data</em> decide where the boundaries go.</div>
+
+      <h2>Byte-pair encoding: the same move as last lesson</h2>
+
+      <p>Here is the algorithm, and you already know how it works, because it is counting pairs — exactly
+      what you did to build the bigram.<a href="#c1" class="cite">1</a></p>
+
+      <figure class="code-annot">
+        <figcaption>Byte-pair encoding <span class="runs">no neural network involved</span></figcaption>
+<pre>1. Start with every word split into characters.
+   Append "_" to mark where a word ends.
+
+       low_   lower_   newest_   widest_
+
+2. Count every adjacent pair of symbols in the corpus.
+   Merge the most frequent pair into ONE new symbol.
+   Write that merge down as a rule.
+
+3. Repeat until the vocabulary is as big as you want.</pre>
+        <span class="note"><b>"_"</b>The end-of-word marker is what lets the tokeniser learn that
+        <code>est</code> at the end of a word is a suffix, and distinguish it from <code>est</code> in
+        the middle of one.</span>
+        <span class="note"><b>as big as you want</b>That stopping point is the vocabulary size. It is
+        a dial you turn, not a fact you discover — and turning it trades sequence length against
+        vocabulary size.</span>
+      </figure>
+
+      <aside class="sidenote" id="c1">
+        <span class="num">1.</span> Byte-pair encoding began as a text-compression trick and was adapted to
+        language by Sennrich, Haddow &amp; Birch,
+        <a href="https://arxiv.org/abs/1508.07909"><em>Neural Machine Translation of Rare Words with
+        Subword Units</em></a> (ACL 2016). It is what GPT-2, GPT-4, Llama, and GLM all use, with variations.
+      </aside>
+
+      <h2>Train one</h2>
+
+      <p>Below is a corpus of four words, repeated at different frequencies. Click <strong>Merge</strong>
+      and watch two counters move in opposite directions: the vocabulary grows, the corpus shrinks.
+      That tension is the entire design space of tokenisation.</p>
+
+      <p>Do these three things, in order:</p>
+      <ol>
+        <li><strong>Predict the first merge before you click.</strong> Which adjacent pair is most common?</li>
+        <li>Merge until the button stops. Watch <code>est_</code> assemble itself from <code>e</code>, <code>s</code>, <code>t</code>.</li>
+        <li>Then type <code>lowest</code> into the encode box — a word that <em>is not in the corpus</em>.</li>
+      </ol>
+
+      <section class="sandbox bpe"
+               data-corpus="low low low low low lower lower newest newest newest newest newest newest widest widest widest"
+               data-max-merges="9">
+        <p class="kicker">Drill 1 · Interactive</p>
+        <h3 class="sandbox-title">Train a tokeniser, one merge at a time</h3>
+        <p class="sandbox-help">Four distinct words. Starting vocabulary: 11 characters. Every merge you
+        make is a rule that gets replayed, in order, whenever this tokeniser encodes anything.</p>
+
+        <div class="stats bpe-stats"></div>
+
+        <p class="bpe-next sandbox-help"></p>
+
+        <div class="sandbox-controls">
+          <button class="btn primary bpe-step">Merge the most frequent pair</button>
+          <button class="btn bpe-reset">Reset</button>
+        </div>
+
+        <div class="bpe-seg"></div>
+
+        <h3 class="sandbox-title" style="margin-top:1.5rem;font-size:var(--text-base)">Merge rules learned</h3>
+        <ol class="rules bpe-rules"></ol>
+
+        <h3 class="sandbox-title" style="margin-top:1.5rem;font-size:var(--text-base)">Encode a word</h3>
+        <div class="sandbox-controls">
+          <label for="encw" style="font-family:var(--font-ui);font-size:var(--text-sm)">Word&nbsp;</label>
+          <input id="encw" class="text-input bpe-input" value="lowest" spellcheck="false"
+                 aria-describedby="enchelp">
+        </div>
+        <p id="enchelp" class="sandbox-help">Try <code>lowest</code>, then <code>slow</code>, then
+        <code>newer</code>. None of them are in the corpus.</p>
+        <p class="sandbox-out bpe-encoded" role="status" aria-live="polite"></p>
+      </section>
+
+      <h2>What just happened</h2>
+
+      <p>Nine merges took the vocabulary from <strong>11 symbols to 20</strong>, and the corpus from
+      <strong>95 tokens to 31</strong> — a third of its original length. You bought shorter sequences with
+      a bigger vocabulary. That is the only trade tokenisation ever makes.</p>
+
+      <p>And then the important part. <code>lowest</code> never appears in that corpus. Yet the tokeniser
+      encodes it without hesitating:</p>
+
+      <div class="dimflow" aria-label="The word lowest encoded as two learned subword tokens">
+        <div class="step"><span class="op">Never seen</span><span class="dim">"lowest"</span></div>
+        <span class="arrow">→</span>
+        <div class="step"><span class="op">A merge gave</span><span class="dim">low</span></div>
+        <span class="arrow">+</span>
+        <div class="step"><span class="op">A merge gave</span><span class="dim">est_</span></div>
+        <span class="arrow">→</span>
+        <div class="step"><span class="op">2 tokens</span><span class="dim">both known</span></div>
+      </div>
+
+      <p>It learned <code>low</code> from <code>low</code> and <code>lower</code>. It learned
+      <code>est_</code> from <code>newest</code> and <code>widest</code>. It never saw them together — and
+      it composed them anyway. Type <code>slow</code> and you'll see it fall back further, to
+      <code>s</code> + <code>low_</code>, spelling out the part it doesn't know.</p>
+
+      <p>That is why <a href="../reference/glossary.html#oov">out-of-vocabulary</a> words cannot happen
+      here. In the worst case the tokeniser retreats all the way to single characters. It always has
+      <em>something</em>. This single property is why BPE won, and why the word-level tokenisers of the
+      2010s are gone.</p>
+
+      <section class="quiz" data-correct-msg="Exactly. It composes the unseen word from subwords it learned separately — and if it had never seen 'low' either, it would fall back further, to characters.">
+        <p class="kicker">Drill 2 · Retrieval</p>
+        <p class="quiz-q">Your tokeniser never saw <code>lowest</code>. What does it do with it?</p>
+        <ul class="quiz-options">
+          <li><button class="quiz-option" data-msg="That is what a word-level tokeniser does, and why they were abandoned. BPE has no unknown token to emit.">It fails and emits an unknown token</button></li>
+          <li><button class="quiz-option" data-correct="true">It composes it from low and est_</button></li>
+          <li><button class="quiz-option" data-msg="Training is over. Encoding only replays existing rules — it never adds new ones, or the vocabulary would keep changing.">It learns a brand new merge rule</button></li>
+          <li><button class="quiz-option" data-msg="There is no token for the whole word — it was never in the corpus, so no merge rule ever built it.">It keeps the entire word as one</button></li>
+        </ul>
+        <p class="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <h2>The dial, and where real models set it</h2>
+
+      <p>Stop merging early and you get a small vocabulary with long sequences. Merge for a long time and
+      you get a big vocabulary with short ones. GPT-2's config settles at
+      <strong><code>vocab_size: 50257</code></strong> against a context of
+      <strong><code>n_positions: 1024</code></strong> tokens.<a href="#c2" class="cite">2</a></p>
+
+      <aside class="sidenote" id="c2">
+        <span class="num">2.</span> Straight from the
+        <a href="https://huggingface.co/openai-community/gpt2/blob/main/config.json">published GPT-2
+        config.json</a> — not from memory. Get in the habit: a model's config file is the primary source
+        for its shape.
+      </aside>
+
+      <p>Now a detail worth carrying: when GLM-4.6 advertises a
+      <a href="https://huggingface.co/zai-org/GLM-4.6">200,000-token context</a>, that is
+      <em>tokens</em>, not characters and not words. How much text it actually holds depends entirely on
+      the tokeniser — and on the language. Text in a language poorly covered by the merge rules tokenises
+      into more pieces, and therefore costs more and remembers less.</p>
+
+      <div class="callout">
+        <span class="kicker">Where the weirdness lives</span>
+        <p>The model never sees letters. It sees integers indexing a vocabulary — so <code>low</code> and
+        <code>l</code>,<code>o</code>,<code>w</code> are unrelated symbols to it, sharing nothing. Karpathy's
+        framing, introducing his own tokenizer lecture, is that "a lot of weird behaviors and problems of
+        LLMs actually trace back to tokenization."<a href="#c3" class="cite">3</a> When you next see a model
+        miscount the letters in a word, remember that it was never shown the letters.</p>
+      </div>
+
+      <aside class="sidenote" id="c3">
+        <span class="num">3.</span> Karpathy,
+        <a href="https://www.youtube.com/watch?v=zduSFxRajkE">Let's build the GPT Tokenizer</a> (2h13m, Feb 2024),
+        which builds <a href="https://github.com/karpathy/minbpe">minbpe</a> from scratch. He goes further than
+        most: he thinks the stage should ideally be deleted entirely.
+      </aside>
+
+      <section class="quiz" data-correct-msg="Right. Character tokens generalise perfectly — they can spell anything — but they make every sequence several times longer, and the model pays for length.">
+        <p class="quiz-q">Why not simply use one token per character?</p>
+        <ul class="quiz-options">
+          <li><button class="quiz-option" data-msg="The opposite: characters give you the smallest vocabulary there is, a hundred or so symbols.">The vocabulary would grow impossibly large then</button></li>
+          <li><button class="quiz-option" data-correct="true">Sequences become far too long to process</button></li>
+          <li><button class="quiz-option" data-msg="Spelling out rare words is exactly what characters do best. That is their strength, not their flaw.">Characters cannot spell out rare unseen words</button></li>
+          <li><button class="quiz-option" data-msg="They can — character-level models genuinely work, and you will train one. They are just wasteful.">Models cannot learn from single character tokens</button></li>
+        </ul>
+        <p class="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <h2>Where this sits in the pipeline</h2>
+
+      <p>You have now built the first stage of the thing you came here to build. Everything downstream
+      consumes its output, and none of it can be changed afterwards — change the vocabulary and every
+      learned parameter that indexes it becomes meaningless.</p>
+
+      <div class="dimflow" aria-label="Text becomes token IDs, which the model consumes">
+        <div class="step"><span class="op">Text</span><span class="dim">"lowest"</span></div>
+        <span class="arrow">→</span>
+        <div class="step"><span class="op">Tokenise</span><span class="dim">low · est_</span></div>
+        <span class="arrow">→</span>
+        <div class="step"><span class="op">Look up IDs</span><span class="dim">[15, 3]</span></div>
+        <span class="arrow">→</span>
+        <div class="step"><span class="op">Model</span><span class="dim">(V,) probs</span></div>
+      </div>
+
+      <p>Those integers are all the model will ever receive. <code>15</code> is not "bigger" than
+      <code>3</code> in any meaningful sense — they are names, not quantities. Making the model treat them
+      as meaningful requires giving each one a learned vector, which is called an
+      <a href="../reference/glossary.html#embedding">embedding</a>, and which is the next thing you'll build.</p>
+
+      <h2>What you now know</h2>
+
+      <ul>
+        <li>Tokenisation is a separate program, trained before the model, with no neural network in it.</li>
+        <li>BPE starts from characters and merges the most frequent pair, repeatedly. It is counting.</li>
+        <li>The merge rules, in order, <em>are</em> the tokeniser. Encoding replays them.</li>
+        <li>Unseen words always encode, by falling back to smaller pieces. No out-of-vocabulary.</li>
+        <li>Vocabulary size is a dial trading sequence length against vocabulary size. GPT-2 chose 50,257.</li>
+        <li>A model never sees letters — which explains a family of its strangest failures.</li>
+      </ul>
+
+    </div>
+
+    <footer class="lesson-foot">
+      <h3>Read this next — the primary source</h3>
+      <a class="primary-source" href="https://www.youtube.com/watch?v=zduSFxRajkE">
+        <strong>Let's build the GPT Tokenizer — Andrej Karpathy (2h13m)</strong><br>
+        The definitive treatment, building <a href="https://github.com/karpathy/minbpe">minbpe</a> from an
+        empty file up to a working GPT-4 tokeniser. Watch the first 40 minutes now — that covers exactly
+        what you just did by clicking, in Python. The rest (special tokens, <code>tiktoken</code>, regex
+        splitting) will make more sense after Lesson 03.
+      </a>
+
+      <h3>Reference</h3>
+      <p><a href="../reference/glossary.html#bpe">The vocabulary</a> — BPE, merge rules, subwords, and OOV
+      are all defined there, alongside everything from Lesson 01.</p>
+
+      <h3>Previously</h3>
+      <p><a href="0001-a-language-model-is-a-guessing-machine.html">Lesson 01 · A Language Model Is a
+      Guessing Machine</a> — where you built a bigram by counting. Notice you have now used the same
+      move twice: count pairs, then divide or merge.</p>
+
+      <p class="ask-teacher">Stuck on why the end-of-word marker matters, or what a token ID really is?
+      Ask me. And if you want the harder version of this lesson, ask me to have you implement BPE in
+      Python on your own machine — it's about forty lines, and it will run instantly.</p>
+    </footer>
+  </article>
+
+  <script src="../../assets/theme.js"></script>
+  <script src="../../assets/quiz.js"></script>
+  <script src="../assets/bpe.js"></script>
+</body>
+</html>

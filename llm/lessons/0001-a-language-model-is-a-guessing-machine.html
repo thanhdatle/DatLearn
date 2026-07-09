@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="llm">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>01 · A Language Model Is a Guessing Machine — LLM — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/llm.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <article class="lesson">
+    <nav class="lesson-nav">
+      <a href="../../index.html">DatLearn</a><span class="sep">/</span>
+      <a href="../index.html">LLM</a><span class="sep">/</span>
+      <span>Lesson 01</span>
+    </nav>
+
+    <header class="lesson-header">
+      <p class="kicker">LLM · Lesson 01 · ~10 min + 3 drills</p>
+      <h1>A Language Model Is a Guessing Machine</h1>
+      <p class="lesson-lede">By the end of this page you will have built a working language model.
+      No PyTorch, no maths, no training. Just counting — and it will generate text.</p>
+    </header>
+
+    <div class="lesson-body">
+
+      <p class="opening">You said you use these things every day and can't explain what's inside. So
+      let's remove the mystery in one move, on the first page, before any machinery arrives. Here is
+      the entire definition, and it is not a simplification:</p>
+
+      <div class="pull">A <a href="../reference/glossary.html#language-model">language model</a> is a
+      function that takes some text and returns a <strong>probability for every token that could come
+      next</strong>.</div>
+
+      <p>That's it. That is what GPT-4 is. That is what
+      <a href="https://arxiv.org/abs/2508.06471">GLM-4.5</a> is. Not "an AI that understands
+      language" — a function from a <a href="../reference/glossary.html#context">context</a> to a list
+      of numbers that sum to 1. Every impressive thing you have seen a chatbot do is that function,
+      called over and over, each time on its own previous output.</p>
+
+      <aside class="sidenote">
+        <span class="num">Why start here.</span> Almost everything that confuses people about LLMs
+        dissolves once this is concrete. Hallucination, temperature, streaming, context limits — all of
+        them are properties of <em>this</em> function and the loop around it, not of some further magic.
+      </aside>
+
+      <h2>The picture to keep</h2>
+
+      <p>Ask a model to continue <code>the cat sat on the</code>. It does not "choose" a word. It
+      returns a number for <em>every</em> token it knows — this is the picture you'll see in every
+      lesson from here on:</p>
+
+      <div class="probs" aria-label="Illustrative next-token probabilities after the context 'the cat sat on the'">
+        <div class="prob" data-picked="true"><span class="tok">mat</span><span class="bar" style="--p:.61"></span><span class="pct">61%</span></div>
+        <div class="prob"><span class="tok">floor</span><span class="bar" style="--p:.18"></span><span class="pct">18%</span></div>
+        <div class="prob"><span class="tok">sofa</span><span class="bar" style="--p:.09"></span><span class="pct">9%</span></div>
+        <div class="prob"><span class="tok">table</span><span class="bar" style="--p:.05"></span><span class="pct">5%</span></div>
+        <div class="prob"><span class="tok">roof</span><span class="bar" style="--p:.02"></span><span class="pct">2%</span></div>
+      </div>
+
+      <p class="sandbox-help">Illustrative numbers, to fix the shape of the idea. Real ones are coming —
+      you're about to compute them yourself.</p>
+
+      <p>The remaining tokens in the vocabulary — all fifty thousand of them, for
+      <a href="https://huggingface.co/openai-community/gpt2/blob/main/config.json">GPT-2</a>, whose
+      config lists <code>vocab_size: 50257</code> — share the leftover probability, most of them a
+      vanishingly small slice. The output is always the same shape: one number per token,
+      <span class="shape">(<b>V</b>,)</span> where <span class="shape"><b>V</b></span> is the
+      <a href="../reference/glossary.html#vocabulary">vocabulary size</a>.</p>
+
+      <aside class="sidenote">
+        <span class="num">Shapes, always.</span> From here on, every tensor gets its shape and the
+        meaning of each axis. It is the habit that separates people who can read model code from
+        people who can only run it. <span class="shape">(<b>V</b>,)</span> means "a flat list of
+        <span class="shape"><b>V</b></span> numbers."
+      </aside>
+
+      <h2>Build one by counting</h2>
+
+      <p>Where do those numbers come from? In a real model, from billions of learned parameters. But
+      you can get them from something you already understand completely: <strong>counting</strong>.</p>
+
+      <p>Take a tiny <a href="../reference/glossary.html#corpus">corpus</a>. Walk through it and tally,
+      for each token, which token came next. That tally <em>is</em> a language model — the oldest kind,
+      called a <a href="../reference/glossary.html#ngram">bigram model</a>, because it looks at one
+      token of context to guess the next.</p>
+
+      <figure class="code-annot">
+        <figcaption>The whole model <span class="runs">runs in your head</span></figcaption>
+<pre>corpus: "the model reads the text .
+         the model guesses the next token .
+         the next token becomes the context .
+         the context feeds the model again ."
+
+count what follows "the":
+    model    |||  →  3
+    context  ||   →  2
+    next     ||   →  2
+    text     |    →  1
+                     ─── 8 total
+
+divide by the total → a probability for each:
+    model 3/8 = 38%   context 2/8 = 25%
+    next  2/8 = 25%   text    1/8 = 13%</pre>
+        <span class="note"><b>divide</b>That division is the only step that turns counts into a
+        <a href="../reference/glossary.html#distribution">distribution</a>. Non-negative, sums to 1. Done.</span>
+      </figure>
+
+      <p>Those four percentages are not an illustration. They are the real distribution of that corpus
+      after the token <code>the</code>, and the widget below will show you exactly those numbers.</p>
+
+      <h2>Now drive it</h2>
+
+      <p>Below is that model, built live from that corpus. Pick a context, read the distribution, then
+      generate. Two things to actually do — the point is the doing, not the reading:</p>
+
+      <ol>
+        <li><strong>Before clicking</strong>, predict which token wins from <code>model</code>. Then look.</li>
+        <li>Switch to <strong>Greedy</strong> and generate ten tokens. Watch what goes wrong.</li>
+      </ol>
+
+      <section class="sandbox ngram"
+               data-order="1"
+               data-start="the"
+               data-corpus="the model reads the text . the model guesses the next token . the next token becomes the context . the context feeds the model again .">
+        <p class="kicker">Drill 1 · Interactive</p>
+        <h3 class="sandbox-title">Your first language model</h3>
+        <p class="sandbox-help">27 tokens of corpus, a 12-token vocabulary, 20 learned numbers. It is a
+        real language model by the definition above — no asterisk.</p>
+
+        <div class="sandbox-controls">
+          <label for="ctx1" style="font-family:var(--font-ui);font-size:var(--text-sm)">Context&nbsp;</label>
+          <select id="ctx1" class="ngram-context btn" style="min-width:12ch"></select>
+          <button class="btn ngram-mode" aria-pressed="false"
+                  title="Picking proportionally to probability. Run it twice, get two texts.">Sampling</button>
+        </div>
+
+        <div class="probs ngram-probs"></div>
+
+        <div class="sandbox-controls">
+          <button class="btn primary ngram-step">Generate next token</button>
+          <button class="btn ngram-reset">Reset</button>
+        </div>
+
+        <p class="sandbox-out ngram-out" role="status" aria-live="polite"></p>
+      </section>
+
+      <p>Two discoveries are waiting in there, and they are the whole lesson.</p>
+
+      <h3>One: sampling is why it isn't deterministic</h3>
+
+      <p>The model gives the same distribution every time. What differs is how you <em>use</em> it.
+      <a href="../reference/glossary.html#sampling">Sampling</a> rolls a die weighted by those
+      probabilities — so <code>the</code> becomes <code>model</code> 38% of the time and
+      <code>text</code> 13% of the time. Run it twice, get two texts.</p>
+
+      <p><a href="../reference/glossary.html#greedy">Greedy</a> decoding always takes the top bar. It
+      is deterministic, and it is <em>worse</em>. Try it: from <code>the</code>, greedy produces</p>
+
+      <pre>the model again . the model again . the model again . the</pre>
+
+      <p>It locks into a cycle, forever. Of course it does — the same context always yields the same
+      choice, so the instant the path revisits a token it has already emitted, it is trapped. The
+      randomness you might have assumed was a defect is what keeps generation alive.<a href="#c1" class="cite">1</a></p>
+
+      <aside class="sidenote" id="c1">
+        <span class="num">1.</span> This is why real decoders ship a
+        <a href="../reference/glossary.html#temperature">temperature</a> knob rather than always taking
+        the argmax, and why setting temperature to 0 makes a chatbot repeat itself. Same phenomenon,
+        bigger model.
+      </aside>
+
+      <h3>Two: the loop is the whole of generation</h3>
+
+      <p>Generating text is this, and nothing else:</p>
+
+      <div class="dimflow" aria-label="The autoregressive generation loop: context, model, pick one, append, repeat">
+        <div class="step"><span class="op">Context</span><span class="dim">"the"</span></div>
+        <span class="arrow">→</span>
+        <div class="step"><span class="op">Model</span><span class="dim">(V,) probs</span></div>
+        <span class="arrow">→</span>
+        <div class="step"><span class="op">Pick one</span><span class="dim">"model"</span></div>
+        <span class="arrow">→</span>
+        <div class="step"><span class="op">Append</span><span class="dim">"the model"</span></div>
+        <span class="arrow">↺</span>
+      </div>
+
+      <p>Feed the output back in as input. Repeat. That is
+      <a href="../reference/glossary.html#autoregressive">autoregressive</a> generation, and it is why
+      a chatbot's answer arrives word by word rather than all at once: each token is a separate call
+      that could not have happened before the one in front of it existed.</p>
+
+      <section class="quiz" data-correct-msg="Yes. Everything else — attention, layers, billions of parameters — exists only to make this one output better.">
+        <p class="kicker">Drill 2 · Retrieval</p>
+        <p class="quiz-q">What does a language model output?</p>
+        <ul class="quiz-options">
+          <li><button class="quiz-option" data-msg="It does output that, but only after you pick one. The model itself is not committed to any single token.">The one correct token continuing that context</button></li>
+          <li><button class="quiz-option" data-correct="true">A probability for every possible next token</button></li>
+          <li><button class="quiz-option" data-msg="Nothing in the model compresses or restates the input. It only ever scores what comes next.">A shorter summary of the preceding context</button></li>
+          <li><button class="quiz-option" data-msg="Nothing in the model measures truth. It scores likelihood given its corpus — which is precisely why it can be fluent and wrong.">A truthfulness score for the preceding text</button></li>
+        </ul>
+        <p class="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <h2>What your model cannot do</h2>
+
+      <p>Your bigram sees exactly one token of context. Ask it to continue <code>the</code> and it
+      cannot know whether the sentence began <code>the model reads…</code> or
+      <code>the context feeds…</code>. Everything before the last token is <em>gone</em>.</p>
+
+      <p>So it can never learn that <code>token</code> tends to follow <code>next</code> only when
+      you're talking about tokens. It has no memory, and no way to notice that <code>model</code> and
+      <code>context</code> are the kind of word that behaves alike. It stores a separate, unrelated
+      number for every pair it ever saw.</p>
+
+      <p>Fixing those two limits — <em>reach further back</em>, and <em>let similar tokens share what
+      they learn</em> — is, honestly, the rest of this course.
+      <a href="../reference/glossary.html#attention">Attention</a> is the answer to the first.
+      <a href="../reference/glossary.html#embedding">Embeddings</a> are the answer to the second.</p>
+
+      <section class="quiz" data-correct-msg="Right. One token of context is a hard wall, and no amount of counting gets past it. Attention is what climbs it.">
+        <p class="quiz-q">With one token of context, what can a bigram never do?</p>
+        <ul class="quiz-options">
+          <li><button class="quiz-option" data-msg="It does exactly this — that is the distribution you were just reading off the bars.">Give different probabilities to different next tokens</button></li>
+          <li><button class="quiz-option" data-msg="It does this constantly. Sampling recombines pairs into sentences the corpus never contained.">Produce a sentence that was not in the corpus</button></li>
+          <li><button class="quiz-option" data-correct="true">Let a distant earlier word affect its prediction</button></li>
+          <li><button class="quiz-option" data-msg="Punctuation is just another token to it. Your model emits full stops perfectly well.">Finish a sentence with a punctuation mark token</button></li>
+        </ul>
+        <p class="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <h2>The gap, in numbers</h2>
+
+      <p>You wanted to know how far this is from GLM. Let's be exact rather than vague, now and every
+      time. Your model holds <strong>20 numbers</strong>. Here is the same axis, all the way up —
+      <em>logarithmic</em>, because on a linear axis your model would be less than one pixel:</p>
+
+      <div class="scale-bar">
+        <div class="row"><span class="who">Yours (today)</span><span class="mag"><i style="--log:.113"></i><span>20</span></span></div>
+        <div class="row"><span class="who">TinyStories</span><span class="mag"><i style="--log:.606"></i><span>~10M</span></span></div>
+        <div class="row"><span class="who">GPT-2 small</span><span class="mag"><i style="--log:.701"></i><span>124M</span></span></div>
+        <div class="row"><span class="who">nanochat d20</span><span class="mag"><i style="--log:.757"></i><span>560M</span></span></div>
+        <div class="row"><span class="who">GLM-4.5 active</span><span class="mag"><i style="--log:.910"></i><span>32B</span></span></div>
+        <div class="row"><span class="who">GLM-4.5 total</span><span class="mag"><i style="--log:1"></i><span>355B</span></span></div>
+        <p class="axis">Parameters, log₁₀ scale — each full bar-width spans ten orders of magnitude.
+        GLM-4.5 is <a href="https://www.lmsys.org/blog/2025-07-31-glm4-5/">355B total but only 32B
+        active per token</a>: it is a
+        <a href="../reference/glossary.html#moe">mixture of experts</a>, so most of it sits idle on any
+        given word.</p>
+      </div>
+
+      <p>Two things are true at once, and holding both is the discipline of this whole workspace.</p>
+
+      <p><strong>The gap is enormous and it is not mysterious.</strong> GLM-4.5 saw 23 trillion tokens;
+      you saw 27. Its training run cost roughly 3 million H100-hours by our own estimate — and you will
+      be able to derive that number yourself before this course ends. But nothing on that chart is doing
+      something categorically different from what you just did. They are all returning a probability for
+      every next token.</p>
+
+      <p><strong>And small is not the same as useless.</strong> Microsoft Research's
+      <a href="https://arxiv.org/abs/2305.07759">TinyStories</a> showed that models under 10M
+      parameters write fluent, coherent, grammatical English — if the data is narrow enough. Meanwhile
+      Karpathy's own $100 nanochat tier (560M parameters, four hours on eight H100s) produces something
+      he describes as "like talking to a kindergartener."<a href="#c2" class="cite">2</a> Scale buys
+      breadth. It does not buy the definition — you already have that.</p>
+
+      <aside class="sidenote" id="c2">
+        <span class="num">2.</span> Karpathy,
+        <a href="https://github.com/karpathy/nanochat/discussions/1">nanochat Discussion #1</a>. Worth
+        internalising: <em>every</em> nanochat tier needs an 8×H100 node. None of them run on your Mac.
+        We will reproduce that pipeline stage for stage, at a scale that fits here — and the babble it
+        produces will be a success, not a failure.
+      </aside>
+
+      <div class="callout warn">
+        <span class="kicker">The one trap</span>
+        <p>When you train your own model in a few lessons' time, it will produce nonsense, and some part
+        of you will read that as having done it wrong. You didn't. A model this size <em>should</em>
+        babble. Judge your model against its parameter count and its token count — never against a
+        chatbot that cost eight figures.</p>
+      </div>
+
+      <h2>What you now know</h2>
+
+      <ul>
+        <li>A language model maps a context to a probability over every next token. Shape <span class="shape">(<b>V</b>,)</span>.</li>
+        <li>You can build one by counting pairs and dividing. You did.</li>
+        <li>Generation is a loop: predict, pick one, append, repeat.</li>
+        <li>Sampling gives variety; greedy gives loops.</li>
+        <li>One token of context is the bigram's ceiling — and the reason attention exists.</li>
+      </ul>
+
+      <p>Next we take the word "token" seriously. You have been assuming it means "word." It doesn't,
+      and the difference is the first real stage of the pipeline you're here to build.</p>
+
+    </div>
+
+    <footer class="lesson-foot">
+      <h3>Read this next — the primary source</h3>
+      <a class="primary-source" href="https://karpathy.ai/zero-to-hero.html">
+        <strong>Neural Networks: Zero to Hero — Andrej Karpathy</strong><br>
+        Free video course. Start with <em>micrograd</em>, then <em>makemore part 1</em>, which builds
+        exactly the bigram model you just used — and then <em>trains</em> one instead of counting it.
+        Karpathy was a founding member of OpenAI and led Tesla's vision team; this is the
+        highest-trust from-scratch material that exists, and it costs nothing.
+      </a>
+
+      <h3>Reference</h3>
+      <p><a href="../reference/glossary.html">The vocabulary</a> — every term above, defined once.
+      Keep it open.</p>
+
+      <h3>Next</h3>
+      <p><a href="0002-tokenisation.html">Lesson 02 · The Model Never Sees Letters</a> — build a
+      tokeniser by counting pairs, and watch it spell a word it has never seen.</p>
+
+      <p class="ask-teacher">Anything above that didn't land — the division, the loop, why greedy cycles
+      — ask me. I'm your teacher here, not just the person who wrote the page. A question now is worth
+      three lessons later.</p>
+    </footer>
+  </article>
+
+  <script src="../../assets/theme.js"></script>
+  <script src="../../assets/quiz.js"></script>
+  <script src="../assets/ngram.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="llm">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LLM Foundations — DatLearn</title>
+  <link rel="stylesheet" href="../assets/course.css">
+  <link rel="stylesheet" href="assets/llm.css">
+  <style>
+    .topic-hero { max-width: 52ch; margin-bottom: var(--space-6); }
+    .topic-hero h1 { font-size: var(--text-hero); font-weight: 600; letter-spacing: -0.03em;
+      line-height: 1.02; margin: .3rem 0 var(--space-2); }
+    .lesson-list { list-style: none; padding: 0; margin: var(--space-2) 0 0; display: grid; gap: var(--space-2); }
+    .lesson-list a { display: flex; gap: var(--space-3); align-items: baseline;
+      text-decoration: none; padding: var(--space-2) var(--space-3);
+      border: var(--rule) solid var(--border); border-radius: var(--radius-lg);
+      background: var(--surface); transition: border-color var(--duration) var(--ease), transform var(--duration) var(--ease); }
+    .lesson-list a:hover { border-color: var(--border-strong); transform: translateX(3px); }
+    .lesson-list a:focus-visible { outline: 2px solid var(--topic); outline-offset: 2px; }
+    .lesson-num { font-family: var(--font-mono); color: var(--topic); font-size: var(--text-sm); }
+    .lesson-title { font-size: var(--text-lg); font-weight: 600; }
+    .lesson-desc { color: var(--ink-soft); font-family: var(--font-ui); font-size: var(--text-sm); margin: .2rem 0 0; }
+    .lesson-list li.planned a { opacity: .6; border-style: dashed; pointer-events: none; }
+    .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: var(--space-3); }
+    .mini { font-family: var(--font-ui); }
+    .mini h2 { font-family: var(--font-ui); font-size: var(--text-base); font-weight:600;
+      text-transform: uppercase; letter-spacing:.08em; color: var(--ink-mute); margin: 0 0 var(--space-1); }
+    .mini ul { margin: 0; padding-left: 1.1em; color: var(--ink-soft); font-size: var(--text-sm); line-height:1.6; }
+    .mini a { text-decoration-color: var(--topic); }
+    @media (prefers-reduced-motion: reduce) { .lesson-list a:hover { transform: none; } }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="lesson">
+    <nav class="lesson-nav">
+      <a href="../index.html">← All topics</a>
+    </nav>
+
+    <header class="topic-hero">
+      <p class="kicker">LLM foundations</p>
+      <h1>Open the box,<br><em>one stage at a time.</em></h1>
+      <p class="hub-sub">
+        You use these things every day and can't say what's inside. So we build one — tokeniser,
+        transformer, training loop, the lot — small enough to run on this Mac, complete enough that
+        nothing is left as magic. By the end, the only thing separating your model from GLM should be
+        a number you can calculate.
+      </p>
+    </header>
+
+    <section aria-labelledby="lessons-h">
+      <h2 id="lessons-h" class="kicker">Lessons</h2>
+      <ol class="lesson-list">
+        <li>
+          <a href="lessons/0001-a-language-model-is-a-guessing-machine.html">
+            <span class="lesson-num">01</span>
+            <span>
+              <span class="lesson-title">A Language Model Is a Guessing Machine</span>
+              <p class="lesson-desc">Build one by counting, and watch it generate. No maths, no PyTorch. ~10 min + 3 drills.</p>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="lessons/0002-tokenisation.html">
+            <span class="lesson-num">02</span>
+            <span>
+              <span class="lesson-title">The Model Never Sees Letters</span>
+              <p class="lesson-desc">Train a real BPE tokeniser, and watch it spell a word it has never seen. ~12 min + 3 drills.</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">03</span>
+            <span>
+              <span class="lesson-title">How Wrong Is It? Loss and Surprise</span>
+              <p class="lesson-desc">Score your bigram with one number, and meet the quantity all training minimises. (planned)</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">04</span>
+            <span>
+              <span class="lesson-title">Tensors, Shapes and Autograd</span>
+              <p class="lesson-desc">The PyTorch you actually need — and the derivative, rebuilt from nothing. (planned)</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">05</span>
+            <span>
+              <span class="lesson-title">Embeddings — Letting Tokens Share</span>
+              <p class="lesson-desc">Replace the count table with a learned lookup, and train it. Your first real model. (planned)</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">06</span>
+            <span>
+              <span class="lesson-title">Attention, Spelled Out</span>
+              <p class="lesson-desc">Break the one-token ceiling. The idea that made all of this possible. (planned)</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">07</span>
+            <span>
+              <span class="lesson-title">A Whole Transformer, Trained on Your Mac</span>
+              <p class="lesson-desc">Stack the blocks, run the loop, read the samples. It will babble — that's a pass. (planned)</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">08</span>
+            <span>
+              <span class="lesson-title">Reading GLM's Report Without Flinching</span>
+              <p class="lesson-desc">MoE, GQA, RoPE, QK-norm — which parts you built, which are genuinely new. (planned)</p>
+            </span>
+          </a>
+        </li>
+      </ol>
+    </section>
+
+    <section class="two-col" style="margin-top:var(--space-6)">
+      <div class="mini">
+        <h2>Reference</h2>
+        <ul>
+          <li><a href="reference/glossary.html">The vocabulary</a> — every term, defined once. Printable. Keep it open.</li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h2>The mission</h2>
+        <ul>
+          <li>Open the black box by building one.</li>
+          <li>Apple Silicon only — everything must run here.</li>
+          <li>The gap to GLM is a number, never a mystery.</li>
+          <li><a href="MISSION.md">MISSION.md</a> · <a href="RESOURCES.md">RESOURCES.md</a></li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h2>Primary sources</h2>
+        <ul>
+          <li><a href="https://karpathy.ai/zero-to-hero.html">Zero to Hero</a> — Karpathy, free</li>
+          <li><a href="https://github.com/rasbt/LLMs-from-scratch">LLMs from Scratch</a> — Raschka</li>
+          <li><a href="https://github.com/karpathy/nanochat">nanochat</a> — the pipeline we're shadowing</li>
+          <li><a href="https://arxiv.org/abs/2508.06471">GLM-4.5 report</a> — the destination</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="../assets/theme.js"></script>
+</body>
+</html>

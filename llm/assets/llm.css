@@ -1,0 +1,522 @@
+/* ============================================================
+   LLM topic — technical-documentation skin over the shared system.
+
+   Loaded AFTER ../../assets/course.css and scoped to
+   <html data-topic="llm">, so it can never leak into the hub,
+   strength, or admob. course.css is the base and is NOT forked.
+
+   Design direction (see ../NOTES.md):
+     · /ui-ux-pro-max proposed Claymorphism. Rejected — bubbly 3D around
+       backprop equations fights the content. Kept its typographic and
+       palette recommendations, which were sound.
+     · Display + UI type -> IBM Plex Sans (technical documentation voice)
+     · Reading prose stays Newsreader (long-form legibility)
+     · Topic colour is deep plum — the accessible form of the "editorial
+       black + accent pink" palette the skill DID get right. Teal was the
+       first choice and was rejected: measured at only 8 degrees of hue
+       from admob's #0a8a6f, the two topic chips read as one topic.
+       Plum sits 128deg from admob and 63deg from strength's indigo.
+       Contrast measured, not guessed (WCAG 2.x relative luminance).
+     · Bespoke components carry the subject matter: tensor shapes,
+       annotated code, dimension flow, probability strips, scale bars.
+       These exist because the content needs them, not for decoration.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+/* ---------- Tokens ---------- */
+:root[data-topic="llm"] {
+  --font-display: 'IBM Plex Sans', 'Public Sans', system-ui, sans-serif;
+  --font-ui: 'IBM Plex Sans', 'Public Sans', system-ui, sans-serif;
+
+  /* Topic colour. Light value: 7.89:1 on --paper (#fbfaf6). */
+  --topic: #86198f;
+  --topic-tint: color-mix(in oklab, var(--topic) 8%, transparent);
+  --topic-edge: color-mix(in oklab, var(--topic) 30%, var(--border));
+
+  /* Probability strip: the recurring motif of this course. */
+  --prob-fill: color-mix(in oklab, var(--topic) 62%, transparent);
+  --prob-track: color-mix(in oklab, var(--border) 55%, transparent);
+}
+
+/* Dark value: 7.49:1 on dark --paper (#15140f), 6.94:1 on dark --surface
+   (#1d1c16) — both checked, because chips sit on surface, not paper.
+   Hue 292deg, holding the light value's 295deg so the topic reads as the
+   same colour in both themes. Declared for BOTH the explicit toggle and
+   the OS preference, mirroring how course.css declares its dark tokens. */
+:root[data-topic="llm"][data-theme="dark"] {
+  --topic: #e879f9;
+  --prob-fill: color-mix(in oklab, var(--topic) 46%, transparent);
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-topic="llm"]:not([data-theme="light"]) {
+    --topic: #e879f9;
+    --prob-fill: color-mix(in oklab, var(--topic) 46%, transparent);
+  }
+}
+
+/* ---------- Display type ---------- */
+[data-topic="llm"] .topic-hero h1,
+[data-topic="llm"] .lesson-header h1,
+[data-topic="llm"] .ref h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+[data-topic="llm"] .topic-hero h1 em { font-style: italic; color: var(--topic); }
+
+[data-topic="llm"] .lesson-body h2,
+[data-topic="llm"] .ref h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+[data-topic="llm"] .lesson-body h3,
+[data-topic="llm"] .ref h3 { font-family: var(--font-display); font-weight: 600; }
+
+/* Topic colour replaces the rust accent in topic chrome. */
+[data-topic="llm"] .kicker { color: var(--topic); }
+[data-topic="llm"] .sidenote .num { color: var(--topic); }
+[data-topic="llm"] .cite { color: var(--topic); }
+[data-topic="llm"] .lesson-nav a:hover { color: var(--topic); }
+[data-topic="llm"] .lesson-foot .primary-source { border-left-color: var(--topic); }
+[data-topic="llm"] .lesson-body .opening::first-letter { color: var(--topic); }
+[data-topic="llm"] .glossary dt .tag { color: var(--topic); }
+[data-topic="llm"] :not(pre) > code { background: var(--topic-tint); }
+[data-topic="llm"] .quiz-option:focus-visible { outline-color: var(--topic); }
+
+/* Pull quotes and plain callouts carry topic chrome. The semantic variants do
+   NOT — .good stays green, .warn stays amber, and .quiz-option.wrong keeps the
+   shared rust, because those colours mean something. :not() keeps this rule
+   from swallowing them despite loading after course.css. */
+[data-topic="llm"] .pull { border-left-color: var(--topic); }
+[data-topic="llm"] .callout:not(.good):not(.warn) { border-left-color: var(--topic); }
+[data-topic="llm"] .callout:not(.good):not(.warn) > .kicker { color: var(--topic); }
+
+/* Numbers that get compared in a column must line up. */
+[data-topic="llm"] table { font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   .shape — inline tensor-shape badge, e.g. (B, T, C)
+   The habit this course is trying to build: never mention a tensor
+   without its shape.
+   ============================================================ */
+[data-topic="llm"] .shape {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--topic);
+  background: var(--topic-tint);
+  border: var(--rule) solid var(--topic-edge);
+  border-radius: 3px;
+  padding: .05em .4em;
+  vertical-align: baseline;
+}
+[data-topic="llm"] .shape b { font-weight: 600; color: var(--ink); }
+
+/* ============================================================
+   .code-annot — code with a margin gutter of anchored notes.
+   Tufte sidenotes, applied to source. The <pre> scrolls inside its own
+   container so a long line can never scroll the page body.
+   ============================================================ */
+[data-topic="llm"] .code-annot {
+  margin: var(--space-3) 0;
+  border: var(--rule) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+[data-topic="llm"] .code-annot > figcaption {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding: .55rem var(--space-2);
+  border-bottom: var(--rule) solid var(--border);
+  background: var(--paper);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  align-items: baseline;
+  min-width: 0;
+}
+[data-topic="llm"] .code-annot > figcaption .runs {
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--font-mono);
+  color: var(--topic);
+  flex: none;
+}
+[data-topic="llm"] .code-annot pre {
+  border: 0;
+  border-radius: 0;
+  margin: 0;
+  background: transparent;
+}
+[data-topic="llm"] .code-annot .note {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  border-top: var(--rule) dashed var(--border);
+  padding: .6rem var(--space-2);
+  background: var(--paper);
+}
+[data-topic="llm"] .code-annot .note b {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--topic);
+  margin-right: .5ch;
+}
+
+/* ============================================================
+   .probs — the probability strip. The single recurring visual of this
+   course: candidate next tokens, and how much the model believes each.
+   Bars are set with an inline --p (0..1). Value is also printed, so the
+   meaning never depends on bar length or colour alone.
+   ============================================================ */
+[data-topic="llm"] .probs {
+  display: grid;
+  gap: .35rem;
+  margin: var(--space-3) 0;
+  max-width: var(--measure);
+}
+[data-topic="llm"] .probs .prob {
+  display: grid;
+  grid-template-columns: minmax(0, 7ch) minmax(0, 1fr) minmax(0, 6ch);
+  align-items: center;
+  gap: var(--space-1);
+}
+[data-topic="llm"] .probs .tok {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+[data-topic="llm"] .probs .bar {
+  height: 1.15rem;
+  border-radius: 2px;
+  background: var(--prob-track);
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+}
+[data-topic="llm"] .probs .bar::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--p, 0) * 100%);
+  background: var(--prob-fill);
+  border-right: 2px solid var(--topic);
+  transform-origin: left center;
+  transition: width var(--duration) var(--ease);
+}
+[data-topic="llm"] .probs .pct {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-xs);
+  color: var(--ink-mute);
+}
+[data-topic="llm"] .probs .prob[data-picked="true"] .tok { color: var(--topic); font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-topic="llm"] .probs .bar::after { transition: none; }
+}
+
+/* ============================================================
+   .dimflow — a tensor changing shape as it moves through layers.
+   Horizontal on desktop, wraps on mobile, scrolls inside itself.
+   ============================================================ */
+[data-topic="llm"] .dimflow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: .4rem;
+  margin: var(--space-3) 0;
+  padding: var(--space-2);
+  border: var(--rule) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow-x: auto;
+}
+[data-topic="llm"] .dimflow .step {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: grid;
+  gap: .2rem;
+  padding: .5rem .7rem;
+  border: var(--rule) solid var(--topic-edge);
+  border-radius: var(--radius);
+  background: var(--topic-tint);
+}
+[data-topic="llm"] .dimflow .step .op {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink);
+}
+[data-topic="llm"] .dimflow .step .dim {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--topic);
+  white-space: nowrap;
+}
+[data-topic="llm"] .dimflow .arrow {
+  align-self: center;
+  color: var(--ink-mute);
+  font-family: var(--font-mono);
+  flex: none;
+}
+
+/* ============================================================
+   .scale-bar — keeps the gap to GLM honest. A log-scale comparison,
+   because the difference is orders of magnitude and a linear bar would
+   render our model as literally zero pixels.
+   ============================================================ */
+[data-topic="llm"] .scale-bar {
+  display: grid;
+  gap: .5rem;
+  margin: var(--space-3) 0;
+  padding: var(--space-2);
+  border: var(--rule) solid var(--border);
+  border-left: 3px solid var(--topic);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+[data-topic="llm"] .scale-bar .row {
+  display: grid;
+  grid-template-columns: minmax(0, 12ch) minmax(0, 1fr);
+  gap: var(--space-1);
+  align-items: center;
+}
+[data-topic="llm"] .scale-bar .who {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+[data-topic="llm"] .scale-bar .mag {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: .5ch;
+}
+[data-topic="llm"] .scale-bar .mag i {
+  display: block;
+  height: .8rem;
+  width: calc(var(--log, 0) * 100%);
+  min-width: 3px;
+  background: var(--prob-fill);
+  border-right: 2px solid var(--topic);
+  border-radius: 2px;
+  flex: none;
+}
+[data-topic="llm"] .scale-bar .mag span {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-mute);
+  white-space: nowrap;
+}
+[data-topic="llm"] .scale-bar .axis {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--ink-mute);
+  border-top: var(--rule) dashed var(--border);
+  padding-top: .4rem;
+}
+
+/* ============================================================
+   Interactive sandbox chrome — used by widgets in ./ngram.js etc.
+   ============================================================ */
+[data-topic="llm"] .sandbox {
+  margin: var(--space-4) 0;
+  border: var(--rule) solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  padding: var(--space-3);
+}
+[data-topic="llm"] .sandbox > .kicker { display: block; margin-bottom: var(--space-1); }
+[data-topic="llm"] .sandbox-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  margin: 0 0 var(--space-1);
+}
+[data-topic="llm"] .sandbox-help {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  margin: 0 0 var(--space-2);
+}
+[data-topic="llm"] .sandbox-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  align-items: center;
+  margin-bottom: var(--space-2);
+}
+[data-topic="llm"] .btn {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--paper);
+  border: var(--rule) solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: .55rem .9rem;
+  min-height: 44px;
+  cursor: pointer;
+  transition: border-color var(--duration) var(--ease), background var(--duration) var(--ease);
+}
+[data-topic="llm"] .btn:hover:not(:disabled) { border-color: var(--topic); }
+[data-topic="llm"] .btn:focus-visible { outline: 2px solid var(--topic); outline-offset: 2px; }
+[data-topic="llm"] .btn:active:not(:disabled) { background: var(--topic-tint); }
+[data-topic="llm"] .btn:disabled { opacity: .45; cursor: not-allowed; }
+[data-topic="llm"] .btn.primary {
+  color: var(--paper);
+  background: var(--topic);
+  border-color: var(--topic);
+}
+[data-topic="llm"] .btn.primary:hover:not(:disabled) { filter: brightness(1.08); }
+
+[data-topic="llm"] .sandbox-out {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  background: var(--paper);
+  border: var(--rule) solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-2);
+  min-height: 3.4rem;
+  overflow-wrap: anywhere;
+}
+[data-topic="llm"] .sandbox-out .cursor {
+  border-bottom: 2px solid var(--topic);
+  padding-bottom: 1px;
+}
+[data-topic="llm"] .sandbox-out .fresh { background: var(--topic-tint); border-radius: 2px; }
+
+/* ============================================================
+   Tokenisation widgets (lesson 02) — token chips, live stats, merge rules.
+   ============================================================ */
+[data-topic="llm"] .tokchip {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  padding: .1em .45em;
+  margin: .12em .1em;
+  border: var(--rule) solid var(--topic-edge);
+  border-radius: 3px;
+  background: var(--topic-tint);
+  color: var(--ink);
+  white-space: pre;
+}
+/* A chip created by the merge that just happened. */
+[data-topic="llm"] .tokchip.fresh {
+  border-color: var(--topic);
+  background: color-mix(in oklab, var(--topic) 22%, transparent);
+  font-weight: 600;
+}
+/* The end-of-word marker is structural, not content. Mute it. */
+[data-topic="llm"] .tokchip .eow { color: var(--ink-mute); }
+
+[data-topic="llm"] .stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: var(--rule) dashed var(--border);
+}
+[data-topic="llm"] .stats .stat { display: grid; gap: .1rem; min-width: 0; }
+[data-topic="llm"] .stats .stat .k {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--ink-mute);
+}
+[data-topic="llm"] .stats .stat .v {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--topic);
+}
+[data-topic="llm"] .stats .stat .v small {
+  font-size: var(--text-xs);
+  font-weight: 400;
+  color: var(--ink-mute);
+}
+
+[data-topic="llm"] .rules {
+  margin: var(--space-2) 0 0;
+  padding-left: 2.4ch;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+[data-topic="llm"] .rules li { margin: .15rem 0; }
+[data-topic="llm"] .rules li:last-child { color: var(--topic); font-weight: 500; }
+[data-topic="llm"] .rules:empty::after {
+  content: "No rules yet — the tokeniser knows only single characters.";
+  font-family: var(--font-ui);
+  color: var(--ink-mute);
+}
+
+[data-topic="llm"] .seg-row {
+  display: grid;
+  grid-template-columns: minmax(0, 5ch) minmax(0, 1fr);
+  gap: var(--space-1);
+  align-items: baseline;
+  padding: .2rem 0;
+}
+[data-topic="llm"] .seg-row .freq {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-xs);
+  color: var(--ink-mute);
+  text-align: right;
+}
+[data-topic="llm"] .seg-row .syms { min-width: 0; }
+
+[data-topic="llm"] .text-input {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink);
+  background: var(--paper);
+  border: var(--rule) solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: .55rem .7rem;
+  min-height: 44px;
+  min-width: 0;
+  flex: 1 1 14ch;
+}
+[data-topic="llm"] .text-input:focus-visible { outline: 2px solid var(--topic); outline-offset: 2px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 560px) {
+  [data-topic="llm"] .probs .prob { grid-template-columns: minmax(0, 6ch) minmax(0, 1fr) minmax(0, 5ch); }
+  [data-topic="llm"] .scale-bar .row { grid-template-columns: minmax(0, 1fr); gap: .2rem; }
+  [data-topic="llm"] .dimflow .arrow { display: none; }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  [data-topic="llm"] .sandbox, [data-topic="llm"] .btn { display: none !important; }
+  [data-topic="llm"] .shape { border-color: #888; color: #000; background: transparent; }
+  [data-topic="llm"] .probs .bar::after { background: #999; }
+  [data-topic="llm"] .code-annot, [data-topic="llm"] .dimflow, [data-topic="llm"] .scale-bar,
+  [data-topic="llm"] .probs { break-inside: avoid; }
+}

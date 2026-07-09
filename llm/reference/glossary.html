@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="llm">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LLM Foundations — Glossary — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/llm.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="ref">
+    <nav class="lesson-nav">
+      <a href="../../index.html">DatLearn</a><span class="sep">/</span>
+      <a href="../index.html">LLM</a><span class="sep">/</span>
+      <span>Reference · Glossary</span>
+    </nav>
+
+    <p class="kicker">Reference — keep this open while you work</p>
+    <h1>The vocabulary</h1>
+    <p class="ref-sub">Defined once, so every lesson uses the same words for the same things. Terms
+    marked <span class="tag">ahead</span> haven't been taught yet — they're here so that when you
+    meet them in a paper, you have somewhere to look. Prints cleanly (⌘/Ctrl-P).</p>
+
+    <h2>The core loop</h2>
+    <dl class="glossary">
+      <dt id="token">Token</dt>
+      <dd>The atom a language model reads and writes. Not quite a word: real tokenisers split
+        <code>tokenising</code> into pieces, and punctuation is usually its own token. A model never
+        sees letters — only token IDs, which are just integers indexing a vocabulary.</dd>
+
+      <dt id="vocabulary">Vocabulary <span class="tag">size = V</span></dt>
+      <dd>The fixed set of tokens a model knows, each with an integer ID. Everything the model can
+        ever say is a sequence drawn from this set. GPT-2's vocabulary is 50,257 tokens; the toy
+        model in Lesson 01 has 12.</dd>
+
+      <dt id="tokenizer">Tokeniser</dt>
+      <dd>The (non-neural) program that converts text ↔ token IDs. It is trained separately from the
+        model, before the model exists, and its choices are permanent — you cannot change the
+        vocabulary without retraining everything downstream.</dd>
+
+      <dt id="corpus">Corpus</dt>
+      <dd>The body of text a model learns from. GLM-4.5 was trained on 23 trillion tokens
+        (<a href="https://arxiv.org/abs/2508.06471">tech report</a>). Lesson 01's corpus is 27 tokens.
+        The distance between those two numbers is most of what separates the two models.</dd>
+
+      <dt id="context">Context</dt>
+      <dd>The tokens the model is allowed to look at when predicting the next one. A bigram model's
+        context is exactly one token. GPT-2's was 1,024; GLM-4.6's is 200,000
+        (<a href="https://huggingface.co/zai-org/GLM-4.6">model card</a>). Also called the
+        <em>context window</em>.</dd>
+
+      <dt id="language-model">Language model</dt>
+      <dd>A function from a context to a <a href="#distribution">probability distribution</a> over
+        the next token. That is the complete definition. Everything else — transformers, attention,
+        trillions of parameters — is machinery for making that function good.</dd>
+
+      <dt id="distribution">Probability distribution</dt>
+      <dd>A list of numbers, one per token in the vocabulary, each ≥ 0, summing to exactly 1. The
+        model's entire answer at every step. Shape <span class="shape">(V,)</span> for one prediction.</dd>
+
+      <dt id="autoregressive">Autoregressive</dt>
+      <dd>Generating one token at a time, then feeding your own output back in as context. The reason
+        a chatbot streams word by word: each word is a fresh forward pass that depends on every word
+        before it. Also why generation cannot be parallelised the way training can.</dd>
+
+      <dt id="greedy">Greedy decoding</dt>
+      <dd>Always take the single highest-probability token. Deterministic, and it tends to fall into
+        loops — the same context always produces the same choice, so any cycle repeats forever.</dd>
+
+      <dt id="sampling">Sampling</dt>
+      <dd>Draw the next token randomly, in proportion to its probability. Run twice, get two different
+        texts. This — not the network — is why the model is not deterministic.</dd>
+
+      <dt id="temperature">Temperature <span class="tag">ahead</span></dt>
+      <dd>A knob that sharpens or flattens the distribution before sampling. Below 1 makes the model
+        more confident and repetitive; above 1 makes it more surprising and less coherent. At 0 it
+        becomes <a href="#greedy">greedy</a>.</dd>
+    </dl>
+
+    <h2>Tokenisation</h2>
+    <dl class="glossary">
+      <dt id="bpe">BPE — byte-pair encoding</dt>
+      <dd>The algorithm that builds a vocabulary: start from single characters, repeatedly find the
+        most frequent adjacent pair, and merge it into a new token. Stop when the vocabulary reaches
+        the size you want. Every merge is learned from the corpus by counting — no neural network is
+        involved. Originally a text-compression algorithm; adapted to language by Sennrich, Haddow &amp;
+        Birch, <a href="https://arxiv.org/abs/1508.07909"><em>Neural Machine Translation of Rare Words
+        with Subword Units</em></a> (arXiv 2015, ACL 2016).</dd>
+
+      <dt id="merge-rules">Merge rules</dt>
+      <dd>The ordered list BPE produces. Order matters: rule 1 is applied everywhere before rule 2 is
+        considered. Encoding new text means replaying these rules in the same order. This list <em>is</em>
+        the tokeniser.</dd>
+
+      <dt id="subword">Subword</dt>
+      <dd>A token smaller than a word and bigger than a character. Subwords are the compromise that
+        lets a fixed vocabulary represent any word ever written: common words become one token, rare
+        ones get spelled out from pieces.</dd>
+
+      <dt id="oov">Out-of-vocabulary (OOV)</dt>
+      <dd>A word the tokeniser has no token for. Word-level tokenisers break on these; subword and
+        byte-level tokenisers cannot, because they can always fall back to smaller pieces. This is the
+        entire reason BPE won.</dd>
+    </dl>
+
+    <h2>Models and their parts</h2>
+    <dl class="glossary">
+      <dt id="parameter">Parameter</dt>
+      <dd>One number the model learned from data, rather than one you chose. Count them and you have
+        the model's size. Lesson 01's bigram model has <b>20</b>. GLM-4.5 has <b>355 billion</b>.
+        Same job; ten orders of magnitude apart.</dd>
+
+      <dt id="ngram">n-gram model</dt>
+      <dd>A language model built by counting: how often did token B follow context A? Normalise the
+        counts and you have a distribution. <em>Bigram</em> = 1 token of context, <em>trigram</em> = 2.
+        The oldest kind of language model, and still the clearest.</dd>
+
+      <dt id="embedding">Embedding <span class="tag">ahead</span></dt>
+      <dd>A lookup table mapping each token ID to a learned vector, shape
+        <span class="shape">(V, C)</span>. Where a bigram stores a separate count for every token
+        pair, an embedding lets similar tokens <em>share</em> what they learn. This is the single idea
+        that lets models generalise beyond what they saw.</dd>
+
+      <dt id="logits">Logits <span class="tag">ahead</span></dt>
+      <dd>The model's raw, unnormalised scores over the vocabulary — any real number, positive or
+        negative. Shape <span class="shape">(V,)</span>. <a href="#softmax">Softmax</a> turns them
+        into probabilities.</dd>
+
+      <dt id="softmax">Softmax <span class="tag">ahead</span></dt>
+      <dd>Exponentiate every logit, then divide by the total. Produces positive numbers that sum to 1,
+        i.e. a <a href="#distribution">distribution</a>. The exponential is what makes a slightly
+        higher score into a much higher probability.</dd>
+
+      <dt id="loss">Loss <span class="tag">ahead</span></dt>
+      <dd>A single number measuring how surprised the model was by the token that actually came next.
+        Low loss = the model expected it. Training is nothing but pushing this number down.</dd>
+
+      <dt id="attention">Attention <span class="tag">ahead</span></dt>
+      <dd>The mechanism that lets a token's prediction depend on <em>any</em> earlier token in the
+        context, not just the previous one — and lets the model learn <em>which</em> earlier tokens
+        matter. The contribution of <a href="https://arxiv.org/abs/1706.03762">Vaswani et al., 2017</a>,
+        and the reason a bigram's one-token memory is not a permanent ceiling.</dd>
+
+      <dt id="transformer">Transformer <span class="tag">ahead</span></dt>
+      <dd>The architecture stacking <a href="#attention">attention</a> and small feed-forward networks
+        into layers. Every model in this glossary — GPT-2, GLM, Qwen — is a transformer with different
+        dimensions and a handful of refinements.</dd>
+    </dl>
+
+    <h2>Scale — the words for the gap</h2>
+    <dl class="glossary">
+      <dt id="moe">Mixture of Experts (MoE)</dt>
+      <dd>A layer holding many parallel feed-forward "experts", of which only a few run for any given
+        token. Lets a model own enormous <em>total</em> parameters while paying for only a few per
+        token. GLM-4.5 has 1 shared + 128 routed experts and uses 8 routed experts per token
+        (<a href="https://www.lmsys.org/blog/2025-07-31-glm4-5/">LMSYS</a>).</dd>
+
+      <dt id="active-params">Total vs active parameters</dt>
+      <dd>In an MoE, <em>total</em> is what you must store; <em>active</em> is what actually computes
+        for each token. GLM-4.5 is <b>355B total / 32B active</b>. Cost and speed track the active
+        count; memory tracks the total. Quoting only one number is how people mislead you.</dd>
+
+      <dt id="flops">FLOPs, and <code>C ≈ 6ND</code></dt>
+      <dd>The total arithmetic a training run performs. The standard estimate
+        (<a href="https://arxiv.org/abs/2001.08361">Kaplan et al., 2020</a>) is 6 × active parameters ×
+        training tokens. For GLM-4.5: 6 × 32e9 × 23e12 ≈ <b>4.4 × 10²⁴ FLOPs</b>. Learn this formula —
+        it converts any model's headline numbers into an honest cost.</dd>
+
+      <dt id="mfu">MFU — model FLOPs utilisation</dt>
+      <dd>The fraction of a chip's peak arithmetic rate a real training run achieves. Large runs land
+        around 35–45%. An H100 peaks near 989 TFLOP/s in BF16, so it really delivers ~350–450.
+        Dividing <a href="#flops">C</a> by that gives GLM-4.5 ≈ <b>3 million H100-hours</b> — roughly
+        120 days on a thousand GPUs. <em>Zhipu has never published a cost; this is an estimate from
+        their published sizes, and you should be able to derive it yourself.</em></dd>
+
+      <dt id="scaling-laws">Scaling laws</dt>
+      <dd>Loss falls as a smooth power law in parameters, data, and compute — predictably enough to
+        plan a run before starting it (<a href="https://arxiv.org/abs/2001.08361">Kaplan 2020</a>).
+        <a href="https://arxiv.org/abs/2203.15556">Chinchilla</a> refined the compute-optimal ratio to
+        roughly <b>20 training tokens per parameter</b>.</dd>
+    </dl>
+
+    <h2>Training stages — the pipeline we're reproducing</h2>
+    <dl class="glossary">
+      <dt id="pretraining">Pretraining</dt>
+      <dd>Predict the next token over a very large, general corpus. Produces a <em>base model</em>:
+        fluent, knowledgeable, and useless as an assistant — it completes text rather than answering.
+        This is where essentially all the compute goes.</dd>
+
+      <dt id="midtraining">Midtraining <span class="tag">ahead</span></dt>
+      <dd>A shorter stage on curated, higher-quality data (code, maths, cleaned web) that teaches
+        formats and conversational structure before alignment proper. Named as its own stage in
+        <a href="https://github.com/karpathy/nanochat">nanochat</a>.</dd>
+
+      <dt id="sft">SFT — supervised fine-tuning <span class="tag">ahead</span></dt>
+      <dd>Train on curated (prompt, good-response) pairs so the base model learns to answer rather than
+        continue. The first step of the
+        <a href="https://arxiv.org/abs/2203.02155">InstructGPT recipe</a>.</dd>
+
+      <dt id="rlhf">RLHF / DPO <span class="tag">ahead</span></dt>
+      <dd>Optimise against human preference rather than a fixed target.
+        <a href="https://arxiv.org/abs/2203.02155">RLHF</a> trains a reward model and runs RL against it;
+        <a href="https://arxiv.org/abs/2305.18290">DPO</a> reaches a similar place without the RL.</dd>
+
+      <dt id="distillation">Distillation <span class="tag">ahead</span></dt>
+      <dd>Train a small <em>student</em> to imitate a large <em>teacher</em>. The one honest route by
+        which something laptop-sized can beat something enormous — but only on a narrow task. Google's
+        <a href="https://arxiv.org/abs/2305.02301">Distilling Step-by-Step</a> got a 770M student past
+        540B PaLM on-task, ~700× smaller.</dd>
+
+      <dt id="lora">LoRA / QLoRA <span class="tag">ahead</span></dt>
+      <dd>Freeze a pretrained model and train small low-rank adapter matrices instead of all weights
+        (<a href="https://arxiv.org/abs/2106.09685">LoRA</a>).
+        <a href="https://arxiv.org/abs/2305.14314">QLoRA</a> adds 4-bit quantisation, putting a 7B
+        fine-tune inside ~5GB of VRAM.</dd>
+    </dl>
+
+    <p class="ask-teacher" style="margin-top:2rem">A term here that still feels like a word rather than
+    an idea? Ask me — that's what I'm for, and it usually means the lesson that teaches it should come
+    sooner.</p>
+  </main>
+
+  <script src="../../assets/theme.js"></script>
+</body>
+</html>

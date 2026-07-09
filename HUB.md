@@ -33,6 +33,13 @@ DatLearn/
 |-------|---------|--------|
 | [AdMob](admob/index.html) | Master mediation & the revenue-vs-retention balance (Android + iOS) | 1 lesson live |
 | [Strength](strength/index.html) | Still lifting, still strong, in twenty years — progression without grinding | 1 lesson live |
+| [LLM Foundations](llm/index.html) | Open the black box by building one, on this Mac. The gap to GLM is a number, not a mystery | 2 lessons live |
+
+### Topic colours
+
+Topic chips (`--chip`, defined in `index.html`) must clear **4.5:1 contrast in both themes** — they
+are rendered as kicker *text* — **and** sit **≥ 40° apart in hue**, or two topics read as one on the
+grid. Both properties are measured, never guessed. Current: admob 167°, strength 232°, llm 295°.
 
 ## Adding a topic
 
