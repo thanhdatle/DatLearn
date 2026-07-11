@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="bg3">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DOS2 → BG3 Translation Table — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/bg3.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="ref">
+    <nav class="lesson-nav">
+      <a href="../../index.html">← All topics</a>
+      <span class="sep">·</span>
+      <a href="../index.html">Baldur's Gate 3</a>
+      <span class="sep">·</span>
+      <span>DOS2 → BG3</span>
+    </nav>
+
+    <p class="kicker">Reference · print me</p>
+    <h1>DOS2 → BG3: What Transfers, What Betrays You</h1>
+    <p class="ref-sub">
+      Same studio, different rulebook. Your DOS2 instincts are an asset in roughly half of BG3 and
+      a liability in the other half — and the game will never tell you which half you are in.
+      This table tells you. Ordered by how badly each habit misfires.
+    </p>
+
+    <div class="callout">
+      <span class="kicker">How to read the evidence badges</span>
+      <p>
+        <span class="evidence mech">Mechanic</span> — verifiable in the datamined game data. A fact.<br>
+        <span class="evidence cons">Consensus</span> — what good players believe. Defensible, not proven. Argue with it.<br>
+        <span class="evidence infer">Inference</span> — my own reasoning from the mechanics. Flagged as mine, not as truth.
+      </p>
+    </div>
+
+    <h2>The four that will actively hurt you</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:22%">System</th><th style="width:26%">DOS2 (your reflex)</th><th style="width:30%">BG3 (the rule)</th><th style="width:22%">What to do</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Armour &amp; CC</b><br><span class="evidence mech">Mechanic</span></td>
+            <td>Two armour bars <b>gate all CC</b>. Strip the bar, then CC lands at <b>100%</b>.<a class="cite" href="https://tech.yahoo.com/gaming/articles/divinity-original-sin-2s-brilliant-000426134.html">src</a></td>
+            <td><b>No gate, and no bar.</b> AC is a difficulty to hit, never a pool, and it is <b>irrelevant to CC</b>. Control resolves on a <b>saving throw</b>.<a class="cite" href="https://bg3.wiki/wiki/Armour_Class">wiki</a></td>
+            <td><b>Lead with the control.</b> Turn one, full-health enemy. Stop softening things up.</td>
+          </tr>
+          <tr>
+            <td><b>Buff stacking</b><br><span class="evidence mech">Mechanic</span></td>
+            <td>Stack every buff on the frontliner. They all persist. No limit.</td>
+            <td><b>Concentration.</b> One concentration spell per caster — casting a second <b>cancels the first</b>. Damage forces a CON save to keep it.<a class="cite" href="https://bg3.wiki/wiki/Concentration">wiki</a></td>
+            <td>Spread buffs across <b>different casters</b>. Protect the concentrating one.</td>
+          </tr>
+          <tr>
+            <td><b>Action economy</b><br><span class="evidence mech">Mechanic</span></td>
+            <td><b>4 AP</b>, one fungible pool, and <b>leftovers roll over</b> to next turn.<a class="cite" href="https://www.gamepressure.com/originalsinii/combat/z09214">src</a></td>
+            <td><b>Three separate boxes</b>: 1 Action, 1 Bonus Action, Movement. <b>No conversion, no carry-over.</b><a class="cite" href="https://bg3.wiki/wiki/Bonus_Action">wiki</a></td>
+            <td>Check the <b>bonus action</b> before every End Turn. You will forget it. Everyone does.</td>
+          </tr>
+          <tr>
+            <td><b>Turn order</b><br><span class="evidence mech">Mechanic</span></td>
+            <td><b>Round-robin</b>: ally, enemy, ally, enemy. Back-to-back ally turns are <b>impossible</b>.<a class="cite" href="https://www.divinitywiki.com/index.php/DOS2:Initiative">src</a></td>
+            <td><b>Individual initiative</b> (<code>1d4 + DEX</code>). Allies can act consecutively, and an unnoticed party gets a <b>surprise round the enemy cannot answer</b>.<a class="cite" href="https://bg3.wiki/wiki/Combat">wiki</a></td>
+            <td><b>Alpha strike.</b> The thing DOS2 said was impossible is BG3's best opening. Sneak first, then talk.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>The rest of the diff</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:22%">System</th><th style="width:26%">DOS2</th><th style="width:30%">BG3</th><th style="width:22%">Verdict</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Surfaces</b></td>
+            <td>Central. Often the <b>win condition</b>. CC from surfaces is automatic.</td>
+            <td>Real and damaging, but the CC is <b>save-gated too</b> — Grease requires a DEX save to knock prone.<a class="cite" href="https://bg3.wiki/wiki/Grease">wiki</a></td>
+            <td>Demoted from win condition to <b>a tool</b>. Still good. No longer the plan.</td>
+          </tr>
+          <tr>
+            <td><b>Damage types</b></td>
+            <td>Physical/magical split. Mixing is <b>believed</b> to be punished — and this is <b>contested even among DOS2 players</b>.</td>
+            <td><b>One AC.</b> No split exists. A hybrid party carries zero structural penalty.<a class="cite" href="https://bg3.wiki/wiki/Armour_Class">wiki</a></td>
+            <td>Forget the whole concept. <b>Build any party you like.</b></td>
+          </tr>
+          <tr>
+            <td><b>Initiative stat</b></td>
+            <td><b>Wits.</b> Every point of Wits = +1 initiative.<a class="cite" href="https://www.divinitywiki.com/index.php/DOS2:Initiative">src</a></td>
+            <td><b>Dexterity</b>, on a <code>1d4</code>. There is no Wits stat.<a class="cite" href="https://bg3.wiki/wiki/Initiative">wiki</a></td>
+            <td>The die only spans 1–4, so <b>flat bonuses dominate</b>. Alert's +5 outweighs the entire roll.</td>
+          </tr>
+          <tr>
+            <td><b>Respec</b></td>
+            <td>Magic Mirror. Free, unlimited.</td>
+            <td><b>Withers, 100 gold</b>, in your camp. Resets class, subclass, stats, spells, feats.<a class="cite" href="https://bg3.wiki/wiki/Withers">wiki</a></td>
+            <td>Trivially cheap by mid-Act 1. <b>Your freedom to experiment survives.</b></td>
+          </tr>
+          <tr>
+            <td><b>Resting</b></td>
+            <td>No real equivalent tier.</td>
+            <td><b>Two short rests</b> per long rest (free, restore half HP + class resources); <b>long rest costs 40 camp supplies</b>.<a class="cite" href="https://bg3.wiki/wiki/Resting">wiki</a></td>
+            <td>You are <b>under-resting</b>. See the field manual — this is the most common new-player error.</td>
+          </tr>
+          <tr>
+            <td><b>Equipment swapping</b></td>
+            <td><b>Cannot change gear in combat.</b></td>
+            <td>You can carry melee <i>and</i> ranged and use either. <span class="evidence cons">Consensus</span></td>
+            <td>Give every melee character a bow. There is no reason not to.</td>
+          </tr>
+          <tr>
+            <td><b>Dialogue</b></td>
+            <td>De-emphasised as a build axis.</td>
+            <td>A <b>real build axis.</b> Persuasion/Deception checks are d20 rolls you can fail. <span class="evidence cons">Consensus</span></td>
+            <td>Have <b>one face character</b> with Charisma and lead conversations with them.</td>
+          </tr>
+          <tr>
+            <td><b>Friendly fire</b></td>
+            <td>Your AoE will absolutely kill your own party.</td>
+            <td>Same. Surfaces and AoE hit allies. <span class="evidence infer">Inference</span></td>
+            <td><b>This one transfers intact.</b> Keep spreading out. Your instincts are correct here.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>What transfers, untouched</h2>
+
+    <p>
+      Half your DOS2 brain is still an asset. Do not throw out the following — they are as true in
+      Faerûn as they were on Reaper's Coast: <b>positioning and elevation matter</b> (though in BG3
+      high ground is a flat <code>+2</code>, not advantage<a class="cite" href="https://bg3.wiki/wiki/High_ground">wiki</a>);
+      <b>spread out against AoE</b>; <b>scout before you commit</b>; <b>the environment is a weapon</b>
+      (explosive barrels work exactly as you would hope); <b>quicksave constantly</b>; and
+      <b>talk to everything before you fight it.</b>
+    </p>
+
+    <h2>Three myths to unlearn immediately</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>You will be told…</th><th>The truth <span class="evidence mech">Mechanic</span></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>"High ground gives advantage"</td><td>Flat <b>+2</b> to attack rolls; low ground is <b>−2</b>. Useful, but far weaker than advantage.<a class="cite" href="https://bg3.wiki/wiki/High_ground">wiki</a></td></tr>
+          <tr><td>"Backstabbing gives advantage"</td><td><b>It gives nothing.</b> Removed after Early Access; absent from the advantage list.<a class="cite" href="https://bg3.wiki/wiki/List_of_sources_of_advantage_and_disadvantage_on_attack_rolls">wiki</a></td></tr>
+          <tr><td>"Initiative is a d20"</td><td><b><code>1d4 + DEX</code>.</b> Tabletop uses d20; BG3 deliberately does not.<a class="cite" href="https://bg3.wiki/wiki/Initiative">wiki</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <span class="kicker">One open question, stated honestly</span>
+      <p>
+        bg3.wiki lists <b>Prone</b> as a condition that breaks concentration.<a class="cite" href="https://bg3.wiki/wiki/Concentration">wiki</a>
+        That contradicts tabletop 5e, where it does not — so it may be a wiki error. If it <em>is</em>
+        true it matters a great deal to you specifically: the Grease and Ice surfaces a DOS2 player
+        reaches for by instinct knock creatures prone, and could therefore <b>break your own team's
+        concentration</b>. Treat as unconfirmed and <b>watch for it in-game</b>. I would rather flag
+        this than quietly smooth it over.
+      </p>
+    </div>
+
+    <p style="margin-top:var(--space-6)">
+      <a href="../lessons/0001-the-armour-gate-is-gone.html">Lesson 01 — The Armour Gate Is Gone</a> ·
+      <a href="../lessons/0002-three-slots-not-a-pool.html">Lesson 02 — Three Slots, Not a Pool</a> ·
+      <a href="field-manual.html">The field manual</a> ·
+      <a href="glossary.html">Glossary</a>
+    </p>
+  </main>
+
+  <script src="../../assets/theme.js"></script>
+</body>
+</html>

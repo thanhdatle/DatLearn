@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="bg3">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Armour Gate Is Gone — BG3 — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/bg3.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="lesson">
+    <nav class="lesson-nav">
+      <a href="../../index.html">← All topics</a>
+      <span class="sep">·</span>
+      <a href="../index.html">Baldur's Gate 3</a>
+      <span class="sep">·</span>
+      <span>Lesson 01</span>
+      <span class="sep">·</span>
+      <a href="../reference/glossary.html">Glossary</a>
+    </nav>
+
+    <header class="lesson-header">
+      <p class="kicker">Lesson 01 · ~10 min · 3 drills</p>
+      <h1>The Armour Gate Is Gone</h1>
+      <p class="lesson-lede">
+        You have a hundred hours of muscle memory telling you to grind a bar to zero before you
+        try to control anything. In Baldur's Gate 3 that bar does not exist — and the habit will
+        cost you every fight until you delete it.
+      </p>
+    </header>
+
+    <div class="lesson-body">
+
+      <p class="opening">
+        Divinity: Original Sin 2 taught you a <strong>two-phase fight</strong>, and taught it so
+        well you no longer notice you are thinking it. Phase one: chew through Physical Armour or
+        Magic Armour. Phase two: the bar hits zero, and now your knockdown, your stun, your freeze
+        land — <em>guaranteed</em>. Crowd control in DOS2 is not a gamble. It is a reward, and the
+        armour bar is the price.
+      </p>
+
+      <aside class="sidenote">
+        <span class="num">1.</span> DOS2's rule, stated plainly: crowd-control effects
+        "do not work until the relevant armor has been depleted, but once a character's armor is
+        gone, those crowd control abilities have a <strong>100% success rate</strong>."
+        <a class="cite" href="https://tech.yahoo.com/gaming/articles/divinity-original-sin-2s-brilliant-000426134.html">PC&nbsp;Gamer</a>
+        Deterministic, and gated. Remember both words — BG3 inverts exactly one of them.
+      </aside>
+
+      <p>
+        Baldur's Gate 3 runs Dungeons &amp; Dragons 5th Edition, not Larian's own system. And in
+        5e <strong>there is no armour bar at all.</strong> There is Armour Class, which sounds like
+        the same thing and is not remotely the same thing.
+      </p>
+
+      <h2>Armour Class is a difficulty, not a pool</h2>
+
+      <p>
+        <strong>Armour Class (AC)</strong> is a single number measuring how hard a creature is to
+        <em>hit with an attack</em>.<a class="cite" href="https://bg3.wiki/wiki/Armour_Class">wiki</a>
+        It does not deplete. You cannot grind it down. Hitting an enemy twenty times leaves its AC
+        exactly where it started. There is no physical bar and no magical bar — there is
+        <strong>one AC</strong>, and it applies to every incoming attack equally.
+      </p>
+
+      <p>
+        And here is the part that should make you sit up: <strong>AC does not protect against
+        crowd control at all.</strong> Not partially. Not at a reduced rate. It is simply not
+        involved. A creature in full plate with AC 18 is exactly as easy to put to sleep as a
+        naked one.
+      </p>
+
+      <div class="vs">
+        <div class="vs-old">
+          <h4>DOS2 — the habit</h4>
+          <p><strong>Armour gates CC.</strong> Burn rounds one and two stripping the bar. Land CC on round three, where it cannot miss.</p>
+          <p>CC is <strong>deterministic but gated</strong>. The cost is paid in <em>time</em>.</p>
+          <p>Splitting damage types is punished — you chew two bars instead of one.</p>
+        </div>
+        <div class="vs-new">
+          <h4>BG3 — the rule</h4>
+          <p><strong>Nothing gates CC.</strong> Your hardest control spell is live on <em>turn one</em>, against a completely undamaged enemy.</p>
+          <p>CC is <strong>available but probabilistic</strong>. The cost is paid in <em>risk</em>.</p>
+          <p>One AC, no split. A mixed party carries no structural penalty. <span class="evidence mech">Mechanic</span></p>
+        </div>
+      </div>
+
+      <p>
+        Read that right-hand column again, because the conclusion is aggressive and it is correct:
+        the DOS2 opening — <em>soften them up first</em> — is not merely suboptimal in BG3.
+        <strong>It is backwards.</strong> You are spending your best turn, the one where the enemy
+        is at full strength and most dangerous, doing chip damage, when you could have removed an
+        enemy from the fight entirely.
+      </p>
+
+      <p class="pull">Lead with the control. Damage is what you do to things that are already helpless.</p>
+
+      <h2>Two rolls, and they go in opposite directions</h2>
+
+      <p>
+        Everything in BG3 combat resolves on a twenty-sided die. But there are <strong>two
+        different rolls</strong>, and confusing them is the root of most first-playthrough
+        bewilderment. The difference is simply <em>who picks up the dice</em>.
+      </p>
+
+      <aside class="sidenote">
+        <span class="num">2.</span> This is the whole game in one sentence:
+        <strong>attacks are rolled by the attacker; saves are rolled by the defender.</strong>
+        If you remember nothing else from this lesson, remember which direction the die is flying.
+      </aside>
+
+      <p>
+        An <strong>attack roll</strong> is you trying to connect. <em>You</em> roll, and you need
+        to meet or beat their AC.<a class="cite" href="https://bg3.wiki/wiki/Attack_roll">wiki</a>
+        This is your sword, your arrow, your Fire Bolt.
+      </p>
+
+      <div class="dice">
+        <p class="roll"><span class="d">d20</span> <span class="eq">+</span> ability modifier <span class="eq">+</span> proficiency bonus <span class="eq">≥</span> <span class="res">target's AC</span></p>
+        <p class="roll"><span class="eq">e.g.</span> <span class="d">14</span> <span class="eq">+</span> 3 <span class="eq">(STR)</span> <span class="eq">+</span> 2 <span class="eq">(prof)</span> <span class="eq">=</span> <span class="res">19</span> <span class="eq">vs AC 15</span> <span class="eq">→</span> <span class="hit">hit</span></p>
+        <p class="note">
+          A natural 20 always hits and doubles your damage dice. A natural 1 always misses, no
+          matter how large your bonuses. <a class="cite" href="https://bg3.wiki/wiki/Attack_roll">wiki</a>
+        </p>
+      </div>
+
+      <p>
+        A <strong>saving throw</strong> is them trying to resist. <em>They</em> roll, against a
+        difficulty <em>you</em> set. This is your Hold Person, your Sleep, your Command — every
+        piece of crowd control in the game.<a class="cite" href="https://bg3.wiki/wiki/Saving_throw">wiki</a>
+      </p>
+
+      <div class="dice">
+        <p class="roll"><span class="eq">their</span> <span class="d">d20</span> <span class="eq">+</span> their ability modifier <span class="eq">≥</span> <span class="res">your spell save DC</span> <span class="eq">→ they resist</span></p>
+        <p class="roll"><span class="eq">your DC =</span> <span class="d">8</span> <span class="eq">+</span> proficiency bonus <span class="eq">+</span> spellcasting modifier</p>
+        <p class="roll"><span class="eq">e.g.</span> <span class="d">8</span> <span class="eq">+</span> 2 <span class="eq">(prof)</span> <span class="eq">+</span> 3 <span class="eq">(WIS)</span> <span class="eq">=</span> <span class="res">DC 13</span>. <span class="eq">They roll 9 + 1 = 10 →</span> <span class="hit">they fail, your spell lands</span></p>
+        <p class="note">
+          Note who benefits from a high roll. On an attack, a high roll is <em>good for you</em>.
+          On a save, a high roll is <em>good for them</em>. The die is the same; the ownership is
+          reversed. <a class="cite" href="https://bg3.wiki/wiki/Saving_throw">wiki</a>
+        </p>
+      </div>
+
+      <section class="quiz" data-correct-msg="Right. Saving throws are rolled by the defender and are completely independent of AC — armour never enters the calculation.">
+        <p class="kicker">Drill 1 — retrieval</p>
+        <p class="quiz-q">An enemy is wearing extremely heavy armour. What happens to your chance of landing Hold Person on it?</p>
+        <ul class="quiz-options">
+          <li><button class="quiz-option" data-correct="true">Nothing at all, since armour never affects saves</button></li>
+          <li><button class="quiz-option" data-msg="No — that is the DOS2 model. In BG3 armour is never depleted, and it plays no part in a saving throw.">You must strip that armour away completely first</button></li>
+          <li><button class="quiz-option" data-msg="No — AC modifies attack rolls only. A saving throw does not consult the target's AC at all.">Your chance drops, because its Armour Class rose</button></li>
+          <li><button class="quiz-option" data-msg="Half-right instinct, wrong game. Armour does not reduce the duration of a control spell in BG3; it does not interact with it whatsoever.">The spell lands, but its duration is halved</button></li>
+        </ul>
+        <p class="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <h2>So how do you make control actually land?</h2>
+
+      <p>
+        You have traded a <em>time</em> cost for a <em>risk</em> cost, and risk can be managed. You
+        have exactly two levers, and a DOS2 player has never had to think about either.
+      </p>
+
+      <h3>Lever one — raise your DC</h3>
+      <p>
+        Your save DC is <code>8 + proficiency + spellcasting modifier</code>. Proficiency rises on
+        its own with level.<a class="cite" href="https://bg3.wiki/wiki/Proficiency">wiki</a> The
+        part you control is the <strong>spellcasting modifier</strong> — which is precisely why a
+        caster pumps its casting stat to 20 and does not spread points around. Every <code>+1</code>
+        there makes <em>every control spell you will ever cast</em> harder to resist.
+      </p>
+
+      <h3>Lever two — target the weak save</h3>
+      <p>
+        This is the real skill, and it is the one that replaces armour-bar-watching. Different
+        spells force <strong>different saves</strong>, and every creature is bad at some of them.
+        A hulking brute has a monstrous Strength save and a pitiful Wisdom save. A cunning caster
+        is the reverse.
+      </p>
+
+      <aside class="sidenote">
+        <span class="num">3.</span> The habit to build, and the direct replacement for
+        "which bar do I strip?" — <strong>"which save is this thing bad at?"</strong> Ask it before
+        every control spell. Hover an enemy and read its stats: the game shows you.
+      </aside>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Save</th><th>Typically weak in…</th><th>Reach for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><b>Wisdom</b></td><td>Beasts, brutes, most low-cunning humanoids</td><td class="num-cell">Hold Person, Command, Fear</td></tr>
+            <tr><td><b>Dexterity</b></td><td>Heavily-armoured, slow, or large creatures</td><td class="num-cell">Grease, Web, most AoE damage</td></tr>
+            <tr><td><b>Constitution</b></td><td>Frail casters and small creatures</td><td class="num-cell">Ray of Sickness, Blindness</td></tr>
+            <tr><td><b>Intelligence</b></td><td>Animals and unthinking things</td><td class="num-cell">Phantasmal Force</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        <span class="evidence infer">Inference</span> That table is my synthesis of how the game's
+        stat blocks distribute, not a quotation — <strong>verify it by hovering the actual enemy in
+        front of you.</strong> The principle (spells target specific saves; creatures have weak
+        ones) is hard mechanics; the specific pairings are a rule of thumb to be overridden by what
+        the tooltip actually says.
+      </p>
+
+      <h2>The payoff: Hold Person</h2>
+
+      <p>
+        Here is why leading with control is not just <em>allowed</em> but devastating. Hold Person
+        is a 2nd-level spell — you will have it in Act 1 — and it forces a <strong>Wisdom</strong>
+        save. When it lands, the target cannot act. And then this:
+      </p>
+
+      <p>
+        <strong>Every melee attack against a held creature from within 3 m is an automatic
+        critical hit.</strong><a class="cite" href="https://bg3.wiki/wiki/Hold_Person">wiki</a>
+      </p>
+
+      <p>
+        Not "has advantage". Not "is more likely to hit". <em>An automatic critical hit</em> —
+        double damage dice, no attack roll to fail. One successful save-or-suck spell converts your
+        entire party's next turn into guaranteed maximum-value crits, on an enemy that cannot fight
+        back. In DOS2 you would have needed two rounds of setup to earn that. In BG3 it is
+        available on turn one, and the price is that it might miss.
+      </p>
+
+      <div class="callout warn">
+        <span class="kicker">The honest catch</span>
+        <p>
+          It <em>can</em> miss. A DOS2 player's first reaction to a failed Hold Person is that the
+          spell is unreliable and not worth casting. That is the wrong lesson. The right one:
+          a 55% chance to delete an enemy from the fight is <strong>an outstanding trade</strong>,
+          and the correct response to a failure is to cast it again — not to retreat to chip
+          damage. Concentration means you keep only one such spell running at a time, which is the
+          subject of a later lesson.
+        </p>
+      </div>
+
+      <section class="quiz" data-correct-msg="Exactly. You cannot lower their roll, so you raise the bar they must clear — and you pick a bar they are bad at clearing.">
+        <p class="kicker">Drill 2 — application</p>
+        <p class="quiz-q">Your control spells keep getting resisted. Which of these actually improves the odds?</p>
+        <ul class="quiz-options">
+          <li><button class="quiz-option" data-msg="No. Damage does not weaken a creature's saving throws in BG3 — that is armour-bar thinking. A bloodied enemy saves exactly as well as a fresh one.">Damage them first, to weaken their saving throws</button></li>
+          <li><button class="quiz-option" data-correct="true">Raise your casting stat, and target weak saves</button></li>
+          <li><button class="quiz-option" data-msg="Attacking from behind grants no bonus in the released game. Backstab advantage existed in Early Access and is gone — and it would not affect a saving throw regardless.">Attack them from behind, to gain a backstab</button></li>
+          <li><button class="quiz-option" data-msg="High ground gives a flat +2 to your attack rolls — genuinely useful, but it does nothing to a spell save DC. This is the most common myth in BG3.">Move onto high ground, to gain the advantage</button></li>
+        </ul>
+        <p class="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <h2>Three things almost every guide gets wrong</h2>
+
+      <p>
+        Since you are about to go and read other BG3 advice, arm yourself. These three claims are
+        repeated constantly and all three are <strong>false</strong>. Each one was checked against
+        the datamined wiki.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>The folklore</th><th>The actual mechanic</th><th>Why you care</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>"High ground gives advantage"</td>
+              <td>A flat <b>+2</b> to attack rolls. Low ground is <b>−2</b>.<a class="cite" href="https://bg3.wiki/wiki/High_ground">wiki</a></td>
+              <td>+2 is good, but far weaker than advantage. Do not skip a better play to climb a rock.</td>
+            </tr>
+            <tr>
+              <td>"Backstabbing gives advantage"</td>
+              <td>It gives <b>nothing</b>. Absent from the game's advantage list.<a class="cite" href="https://bg3.wiki/wiki/List_of_sources_of_advantage_and_disadvantage_on_attack_rolls">wiki</a></td>
+              <td>Stop burning movement to walk around enemies. It buys you literally zero.</td>
+            </tr>
+            <tr>
+              <td>"Initiative is a d20 roll"</td>
+              <td><b>1d4 + Dexterity.</b><a class="cite" href="https://bg3.wiki/wiki/Initiative">wiki</a></td>
+              <td>The die is tiny, so DEX dominates. The Alert feat's <b>+5</b> is bigger than the entire die.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <aside class="sidenote">
+        <span class="num">4.</span> I would have told you all three of these wrong from memory.
+        They were caught only by going and reading the datamined wiki. That is the whole reason
+        every claim in this topic carries an evidence badge — and why you should distrust any BG3
+        guide that carries none.
+      </aside>
+
+      <section class="quiz" data-correct-msg="Correct. 1d4 + DEX. Because the die only spans 1–4, a flat +5 from Alert outweighs the entire range of the roll — which makes it far stronger here than it would be in tabletop.">
+        <p class="kicker">Drill 3 — the correction</p>
+        <p class="quiz-q">What does BG3 actually roll for initiative?</p>
+        <ul class="quiz-options">
+          <li><button class="quiz-option" data-msg="That is tabletop 5e, and it is what almost everyone assumes. BG3 deliberately narrowed the die, which clusters the results and makes flat bonuses much stronger.">A d20, plus your Dexterity modifier score bonus</button></li>
+          <li><button class="quiz-option" data-correct="true">A d4, plus your Dexterity modifier score bonus</button></li>
+          <li><button class="quiz-option" data-msg="That is DOS2 — initiative there is driven by the Wits attribute. BG3 has no Wits stat; the analogous stat is Dexterity.">A d20, plus your Wits attribute score bonus</button></li>
+          <li><button class="quiz-option" data-msg="No roll at all would make initiative fully deterministic. BG3 does roll — just a much smaller die than you would expect.">No roll at all, purely your Dexterity order</button></li>
+        </ul>
+        <p class="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <h2>What to actually do in your first fight</h2>
+
+      <div class="callout good">
+        <span class="kicker">The new opening</span>
+        <p>
+          <strong>1.</strong> Before rolling initiative, ask which single enemy would hurt you most
+          — not which is closest.<br>
+          <strong>2.</strong> Hover it. Read its stats. Find its <em>weakest save</em>.<br>
+          <strong>3.</strong> Open with control aimed at that save, from your highest-DC caster.<br>
+          <strong>4.</strong> If it lands, walk your melee up and take the free critical hits.<br>
+          <strong>5.</strong> If it fails, cast it again. It was still the right call.
+        </p>
+      </div>
+
+      <p>
+        Notice what is <em>not</em> in that list: any step about softening anything up. That step
+        does not exist any more. You spent a hundred hours learning it, and the single most
+        valuable thing you can do this week is stop doing it.
+      </p>
+
+    </div>
+
+    <footer class="lesson-foot">
+      <h3>Primary source</h3>
+      <a class="primary-source" href="https://bg3.wiki/wiki/D%26D_5e_rule_changes">
+        <b>bg3.wiki — D&amp;D 5e rule changes</b><br>
+        The highest-value page on the entire wiki, and the one to read before you play. Everything
+        BG3 does differently from tabletop, datamined and in one list. Twenty minutes here will save
+        you twenty hours of wrong assumptions.
+      </a>
+
+      <h3>Next</h3>
+      <p>
+        <a href="0002-three-slots-not-a-pool.html">Lesson 02 — Three Slots, Not a Pool</a>: your
+        turn is not an action-point budget, and you are almost certainly about to throw a third of
+        it away every round without noticing.
+      </p>
+      <p>
+        Reference: <a href="../reference/dos2-to-bg3.html">The DOS2 → BG3 translation table</a> ·
+        <a href="../reference/field-manual.html">The field manual</a> ·
+        <a href="../reference/glossary.html">Glossary</a>
+      </p>
+
+      <p class="ask-teacher">
+        Something here not landing? Ask me. I am your teacher for this, and "why did that spell
+        miss?" is exactly the right question to bring back — screenshot the fight and we will read
+        the maths together.
+      </p>
+    </footer>
+  </main>
+
+  <script src="../../assets/theme.js"></script>
+  <script src="../../assets/quiz.js"></script>
+</body>
+</html>

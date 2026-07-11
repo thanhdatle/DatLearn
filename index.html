@@ -20,18 +20,26 @@
          admob    167deg   5.08:1 light   7.96:1 dark
          strength 232deg   6.62:1 light   7.08:1 dark
          llm      295deg   8.24:1 light   6.94:1 dark
+         bg3       39deg   5.93:1 light   8.73:1 dark
        admob previously carried one inline hex (#0a8a6f): 4.31:1 light and
-       3.97:1 dark. Both failed the rule stated directly above them. Fixed. */
+       3.97:1 dark. Both failed the rule stated directly above them. Fixed.
+
+       bg3 (bronze/gold) sits 104deg from its nearest neighbour (admob, 167deg)
+       — the widest gap still free on the wheel once the other three are placed.
+       Measured with a contrast+hue script, not eyeballed. */
     .topic-card.t-admob    { --chip: #0a7d65; }
     .topic-card.t-strength { --chip: #4a56a6; }
     .topic-card.t-llm      { --chip: #86198f; }
+    .topic-card.t-bg3      { --chip: #8a5a00; }
     :root[data-theme="dark"] .topic-card.t-admob    { --chip: #2fc79f; }
     :root[data-theme="dark"] .topic-card.t-strength { --chip: #9aa2e8; }
     :root[data-theme="dark"] .topic-card.t-llm      { --chip: #e879f9; }
+    :root[data-theme="dark"] .topic-card.t-bg3      { --chip: #e8b04b; }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) .topic-card.t-admob    { --chip: #2fc79f; }
       :root:not([data-theme="light"]) .topic-card.t-strength { --chip: #9aa2e8; }
       :root:not([data-theme="light"]) .topic-card.t-llm      { --chip: #e879f9; }
+      :root:not([data-theme="light"]) .topic-card.t-bg3      { --chip: #e8b04b; }
     }
   </style>
 </head>
@@ -96,6 +104,21 @@
           <div class="topic-meta">
             <span><b>2</b> lessons</span>
             <span><b>Apple</b> Silicon</span>
+            <span>Active</span>
+          </div>
+        </a>
+
+        <a class="topic-card t-bg3" href="bg3/index.html">
+          <p class="kicker">Tactics &amp; D&amp;D 5e</p>
+          <span class="topic-name">Baldur's Gate 3</span>
+          <p class="topic-desc">
+            Same studio, different rulebook. A first playthrough for a
+            Divinity veteran — deleting the DOS2 reflexes that BG3
+            punishes, in the order they'll cost you.
+          </p>
+          <div class="topic-meta">
+            <span><b>2</b> lessons</span>
+            <span><b>Balanced</b> · Act 1</span>
             <span>Active</span>
           </div>
         </a>

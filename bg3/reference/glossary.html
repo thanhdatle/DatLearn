@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="bg3">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Glossary — BG3 — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/bg3.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="ref">
+    <nav class="lesson-nav">
+      <a href="../../index.html">← All topics</a>
+      <span class="sep">·</span>
+      <a href="../index.html">Baldur's Gate 3</a>
+      <span class="sep">·</span>
+      <span>Glossary</span>
+    </nav>
+
+    <p class="kicker">Reference · print me</p>
+    <h1>The Vocabulary</h1>
+    <p class="ref-sub">
+      Every term defined once, and used consistently in every lesson. D&amp;D's nomenclature is the
+      real barrier to entry for a DOS2 player — not the tactics. Learn twenty words and the game
+      becomes legible.
+    </p>
+
+    <h2>The two rolls</h2>
+    <dl class="glossary">
+      <dt>d20 <span class="tag">the die</span></dt>
+      <dd>
+        A twenty-sided die. Nearly everything uncertain in BG3 resolves by rolling one and adding
+        modifiers. <b>A natural 20 always succeeds; a natural 1 always fails</b>, regardless of
+        bonuses.<a class="cite" href="https://bg3.wiki/wiki/Attack_roll">wiki</a>
+      </dd>
+
+      <dt>Attack roll <span class="tag">you roll</span></dt>
+      <dd>
+        <b>You</b> trying to hit. <code>d20 + ability modifier + proficiency bonus</code>, must meet
+        or beat the target's <b>Armour Class</b>.<a class="cite" href="https://bg3.wiki/wiki/Attack_roll">wiki</a>
+        A high roll is good for you.
+      </dd>
+
+      <dt>Saving throw <span class="tag">they roll</span></dt>
+      <dd>
+        <b>They</b> trying to resist. The defender rolls <code>d20 + their ability modifier</code>
+        against <b>your DC</b>. Every control spell in the game resolves this
+        way.<a class="cite" href="https://bg3.wiki/wiki/Saving_throw">wiki</a>
+        A high roll is good for <em>them</em>. This inversion catches everyone.
+      </dd>
+
+      <dt>Difficulty Class (DC) <span class="tag">the bar</span></dt>
+      <dd>The number a roll must meet or beat. Your <b>spell save DC</b> is <code>8 + proficiency bonus + spellcasting ability modifier</code>.<a class="cite" href="https://bg3.wiki/wiki/Saving_throw">wiki</a> Raising it makes every control spell you own harder to resist.</dd>
+
+      <dt>Armour Class (AC) <span class="tag">not a bar</span></dt>
+      <dd>
+        <b>A difficulty to hit, not a pool to deplete.</b> <code>10 + DEX modifier + armour + shield</code>.<a class="cite" href="https://bg3.wiki/wiki/Armour_Class">wiki</a>
+        It never decreases from being attacked, and — critically — it does <b>nothing</b> against
+        saving throws. Nothing like DOS2's armour bars.
+      </dd>
+
+      <dt>Advantage / Disadvantage <span class="tag">two dice</span></dt>
+      <dd>
+        Roll <b>two d20s and take the higher</b> (advantage) or the <b>lower</b> (disadvantage).
+        It does <b>not stack</b> — five sources are the same as one — and one of each
+        <b>cancels out entirely</b>, back to a single die.<a class="cite" href="https://bg3.wiki/wiki/Advantage">wiki</a>
+        Roughly worth +3 to +5 on average. The most valuable currency in the game.
+      </dd>
+
+      <dt>Proficiency bonus <span class="tag">scales</span></dt>
+      <dd><b>+2</b> at levels 1–4, <b>+3</b> at 5–8, <b>+4</b> at 9+.<a class="cite" href="https://bg3.wiki/wiki/Proficiency">wiki</a> Added to things you are trained in — weapons, skills, some saves — and to your spell save DC.</dd>
+
+      <dt>Proficiency <span class="tag">the trap</span></dt>
+      <dd>
+        Being trained with a weapon or armour type. <b>Wearing armour you lack proficiency in gives
+        disadvantage on every attack, check and save — and blocks spellcasting
+        entirely.</b><a class="cite" href="https://bg3.wiki/wiki/Proficiency">wiki</a>
+        Do not put plate on your Wizard.
+      </dd>
+    </dl>
+
+    <h2>The turn</h2>
+    <dl class="glossary">
+      <dt>Action <span class="tag">1 / turn</span></dt>
+      <dd>Your one big thing: Attack, cast a levelled spell, Dash, Throw. Cannot be split or saved.</dd>
+
+      <dt>Bonus Action <span class="tag">1 / turn</span></dt>
+      <dd>
+        A <b>second, smaller thing you get free every turn</b>, with no DOS2 equivalent — which is
+        exactly why you will forget it. Shove, drink a potion, jump, off-hand attack, dip a weapon,
+        hide (Rogues).<a class="cite" href="https://bg3.wiki/wiki/Bonus_Action">wiki</a>
+        <b>It does not convert to anything and it does not carry over.</b>
+      </dd>
+
+      <dt>Movement <span class="tag">a pool</span></dt>
+      <dd>Roughly 9 m per turn, spendable in pieces before and after your Action. Refreshes fully each turn.</dd>
+
+      <dt>Reaction <span class="tag">1 / round</span></dt>
+      <dd>
+        Fires on a trigger, usually during <b>someone else's</b> turn. Opportunity Attack, Shield,
+        Counterspell.<a class="cite" href="https://bg3.wiki/wiki/Reaction_(Combat)">wiki</a>
+        Configure each one to fire automatically or to <b>Ask</b>, in the Reactions tab of your
+        spellbook.
+      </dd>
+
+      <dt>Opportunity Attack <span class="tag">reaction</span></dt>
+      <dd>A free swing at an enemy who <b>walks</b> out of your melee reach. <b>Jumping away does not trigger it</b> — which is the whole reason Jump matters.</dd>
+
+      <dt>Initiative <span class="tag">1d4 + DEX</span></dt>
+      <dd>
+        Turn order. <b>Not a d20</b> — BG3 deliberately uses a <b>d4</b>.<a class="cite" href="https://bg3.wiki/wiki/Initiative">wiki</a>
+        Because the die only spans 1–4, flat bonuses dominate: the <b>Alert</b> feat's +5 is larger
+        than the entire range of the roll.
+      </dd>
+
+      <dt>Surprise round <span class="tag">free turn</span></dt>
+      <dd>Start a fight unnoticed and the attackers get a round in which <b>only they may act</b>.<a class="cite" href="https://bg3.wiki/wiki/Combat">wiki</a> DOS2's round-robin order makes this impossible; here it is the strongest opening in the game.</dd>
+    </dl>
+
+    <h2>Casting</h2>
+    <dl class="glossary">
+      <dt>Concentration <span class="tag">one at a time</span></dt>
+      <dd>
+        Many buffs and control spells require it. <b>One per caster</b> — casting a second
+        concentration spell <b>immediately ends the first</b>. Taking damage forces a
+        <b>Constitution save at DC 10, or half the damage taken, whichever is higher</b>.<a class="cite" href="https://bg3.wiki/wiki/Concentration">wiki</a>
+        <br>The direct killer of DOS2's stack-every-buff habit.
+      </dd>
+
+      <dt>Spell slot <span class="tag">the fuel</span></dt>
+      <dd>Consumed to cast a levelled spell. Restored on a <b>long rest</b> — except <b>Warlock</b> slots, which come back on a <b>short</b> rest.<a class="cite" href="https://bg3.wiki/wiki/Spells">wiki</a> Max spell level in BG3 is <b>6</b>.</dd>
+
+      <dt>Cantrip <span class="tag">free forever</span></dt>
+      <dd>A level-0 spell, castable at will, costing no slot. Damage cantrips gain an extra die at <b>character level 5</b> and again at <b>10</b>.<a class="cite" href="https://bg3.wiki/wiki/Cantrips">wiki</a></dd>
+
+      <dt>Prepared vs Known <span class="tag">reversible?</span></dt>
+      <dd>
+        <b>Prepared</b> casters (Cleric, Druid, Wizard, Paladin) re-pick their active spells freely
+        outside combat — mistakes are reversible. <b>Known</b> casters (Sorcerer, Bard, Warlock,
+        Ranger) learn a fixed list and swap only one spell per level.<a class="cite" href="https://bg3.wiki/wiki/Spells">wiki</a>
+        <b>Prepared classes are more forgiving on a first playthrough.</b> <span class="evidence infer">Inference</span>
+      </dd>
+    </dl>
+
+    <h2>Character</h2>
+    <dl class="glossary">
+      <dt>Ability modifier <span class="tag">the maths</span></dt>
+      <dd><code>floor((score − 10) / 2)</code>. So 14 → <b>+2</b>, 16 → <b>+3</b>, 20 → <b>+5</b>, and 8 → <b>−1</b>.<a class="cite" href="https://bg3.wiki/wiki/Ability_score">wiki</a> <b>Odd scores round down</b> — a 17 gives the same +3 as a 16, which is why you push to even numbers.</dd>
+
+      <dt>Point buy <span class="tag">27 points</span></dt>
+      <dd>Character creation budget. Scores run <b>8–15</b> (8 is free), then a <b>+2 and a +1</b> are applied, so you can start at <b>17</b>.<a class="cite" href="https://bg3.wiki/wiki/Character_creation">wiki</a></dd>
+
+      <dt>Feat <span class="tag">levels 4, 8, 12</span></dt>
+      <dd>
+        A power pick, taken at levels <b>4, 8 and 12</b> (Fighters also at 6, Rogues at
+        10).<a class="cite" href="https://bg3.wiki/wiki/Feats">wiki</a> <b>Ability Improvement</b>
+        (+2 to one stat, cap 20) is itself a feat. With a level cap of 12, most characters get
+        exactly <b>three</b>.
+      </dd>
+
+      <dt>Level cap <span class="tag">12</span></dt>
+      <dd>The maximum character level.<a class="cite" href="https://bg3.wiki/wiki/Multiclassing">wiki</a> This is <b>why multiclassing has a real cost</b> — every dipped level is one your main class never gets.</dd>
+
+      <dt>Withers <span class="tag">100 gold</span></dt>
+      <dd>The undead fellow in your camp. Rebuilds any character completely — class, stats, spells, feats — for <b>100 gold</b>.<a class="cite" href="https://bg3.wiki/wiki/Withers">wiki</a> <b>Your build is never permanent. Stop agonising.</b></dd>
+    </dl>
+
+    <h2>Resting</h2>
+    <dl class="glossary">
+      <dt>Short rest <span class="tag">2 per long rest</span></dt>
+      <dd>Free, no supplies, no travel. Restores <b>up to half your max HP</b> plus Warlock slots, Ki, Channel Divinity, Action Surge, Second Wind, weapon actions.<a class="cite" href="https://bg3.wiki/wiki/Resting">wiki</a> <b>You are not using these.</b></dd>
+
+      <dt>Long rest <span class="tag">40 supplies</span></dt>
+      <dd>
+        Costs <b>40 camp supplies</b> on Balanced. Restores everything, including both short rests.<a class="cite" href="https://bg3.wiki/wiki/Long_rest">wiki</a>
+        <b>There is no penalty for resting often</b>, and companion scenes fire here — under-resting
+        means missing content. (Hedge: a few side quests are rest-sensitive; no source lists which.)
+      </dd>
+    </dl>
+
+    <p style="margin-top:var(--space-6)">
+      <a href="../lessons/0001-the-armour-gate-is-gone.html">Lesson 01</a> ·
+      <a href="../lessons/0002-three-slots-not-a-pool.html">Lesson 02</a> ·
+      <a href="dos2-to-bg3.html">DOS2 → BG3 translation table</a> ·
+      <a href="field-manual.html">Field manual</a>
+    </p>
+  </main>
+
+  <script src="../../assets/theme.js"></script>
+</body>
+</html>

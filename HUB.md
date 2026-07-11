@@ -34,12 +34,19 @@ DatLearn/
 | [AdMob](admob/index.html) | Master mediation & the revenue-vs-retention balance (Android + iOS) | 1 lesson live |
 | [Strength](strength/index.html) | Still lifting, still strong, in twenty years — progression without grinding | 1 lesson live |
 | [LLM Foundations](llm/index.html) | Open the black box by building one, on this Mac. The gap to GLM is a number, not a mystery | 2 lessons live |
+| [Baldur's Gate 3](bg3/index.html) | Finish a first playthrough on Balanced without hitting a wall — by deleting the DOS2 reflexes BG3 punishes | 2 lessons live |
 
 ### Topic colours
 
 Topic chips (`--chip`, defined in `index.html`) must clear **4.5:1 contrast in both themes** — they
 are rendered as kicker *text* — **and** sit **≥ 40° apart in hue**, or two topics read as one on the
-grid. Both properties are measured, never guessed. Current: admob 167°, strength 232°, llm 295°.
+grid. Both properties are measured, never guessed. Current: admob 167°, strength 232°, llm 295°,
+bg3 39°.
+
+The wheel is now crowded. A fifth topic must land ≥ 40° from **all four**, which leaves exactly two
+usable arcs: **79–127°** (yellow → green) and **335–359°** (crimson). The 167→232 and 232→295 gaps
+are 65° and 63° wide and therefore admit *nothing* — a chip in either would sit < 40° from both
+neighbours. Computed, not eyeballed; recompute when you add the fifth.
 
 ## Adding a topic
 

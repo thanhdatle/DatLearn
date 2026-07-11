@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="bg3">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Baldur's Gate 3 — DatLearn</title>
+  <link rel="stylesheet" href="../assets/course.css">
+  <link rel="stylesheet" href="assets/bg3.css">
+  <style>
+    .topic-hero { max-width: 54ch; margin-bottom: var(--space-6); }
+    .topic-hero h1 { font-size: var(--text-hero); font-weight: 700; line-height: 1.05; margin: .3rem 0 var(--space-2); }
+    .lesson-list li.planned .lesson-link { opacity: .6; border-style: dashed; pointer-events: none; }
+    .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-3); }
+    .mini { font-family: var(--font-ui); min-width: 0; }
+    .mini h2 { font-family: var(--font-ui); font-size: var(--text-base); font-weight: 600;
+      text-transform: uppercase; letter-spacing: .08em; color: var(--ink-mute); margin: 0 0 var(--space-1); }
+    .mini ul { margin: 0; padding-left: 1.1em; color: var(--ink-soft); font-size: var(--text-sm); line-height: 1.6; }
+    .mini a { text-decoration-color: var(--topic); }
+    @media (prefers-reduced-motion: reduce) { .lesson-link:hover { transform: none; } }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="lesson">
+    <nav class="lesson-nav">
+      <a href="../index.html">← All topics</a>
+    </nav>
+
+    <header class="topic-hero">
+      <p class="kicker">Baldur's Gate 3</p>
+      <h1>Same studio.<br><em>Different rulebook.</em></h1>
+      <p class="hub-sub">
+        You finished Divinity: Original Sin 2, so you already know how to play a Larian game — and
+        that is exactly the problem. DOS2 runs Larian's own armour-and-AP system. BG3 runs D&amp;D 5e.
+        The reflexes DOS2 <em>rewarded</em> are the ones BG3 <em>punishes</em>. This course does not
+        teach you BG3 from zero. It deletes the four habits that will cost you, in the order they
+        will cost you.
+      </p>
+    </header>
+
+    <section aria-labelledby="lessons-h">
+      <h2 id="lessons-h" class="kicker">Lessons</h2>
+      <ul class="lesson-list">
+        <li>
+          <a class="lesson-link" href="lessons/0001-the-armour-gate-is-gone.html">
+            <span class="n">01</span>
+            <h3>The Armour Gate Is Gone</h3>
+            <p>There is no bar to strip. Hard control is live on turn one — and the DOS2 opening is
+              not suboptimal here, it is backwards. ~10 min + 3 drills.</p>
+          </a>
+        </li>
+        <li>
+          <a class="lesson-link" href="lessons/0002-three-slots-not-a-pool.html">
+            <span class="n">02</span>
+            <h3>Three Slots, Not a Pool</h3>
+            <p>Your turn is not an AP budget. It is three boxes that never convert and never carry
+              over — and you are about to leave one empty every round. ~10 min + 3 drills.</p>
+          </a>
+        </li>
+        <li class="planned">
+          <a class="lesson-link" href="#" aria-disabled="true">
+            <span class="n">03</span>
+            <h3>Concentration: One Spell, and They Want to Break It</h3>
+            <p>Why stacking every buff on the frontliner is not weak here — it is literally
+              impossible. (planned)</p>
+          </a>
+        </li>
+        <li class="planned">
+          <a class="lesson-link" href="#" aria-disabled="true">
+            <span class="n">04</span>
+            <h3>The Alpha Strike DOS2 Forbade</h3>
+            <p>Individual initiative, the surprise round, and why ambush is the intended play rather
+              than a cheese. (planned)</p>
+          </a>
+        </li>
+        <li class="planned">
+          <a class="lesson-link" href="#" aria-disabled="true">
+            <span class="n">05</span>
+            <h3>Reading a Character Sheet</h3>
+            <p>Point buy, modifiers, proficiency, AC. Build a level-1 character from understanding,
+              not from a tier list. (planned)</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="two-col" style="margin-top:var(--space-6)">
+      <div class="mini">
+        <h2>Reference</h2>
+        <ul>
+          <li><a href="reference/dos2-to-bg3.html">DOS2 → BG3</a> — what transfers, what betrays you. The one to print.</li>
+          <li><a href="reference/field-manual.html">Field manual</a> — tips, tricks, and the traps first-timers fall into.</li>
+          <li><a href="reference/glossary.html">Glossary</a> — every term, defined once. Learn twenty words and the game becomes legible.</li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h2>The mission</h2>
+        <ul>
+          <li>Finish a first playthrough on <b>Balanced</b> without ever hitting a wall.</li>
+          <li><b>Competence, not optimisation.</b> No tier lists, no min-maxing.</li>
+          <li>Spoilers capped at <b>Act 1</b>.</li>
+          <li><a href="MISSION.md">MISSION.md</a> · <a href="RESOURCES.md">RESOURCES.md</a></li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h2>Primary sources</h2>
+        <ul>
+          <li><a href="https://bg3.wiki/wiki/D%26D_5e_rule_changes">D&amp;D 5e rule changes</a> — read this before you play</li>
+          <li><a href="https://bg3.wiki/">bg3.wiki</a> — datamined; the only source trusted for numbers</li>
+          <li><a href="https://www.reddit.com/r/BG3Builds/">r/BG3Builds</a> — where build consensus forms</li>
+          <li><a href="https://larian.com/news">Larian patch notes</a> — the only thing that settles "was this changed?"</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="callout" style="margin-top:var(--space-6); max-width: var(--measure)">
+      <span class="kicker">Why every claim here carries a badge</span>
+      <p>
+        BG3 advice online is folklore-saturated. Researching this course falsified <b>three</b>
+        things I would otherwise have taught you confidently and wrongly: high ground gives a flat
+        <b>+2</b>, not advantage; backstabbing gives <b>nothing</b>; and initiative is
+        <b><code>1d4 + DEX</code></b>, not a d20. So: <span class="evidence mech">Mechanic</span> is
+        datamined fact, <span class="evidence cons">Consensus</span> is what good players believe,
+        and <span class="evidence infer">Inference</span> is my own reasoning. Distrust any BG3
+        guide that never distinguishes them — including this one, if it slips.
+      </p>
+    </div>
+  </main>
+
+  <script src="../assets/theme.js"></script>
+</body>
+</html>
