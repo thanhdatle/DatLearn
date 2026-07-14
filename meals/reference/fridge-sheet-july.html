@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="" data-topic="meals">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thực đơn 2 tuần · 15–28/7 — Fridge Sheet — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/meals.css">
+  <style>
+    /* ============================================================
+       FRIDGE SHEET — a print artifact that happens to have a screen view.
+
+       Target: ONE A4 landscape page. The binding constraint is COLUMN
+       WIDTH, not height: (297mm - 18mm margin) / 7 columns = ~39.8mm per
+       day, of which ~36mm is content. At 9pt that is ~22 characters to a
+       line. Every decision below falls out of that number.
+
+       So all prose is cut: no kid notes (one footer strip instead), no
+       citations, no restaurant addresses, no batch-prep detail, no
+       shopping lists. The DISHES ARE UNCHANGED from
+       two-week-menu-july.html — this is the same plan, compressed, not a
+       different one.
+
+       Colour is an ACCENT only. Everything degrades to black-on-white,
+       because this ends up on a fridge under a magnet and gets read at
+       arm's length by someone holding a wet knife.
+       ============================================================ */
+
+    @page { size: A4 landscape; margin: 9mm; }
+
+    :root { --hair: #c9c4b6; }
+    :root[data-theme="dark"] { --hair: #47443a; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --hair: #47443a; } }
+
+    .sheet {
+      max-width: 297mm;
+      margin: 0 auto;
+      padding: var(--space-4) var(--space-3) var(--space-6);
+      font-family: var(--font-ui);
+      color: var(--ink);
+    }
+
+    /* ---------- masthead ---------- */
+    .mast { display: flex; flex-wrap: wrap; align-items: baseline; gap: .8ch; border-bottom: 2px solid var(--ink); padding-bottom: .35rem; margin-bottom: .5rem; }
+    .mast h1 { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -.01em; margin: 0; line-height: 1.2; }
+    .mast .range { font-family: var(--font-mono); font-size: .85rem; color: var(--ink-soft); }
+    .mast .legend { margin-left: auto; font-size: .72rem; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 1.2ch; }
+    .mast .legend b { color: var(--ink); }
+
+    /* ---------- the grid: 7 days across, 2 weeks down ---------- */
+    .grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; border: 1px solid var(--ink); }
+    .dow {
+      font-family: var(--font-display); font-weight: 700; font-size: .8rem;
+      text-align: center; padding: .25rem 0;
+      border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
+      background: color-mix(in oklab, var(--ink) 8%, transparent);
+    }
+    /* NOT :last-of-type — every child of .grid is a div, so that would match the
+       last CELL, not the last day header. The 7th child is the one we want. */
+    .dow:nth-child(7) { border-right: none; }
+
+    .cell {
+      border-right: 1px solid var(--hair);
+      border-bottom: 1px solid var(--ink);
+      padding: .3rem .35rem .35rem;
+      min-width: 0;
+      break-inside: avoid;
+    }
+    .cell:nth-child(7n) { border-right: none; }                  /* last column of a week */
+    .grid > .cell:nth-last-child(-n+7) { border-bottom: none; }  /* bottom week row */
+
+    .cell-head { display: flex; align-items: baseline; gap: .4ch; margin-bottom: .18rem; }
+    .cell-head .d { font-family: var(--font-display); font-weight: 700; font-size: .92rem; }
+    .cell-head .p {
+      font-size: .6rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+      color: var(--topic); border: 1px solid var(--topic); border-radius: 100px; padding: 0 .4em;
+      white-space: nowrap;
+    }
+    .cell-head .z { margin-left: auto; font-size: .6rem; font-weight: 700; color: var(--passive); white-space: nowrap; }
+
+    /* The món mặn is the biggest thing after the date — it is what you
+       actually need to read from two metres away. */
+    .man { font-size: .82rem; font-weight: 700; line-height: 1.2; margin: 0 0 .1rem; color: var(--ink); }
+    .man .act { color: var(--active); }                               /* the one active dish */
+    .man .big { text-transform: uppercase; letter-spacing: .01em; }   /* a restaurant break */
+
+    .side { font-size: .72rem; line-height: 1.3; color: var(--ink-soft); margin: 0; }
+    .side .sep { color: var(--hair); }
+
+    .tm { font-size: .7rem; line-height: 1.3; margin: .18rem 0 0; padding-top: .15rem; border-top: 1px dotted var(--hair); color: var(--ink-soft); }
+    .tm b { color: var(--ink); font-weight: 600; }
+
+    .lu { font-size: .66rem; line-height: 1.3; margin: .12rem 0 0; color: var(--ink-mute); }
+
+    /* Batch-prep, the two-meals arrow, the reheat. Compact — and they must
+       survive black and white, so each carries a word, not just a colour. */
+    .prep { font-size: .64rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--heat); margin: 0 0 .12rem; }
+    .arrow { font-weight: 700; color: var(--heat); white-space: nowrap; }
+    .reheat { font-weight: 700; color: var(--passive); white-space: nowrap; }
+
+    .pit {
+      font-size: .62rem; font-weight: 700; white-space: nowrap;
+      color: var(--danger); border: 1px solid var(--danger); border-radius: 2px; padding: 0 .25em;
+    }
+
+    /* ---------- footer strip ---------- */
+    .strip { margin-top: .45rem; border: 1px solid var(--ink); border-left: 4px solid var(--danger); padding: .3rem .5rem; }
+    .strip p { margin: 0 0 .14rem; font-size: .7rem; line-height: 1.35; color: var(--ink-soft); }
+    .strip p:last-child { margin-bottom: 0; }
+    .strip b { color: var(--ink); }
+    .strip .hdr { font-weight: 700; color: var(--danger); text-transform: uppercase; letter-spacing: .05em; font-size: .64rem; }
+
+    .screen-only { font-size: var(--text-sm); color: var(--ink-mute); font-family: var(--font-ui); margin-top: var(--space-3); max-width: 70ch; }
+
+    /* ============================================================
+       PRINT — this is the real design; everything above is the preview.
+       Sizes are in pt. The smallest thing on the page is 8.4pt (the
+       protein chip and the pit marker); the spec floor was 7.5pt.
+       ============================================================ */
+    @media print {
+      .theme-toggle, .lesson-nav, .screen-only { display: none !important; }
+      body { background: #fff; color: #000; }
+      .sheet { max-width: none; margin: 0; padding: 0; }
+
+      /* SIZES ARE SET TO FILL THE PAGE, NOT TO SURVIVE IT.
+         A first pass at 8-9pt fitted on one page and then left ~85mm of the
+         sheet blank — which is a waste on an artifact whose entire job is to
+         be readable across a kitchen. These sizes consume the available
+         height. Verified against a real Chrome print-to-PDF render: still
+         exactly one A4 landscape page. Floor is 8.5pt; spec asked for 7.5. */
+      .mast { border-bottom: 1.5pt solid #000; padding-bottom: 1.6mm; margin-bottom: 2.2mm; }
+      .mast h1 { font-size: 19.5pt; }
+      .mast .range { font-size: 11.5pt; color: #000; }
+      .mast .legend { font-size: 8.8pt; color: #000; gap: 2.4ch; }
+
+      .grid { border: 1pt solid #000; break-inside: avoid; }
+      .dow {
+        font-size: 12pt; padding: 1.2mm 0; border-color: #000; background: #e8e8e8;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      }
+      .cell { border-right: .5pt solid #9a9a9a; border-bottom: 1pt solid #000; padding: 1.7mm 1.7mm 1.8mm; }
+
+      .cell-head { margin-bottom: .8mm; }
+      .cell-head .d { font-size: 13.5pt; }
+      /* Colour degrades to black. The protein chip keeps its outline so it
+         still reads as a chip; "0 tay" stays legible with no colour at all. */
+      .cell-head .p { font-size: 8.4pt; color: #000; border-color: #000; }
+      .cell-head .z { font-size: 8.4pt; color: #000; }
+
+      /* The dish name is the biggest thing after the date — it is what you
+         read from across the kitchen. */
+      .man { font-size: 11.5pt; color: #000; line-height: 1.2; margin-bottom: .6mm; }
+      .man .act { color: #000; }
+      .side { font-size: 9.8pt; color: #000; line-height: 1.3; }
+      .side .sep { color: #9a9a9a; }
+      .tm { font-size: 9.4pt; color: #000; border-top-color: #9a9a9a; margin-top: .9mm; padding-top: .7mm; }
+      .lu { font-size: 8.6pt; color: #2a2a2a; margin-top: .7mm; }
+
+      .prep { font-size: 8.6pt; color: #000; margin-bottom: .6mm; }
+      .arrow, .reheat { color: #000; font-size: 9.8pt; }
+      .pit { color: #000; border-color: #000; font-size: 8.4pt; }
+
+      .strip { border: 1pt solid #000; border-left: 3pt solid #000; padding: 1.6mm 2.2mm; margin-top: 2.2mm; break-inside: avoid; }
+      .strip p { font-size: 9.2pt; color: #000; line-height: 1.38; margin-bottom: .8mm; }
+      .strip .hdr { color: #000; font-size: 8.8pt; }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="sheet">
+    <nav class="lesson-nav">
+      <a href="../../index.html">← All topics</a>
+      <span class="sep">·</span>
+      <a href="../index.html">Cơm Nhà</a>
+      <span class="sep">·</span>
+      <a href="two-week-menu-july.html">Two-week menu</a>
+      <span class="sep">·</span>
+      <span>Fridge sheet</span>
+    </nav>
+
+    <header class="mast">
+      <h1>Thực đơn 2 tuần</h1>
+      <span class="range">15–28 / 7 / 2026</span>
+      <span class="legend">
+        <span><b>▶</b> món cần tay — chỉ MỘT mỗi bữa</span>
+        <span><b>0 tay</b> không món nào cần bạn</span>
+        <span><b>→</b> nấu 2 bữa</span>
+        <span><b>⚠</b> bỏ hạt, cắt tư</span>
+      </span>
+    </header>
+
+    <div class="grid">
+
+      <!-- ===== day-of-week header ===== -->
+      <div class="dow">T4</div>
+      <div class="dow">T5</div>
+      <div class="dow">T6</div>
+      <div class="dow">T7</div>
+      <div class="dow">CN</div>
+      <div class="dow">T2</div>
+      <div class="dow">T3</div>
+
+      <!-- ===== WEEK 1 · 15–21/7 ===== -->
+      <div class="cell">
+        <div class="cell-head"><span class="d">15/7</span><span class="p">cá</span></div>
+        <p class="man"><span class="act">▶</span> Cá nục sốt cà</p>
+        <p class="side">Rau muống xào tỏi <span class="sep">·</span> Canh bí đao nấu tôm</p>
+        <p class="tm"><b>TM</b> Chôm chôm, măng cụt <span class="pit">⚠</span></p>
+        <p class="lu">Trưa: trứng chiên thịt băm + sữa chua trái cây</p>
+      </div>
+
+      <div class="cell">
+        <div class="cell-head"><span class="d">16/7</span><span class="p">heo</span></div>
+        <p class="man"><span class="act">▶</span> Sườn xào chua ngọt</p>
+        <p class="side">Đậu que xào tỏi <span class="sep">·</span> Canh trứng cà chua</p>
+        <p class="tm"><b>TM</b> Thanh long, chuối</p>
+        <p class="lu">Trưa: cá nục sốt cà (thừa) + sữa chua</p>
+      </div>
+
+      <div class="cell">
+        <div class="cell-head"><span class="d">17/7</span><span class="p">gà</span></div>
+        <p class="man"><span class="act">▶</span> <span class="big">Mì Quảng gà</span></p>
+        <p class="side">Một tô. Rau sống + bánh tráng mè. Trụng mì ~60&nbsp;°C, <b>không sôi</b>.</p>
+        <p class="tm"><b>TM</b> Dưa hấu</p>
+        <p class="lu">Trưa: cơm chiên trứng + dưa leo</p>
+      </div>
+
+      <div class="cell">
+        <div class="cell-head"><span class="d">18/7</span><span class="p">mực</span></div>
+        <p class="man"><span class="act">▶</span> Mực xào chua ngọt</p>
+        <p class="side">Rau lang luộc <span class="sep">·</span> Canh = nước luộc rau + cà chua</p>
+        <p class="tm"><b>TM</b> Bòn bon, thanh long</p>
+        <p class="lu">Trưa: <b>BÁNH XÈO</b> — cả nhà cuốn · Chiều: nướng bánh chuối</p>
+      </div>
+
+      <div class="cell">
+        <div class="cell-head"><span class="d">19/7</span><span class="p">cá</span></div>
+        <p class="prep">Sơ chế cả tuần</p>
+        <p class="man"><span class="act">▶</span> Cá nục kho <span class="arrow">→ nấu 2 bữa</span></p>
+        <p class="side">Súp lơ xào <span class="sep">·</span> Canh rau ngót nấu thịt băm</p>
+        <p class="tm"><b>TM</b> Chè chuối <i>(giảm ½ đường)</i></p>
+        <p class="lu">Trưa: mực (thừa) · Ngâm hạt chia cho cả tuần</p>
+      </div>
+
+      <div class="cell">
+        <div class="cell-head"><span class="d">20/7</span><span class="p">gà</span></div>
+        <p class="man"><span class="act">▶</span> Gà kho sả nghệ</p>
+        <p class="side">Bí đỏ xào tỏi <span class="sep">·</span> Canh cải thảo nấu nấm</p>
+        <p class="tm"><b>TM</b> Măng cụt, bơ</p>
+        <p class="lu">Trưa: cá nục kho (thừa) + sữa chua</p>
+      </div>
+
+      <div class="cell">
+        <div class="cell-head"><span class="d">21/7</span><span class="p">cá</span><span class="z">0 tay</span></div>
+        <p class="man">Cá nục kho <span class="reheat">— hâm lại</span></p>
+        <p class="side">Rau muống xào tỏi <span class="sep">·</span> Canh trứng cà chua</p>
+        <p class="tm"><b>TM</b> Nhãn <span class="pit">⚠</span>, đu đủ</p>
+        <p class="lu">Trưa: bánh canh (sợi tươi) + chôm chôm <span class="pit">⚠</span></p>
+      </div>
+
+      <!-- ===== WEEK 2 · 22–28/7 ===== -->
+      <div class="cell">
+        <div class="cell-head"><span class="d">22/7</span><span class="p">heo</span><span class="z">0 tay</span></div>
+        <p class="man"><span class="big">Bánh tráng cuốn thịt heo</span></p>
+        <p class="side">Chỉ luộc thịt. Bánh tráng, mì ướt, rau sống. Mắm nêm.</p>
+        <p class="tm"><b>TM</b> Dưa hấu</p>
+        <p class="lu">Trưa: gà kho (thừa) + sữa chua, nhãn <span class="pit">⚠</span></p>
+      </div>
+
+      <div class="cell">
+        <div class="cell-head"><span class="d">23/7</span><span class="p">cá</span></div>
+        <p class="man"><span class="act">▶</span> <span class="big">Bún chả cá</span></p>
+        <p class="side"><b>Mua chả cá ở chợ.</b> Bí đỏ + cà chua + thơm + bắp cải nấu vào nước dùng.</p>
+        <p class="tm"><b>TM</b> Nhãn <span class="pit">⚠</span>, thanh long</p>
+        <p class="lu">Trưa: cơm + chả cá chiên + rau luộc</p>
+      </div>
+
+      <div class="cell">
+        <div class="cell-head"><span class="d">24/7</span><span class="p">gà</span></div>
+        <p class="man"><span class="act">▶</span> <span class="big">Cơm gà Hội An</span></p>
+        <p class="side">Một nồi: luộc gà → <b>nước luộc nấu cơm, và là canh</b>. Xé gà, trộn hành + chanh.</p>
+        <p class="tm"><b>TM</b> Dưa hấu, măng cụt</p>
+        <p class="lu">Trưa: bún chả cá (thừa) + sữa chua</p>
+      </div>
+
+      <div class="cell">
+        <div class="cell-head"><span class="d">25/7</span><span class="p">bò</span><span class="z">0 tay</span></div>
+        <p class="man">Bò xào ớt chuông hành tây</p>
+        <p class="side">Súp lơ luộc <span class="sep">·</span> Canh = nước luộc súp lơ + cà chua</p>
+        <p class="tm"><b>TM</b> Chè đậu xanh <i>(giảm ½ đường)</i></p>
+        <p class="lu">Trưa: ram cuốn cải (nồi chiên không dầu) + mít</p>
+      </div>
+
+      <div class="cell">
+        <div class="cell-head"><span class="d">26/7</span><span class="p">heo</span></div>
+        <p class="prep">Sơ chế + nướng bánh</p>
+        <p class="man"><span class="act">▶</span> Sườn rim mặn ngọt <span class="arrow">→ nấu 2 bữa</span></p>
+        <p class="side">Bí đỏ xào tỏi <span class="sep">·</span> Canh rau ngót</p>
+        <p class="tm"><b>TM</b> Bơ, mít</p>
+        <p class="lu">Trưa: cơm gà (thừa) + bòn bon · Ngâm hạt chia · Banana bread (giảm ½ đường — đông lạnh 1 ổ)</p>
+      </div>
+
+      <div class="cell">
+        <div class="cell-head"><span class="d">27/7</span><span class="p">tôm</span><span class="z">0 tay</span></div>
+        <p class="man">Tôm rim</p>
+        <p class="side">Cà tím om nước tương <span class="sep">·</span> Canh cải thảo nấu nấm</p>
+        <p class="tm"><b>TM</b> Chôm chôm <span class="pit">⚠</span>, đu đủ</p>
+        <p class="lu">Trưa: sườn rim (thừa) + sữa chua</p>
+      </div>
+
+      <div class="cell">
+        <div class="cell-head"><span class="d">28/7</span><span class="p">heo</span><span class="z">0 tay</span></div>
+        <p class="man">Sườn rim <span class="reheat">— hâm lại</span></p>
+        <p class="side">Đậu que xào tỏi <span class="sep">·</span> Canh trứng cà chua</p>
+        <p class="tm"><b>TM</b> Nhãn <span class="pit">⚠</span>, thanh long</p>
+        <p class="lu">Trưa: tôm rim (thừa) + sữa chua</p>
+      </div>
+
+    </div>
+
+    <section class="strip">
+      <p>
+        <span class="hdr">⚠ Nhãn · vải · chôm chôm — mỗi lần, không ngoại lệ:</span>
+        <b>Bóc — tách đôi — BỎ HẠT — cắt tư.</b> Không bao giờ đưa nguyên quả đã bóc vỏ.
+        Ngồi vào bàn, có đĩa. Không vừa đi vừa ăn, không vừa cười vừa ăn, không xem màn hình.
+        <b>Nho cũng vậy.</b>
+      </p>
+      <p>
+        <b>Muối của bé = 50% người lớn.</b> Múc phần của bé ra <b>TRƯỚC KHI</b> nêm mặn — nếm thấy vừa
+        miệng bạn là đã mặn với bé. <b>Ớt để trên bàn, không cho vào nồi.</b>
+        Ngày ăn cá chung (15/7 · 19/7 · 23/7): <b>chiên thêm cho bé một quả trứng.</b>
+        Bữa ăn <b>dừng sau 30 phút</b>, dù bé ăn ít.
+      </p>
+      <p>
+        <b>Rã đông tối hôm trước</b> mọi bữa có thịt/cá đông lạnh — nhớ nhất <b>tối CN 26/7</b> (tôm cho
+        T2 27/7). Nước lạnh chảy qua túi kín, hoặc chế độ rã đông lò vi sóng — <b>KHÔNG nước nóng.</b>
+        Nồi cơm điện + ấm siêu tốc bật <b>đầu tiên</b>. <b>Xào là món CUỐI CÙNG.</b>
+      </p>
+    </section>
+
+    <p class="screen-only">
+      This page is designed to be <b>printed</b> — A4, landscape, one page — and stuck on the fridge.
+      What you see here is a preview of the paper. The prose version, with the reasoning, the kid
+      notes, the shopping lists and the two batch-prep blocks, is
+      <a href="two-week-menu-july.html">the two-week menu</a>.
+    </p>
+  </main>
+
+  <script src="../../assets/theme.js"></script>
+</body>
+</html>
