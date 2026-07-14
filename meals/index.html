@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="meals">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cơm Nhà — DatLearn</title>
+  <link rel="stylesheet" href="../assets/course.css">
+  <link rel="stylesheet" href="assets/meals.css">
+  <style>
+    .topic-hero { max-width: 54ch; margin-bottom: var(--space-6); }
+    .topic-hero h1 { font-size: var(--text-hero); font-weight: 700; line-height: 1.12; margin: .3rem 0 var(--space-2); }
+    .lesson-list li.planned .lesson-link { opacity: .6; border-style: dashed; pointer-events: none; }
+    .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-3); }
+    .mini { font-family: var(--font-ui); min-width: 0; }
+    .mini h2 { font-family: var(--font-display); font-size: var(--text-base); font-weight: 600;
+      text-transform: uppercase; letter-spacing: .08em; color: var(--ink-mute); margin: 0 0 var(--space-1); }
+    .mini ul { margin: 0; padding-left: 1.1em; color: var(--ink-soft); font-size: var(--text-sm); line-height: 1.6; }
+    .mini a { text-decoration-color: var(--topic); }
+    @media (prefers-reduced-motion: reduce) { .lesson-link:hover { transform: none; } }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="lesson">
+    <nav class="lesson-nav">
+      <a href="../index.html">← All topics</a>
+    </nav>
+
+    <header class="topic-hero">
+      <p class="kicker">Cơm Nhà · Đà Nẵng</p>
+      <h1>Fill the grid.<br><em>Don't invent dinner.</em></h1>
+      <p class="hub-sub">
+        Three dishes on the table every weeknight — <span class="vn">món mặn</span>,
+        <span class="vn">rau</span>, <span class="vn">canh</span>, <span class="vn">cơm</span> — in 45
+        to 60 minutes, with a fruit course after and a five-year-old who will actually eat it. The
+        obstacle was never a shortage of recipes. It was the question <em>"what shall I cook?"</em>,
+        asked at 5:40pm, when it is already far too late to ask anything.
+      </p>
+    </header>
+
+    <section aria-labelledby="lessons-h">
+      <h2 id="lessons-h" class="kicker">Lessons</h2>
+      <ul class="lesson-list">
+        <li>
+          <a class="lesson-link" href="lessons/0001-the-mam-com-is-a-slot-grid.html">
+            <span class="n">01</span>
+            <h3>The Mâm Cơm Is a Slot Grid, Not a Recipe List</h3>
+            <p>Four slots you fill, not a meal you invent — plus the rule that decides whether dinner
+              lands in the hour: <b>one active dish, two passive, never two active.</b> And why
+              <span class="vn">cơm–rau–cá</span> makes your no-thịt-kho constraint a return to the
+              canon rather than a loss. ~10 min + 3 drills.</p>
+          </a>
+        </li>
+        <li class="planned">
+          <a class="lesson-link" href="#" aria-disabled="true">
+            <span class="n">02</span>
+            <h3>The Timeline Drill: T+0 → T+30</h3>
+            <p>Rice cooker on before your shoes are off. Kettle at the same moment. Stir-fry
+              <em>last</em>. And the trick that collapses two slots into one pot — the water you
+              boiled the greens in is already your canh. (planned)</p>
+          </a>
+        </li>
+        <li class="planned">
+          <a class="lesson-link" href="#" aria-disabled="true">
+            <span class="n">03</span>
+            <h3>Sunday, Twenty Minutes: Plan the Week</h3>
+            <p>The two-axis rotation as a filled grid, the shopping list falling out of it, and what
+              to thaw when. <em>Quên rã đông là kẻ thù của việc nấu nhanh.</em> (planned)</p>
+          </a>
+        </li>
+        <li class="planned">
+          <a class="lesson-link" href="#" aria-disabled="true">
+            <span class="n">04</span>
+            <h3>The Mắm Nêm Ladder</h3>
+            <p>How the family eats <em>Đà Nẵng</em> food rather than a defanged version of it —
+              substitute, soften, then ladder up one drop at a time. Taste is learned. There is no
+              rush. (planned)</p>
+          </a>
+        </li>
+        <li class="planned">
+          <a class="lesson-link" href="#" aria-disabled="true">
+            <span class="n">05</span>
+            <h3>Restaurant → Home</h3>
+            <p>Eat the benchmark, then rebuild the structure. Starting with the three easiest steals
+              in the city — bánh tráng cuốn thịt heo, cơm gà Hội An, bún chả cá. (planned)</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="two-col" style="margin-top:var(--space-6)">
+      <div class="mini">
+        <h2>Reference</h2>
+        <ul>
+          <li><a href="reference/slot-grid-and-rotation.html">Slot grid &amp; rotation</a> — the grid, the rotation, the T+0→T+30 timeline, batch prep, the kid rules. <b>The one to print.</b></li>
+          <li><a href="reference/dish-bank.html">The dish bank</a> — every dish sorted by slot, with time, load and kid notes. Plus 11 restaurant→home adaptations.</li>
+          <li><a href="reference/fruit-and-snack-calendar.html">Fruit &amp; snack calendar</a> — twelve months, the July flag, the choking protocol, and the three recipes worth memorising.</li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h2>The mission</h2>
+        <ul>
+          <li><b>≥ 3 dishes</b>, every dinner, in <b>45–60 min</b> door-to-table.</li>
+          <li>Plan a whole week in <b>20 minutes</b>. No 5pm spiral.</li>
+          <li>Weekend prep is <b>encouraged</b> — it is the mechanism, not a luxury.</li>
+          <li>A child of <b>3–6</b> eats from the same tray, safely.</li>
+          <li><a href="MISSION.md">MISSION.md</a> · <a href="RESOURCES.md">RESOURCES.md</a></li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h2>Calibrate your palate</h2>
+        <ul>
+          <li><a href="https://myquangbamua.com.vn/">Mì Quảng Bà Mua</a> — 95A Nguyễn Tri Phương; taste the variants side by side</li>
+          <li><b>Bún Chả Cá 109</b> Nguyễn Chí Thanh — learn what that sweet, light broth actually is</li>
+          <li><b>Quán Mậu</b> — go and <em>look</em> at the <span class="vn">hai đầu da</span> cut</li>
+          <li><b>Cơm Gà Bà Buội</b>, 253 Hồ Nghinh — no need to drive to Hội An</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="callout" style="margin-top:var(--space-6); max-width: var(--measure)">
+      <span class="kicker">Why every claim here carries a badge</span>
+      <p>
+        The Vietnamese food web is SEO-farmed and increasingly AI-generated — research for this
+        workspace sampled a "Vietnamese 7-day family menu" that turned out to be largely
+        <em>Chinese</em> dishes. So: <span class="evidence src">Sourced</span> is traceable to a real
+        source, <span class="evidence prac">Practice</span> is what home cooks actually do, and
+        <span class="evidence infer">Inference</span> is my own synthesis — including the two-axis
+        rotation, which <b>no source states as an algorithm</b>, and which is labelled as mine
+        everywhere it appears. A good frame laundered into a false citation is how folklore gets
+        manufactured; this workspace would rather show you the seam.
+      </p>
+    </div>
+  </main>
+
+  <script src="../assets/theme.js"></script>
+</body>
+</html>

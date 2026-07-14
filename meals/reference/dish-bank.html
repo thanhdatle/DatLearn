@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="meals">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Dish Bank — Cơm Nhà — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/meals.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="ref">
+    <nav class="lesson-nav">
+      <a href="../../index.html">← All topics</a>
+      <span class="sep">·</span>
+      <a href="../index.html">Cơm Nhà</a>
+      <span class="sep">·</span>
+      <span>Dish bank</span>
+    </nav>
+
+    <p class="kicker">Reference · the page you open at 5:40pm</p>
+    <h1>The Dish Bank</h1>
+    <p class="ref-sub">
+      Every dish, sorted into the slot it fills. This is not a recipe book — it is a
+      <em>menu of options per slot</em>, so that filling tonight's grid is a scan, not a search.
+      Times are <strong>active time at the stove</strong>, assuming the protein is already thawed and
+      marinated.
+    </p>
+
+    <div class="callout">
+      <span class="kicker">How to read this page</span>
+      <p>
+        <b>Difficulty</b> — ★ easy · ★★ moderate · ★★★ needs your full attention.<br>
+        <span class="load active">Active</span> — needs your hands and your judgement. <b>Only one per tray.</b><br>
+        <span class="load passive">Passive</span> — short, formulaic, cannot surprise you. Two of these per tray.<br>
+        <span class="dish-tag trung">miền Trung</span> Central-Vietnamese ·
+        <span class="dish-tag kid">kid-safe</span> reliably eaten by a 3–6-year-old ·
+        <span class="dish-tag wknd">weekend</span> do not attempt this on a Tuesday.
+      </p>
+    </div>
+
+    <div class="callout good">
+      <span class="kicker">The exclusion, and how narrow it actually is</span>
+      <p>
+        <b>Out:</b> <span class="vn">thịt kho tàu</span> · <span class="vn">thịt kho trứng</span> ·
+        <span class="vn">thịt kho tiêu</span> — the caramel-braised pork dish itself.<br>
+        <b>In, and welcome:</b> <span class="vn">cá kho</span> · <span class="vn">tôm rim</span> ·
+        <span class="vn">sườn rim</span> · <span class="vn">sườn xào chua ngọt</span> ·
+        <span class="vn">gà kho</span>. <b>You have not lost the <em>kho</em> technique — you have
+        lost one recipe.</b> And <span class="vn">cá kho</span> is no consolation prize: fish is the
+        canonical protein of the <span class="vn">cơm–rau–cá</span> tradition.<a class="cite" href="https://doi.org/10.46324/pmp2202230">Marinescu&nbsp;2022</a>
+      </p>
+    </div>
+
+    <h2>Món mặn — the protein anchor</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:24%">Dish</th>
+            <th style="width:11%">Protein</th>
+            <th style="width:9%">Time</th>
+            <th style="width:8%">Diff.</th>
+            <th style="width:12%">Load</th>
+            <th style="width:36%">Kid notes (3–6) &amp; tags</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Trứng đúc thịt / trứng hấp thịt</b><br>steamed egg-and-pork cake</td>
+            <td>egg + pork</td>
+            <td class="num-cell">15–20′</td>
+            <td>★</td>
+            <td><span class="load passive">Passive</span></td>
+            <td><b>The single best kid dish in the repertoire.</b> Soft, mild, no bones, no chewing effort, high protein and choline. Scoop it straight onto rice. Mostly passive steaming.<a class="cite" href="https://www.huggies.com.vn/be-tap-di/thuc-don-cho-be/trung-duc-thit">src</a> <span class="dish-tag kid">kid-safe</span></td>
+          </tr>
+          <tr>
+            <td><b>Trứng cuộn thịt</b><br>rolled omelette, minced pork</td>
+            <td>egg + pork</td>
+            <td class="num-cell">15′</td>
+            <td>★</td>
+            <td><span class="load passive">Passive</span></td>
+            <td>Same idea, pan version. Slice into pinwheels — visually fun. Season lightly; omit the pepper from the child's slices. <span class="dish-tag kid">kid-safe</span></td>
+          </tr>
+          <tr>
+            <td><b>Cá nục kho / cá bống kho tiêu</b></td>
+            <td>fish</td>
+            <td class="num-cell">20–25′</td>
+            <td>★★</td>
+            <td><span class="load active">Active</span></td>
+            <td><b>Allowed, and canonical.</b> Central Vietnam's signature món mặn. Debone carefully for the child, or use fillet. Tastes better on day two — batch it. <span class="dish-tag trung">miền Trung</span></td>
+          </tr>
+          <tr>
+            <td><b>Cá ngừ / cá thu sốt cà chua</b><br>fish in tomato sauce</td>
+            <td>fish</td>
+            <td class="num-cell">20′</td>
+            <td>★</td>
+            <td><span class="load active">Active</span></td>
+            <td>The mild, sweet tomato sauce covers the "fishiness" children object to — the most reliable way to get a preschooler eating fish.<a class="cite" href="https://www.dienmayxanh.com/vao-bep/goi-y-7-thuc-don-bua-com-gia-dinh-mien-trung-de-lam-don-gian-10767">src</a> <span class="dish-tag trung">miền Trung</span> <span class="dish-tag kid">kid-safe</span></td>
+          </tr>
+          <tr>
+            <td><b>Cá chiên giòn / cá chiên nước mắm tỏi</b></td>
+            <td>fish</td>
+            <td class="num-cell">15′</td>
+            <td>★</td>
+            <td><span class="load active">Active</span></td>
+            <td>Crispy is a kid-friendly texture. <b>Serve the fish sauce on the side</b> — never poured over the child's portion. <span class="dish-tag trung">miền Trung</span></td>
+          </tr>
+          <tr>
+            <td><b>Chả cá chiên / chả cá thác lác</b><br>fried fish cake</td>
+            <td>fish</td>
+            <td class="num-cell">10′</td>
+            <td>★</td>
+            <td><span class="load passive">Passive</span></td>
+            <td>Boneless, springy, dippable — a huge win. <b>Buy the chả cá paste at the market: a legitimate shortcut, not a cheat.</b> <span class="dish-tag trung">miền Trung</span> <span class="dish-tag kid">kid-safe</span></td>
+          </tr>
+          <tr>
+            <td><b>Chả trứng lá hẹ</b><br>steamed egg cake, garlic chives</td>
+            <td>egg</td>
+            <td class="num-cell">15′</td>
+            <td>★</td>
+            <td><span class="load passive">Passive</span></td>
+            <td>Appears constantly on Huế and Central home trays. <span class="dish-tag trung">miền Trung</span> <span class="dish-tag kid">kid-safe</span></td>
+          </tr>
+          <tr>
+            <td><b>Thịt luộc chấm mắm nêm</b><br>poached pork belly + mắm nêm</td>
+            <td>pork</td>
+            <td class="num-cell">25′ passive</td>
+            <td>★</td>
+            <td><span class="load passive">Passive</span></td>
+            <td><b>The Đà Nẵng dish, and zero-attention cooking.</b> For the child: plain slices with rice and a <em>very</em> diluted fish sauce — <b>not</b> mắm nêm (too salty, too pungent). Adults get the mắm nêm. Bonus: the poaching liquid becomes the canh. <span class="dish-tag trung">miền Trung</span></td>
+          </tr>
+          <tr>
+            <td><b>Tôm rang / tôm rim</b><br>pan-fried shrimp</td>
+            <td>shrimp</td>
+            <td class="num-cell">10′</td>
+            <td>★</td>
+            <td><span class="load passive">Passive</span></td>
+            <td><b>Allowed.</b> Fast, sweet, kids love it. Peel for the child. Đà Nẵng is a seafood city — lean on this one. <span class="dish-tag kid">kid-safe</span></td>
+          </tr>
+          <tr>
+            <td><b>Thịt bò xào</b><br>beef with onion / pepper / celery</td>
+            <td>beef</td>
+            <td class="num-cell">10′</td>
+            <td>★</td>
+            <td><span class="load passive">Passive</span></td>
+            <td>Slice thin, cook fast. Doubles as the <span class="vn">món xào</span> if you add enough vegetable — which quietly collapses two slots into one.</td>
+          </tr>
+          <tr>
+            <td><b>Gà kho sả nghệ</b><br>chicken, lemongrass &amp; turmeric</td>
+            <td>chicken</td>
+            <td class="num-cell">25′</td>
+            <td>★★</td>
+            <td><span class="load active">Active</span></td>
+            <td><b>Allowed</b> — chicken, not pork. Golden, aromatic, and mild if you go light on the chilli. <span class="dish-tag trung">miền Trung</span></td>
+          </tr>
+          <tr>
+            <td><b>Gà hấp lá chanh / gà luộc</b><br>steamed or poached chicken</td>
+            <td>chicken</td>
+            <td class="num-cell">25′ passive</td>
+            <td>★</td>
+            <td><span class="load passive">Passive</span></td>
+            <td>Passive cooking, and <b>the poaching liquid is your canh</b> — one pot, two slots. Shred for the child. <span class="dish-tag kid">kid-safe</span></td>
+          </tr>
+          <tr>
+            <td><b>Sườn xào chua ngọt</b><br>sweet-sour stir-fried ribs</td>
+            <td>pork</td>
+            <td class="num-cell">20′</td>
+            <td>★★</td>
+            <td><span class="load active">Active</span></td>
+            <td><b>Allowed</b> — stir-fried, not braised. Sweet-and-sour is a reliably accepted kid flavour. <span class="dish-tag kid">kid-safe</span></td>
+          </tr>
+          <tr>
+            <td><b>Sườn rim mặn ngọt</b></td>
+            <td>pork</td>
+            <td class="num-cell">25′</td>
+            <td>★★</td>
+            <td><span class="load active">Active</span></td>
+            <td><b>Allowed — confirmed with you directly.</b> It is a caramel glaze on <em>ribs</em>; the objection is to <span class="vn">thịt kho tàu</span>'s specific profile (caramel + coconut water + hard-boiled egg), which this is not.</td>
+          </tr>
+          <tr>
+            <td><b>Đậu hũ chiên giòn / đậu hũ sốt cà</b></td>
+            <td>tofu</td>
+            <td class="num-cell">10–15′</td>
+            <td>★</td>
+            <td><span class="load passive">Passive</span></td>
+            <td>Cheap, fast, and this is the vegetarian rotation day. Air-fry it. <span class="dish-tag kid">kid-safe</span></td>
+          </tr>
+          <tr>
+            <td><b>Mực xào chua ngọt / mực xào sả ớt</b><br>squid stir-fry</td>
+            <td>squid</td>
+            <td class="num-cell">12′</td>
+            <td>★★</td>
+            <td><span class="load active">Active</span></td>
+            <td><b>Cook fast or it turns to rubber</b> — which is why it counts as active despite being quick. Go very light on the chilli for the child. <span class="dish-tag trung">miền Trung</span></td>
+          </tr>
+          <tr>
+            <td><b>Cá viên / chả tôm chiên sốt chua ngọt</b><br>fish or shrimp balls</td>
+            <td>fish/shrimp</td>
+            <td class="num-cell">15′</td>
+            <td>★</td>
+            <td><span class="load passive">Passive</span></td>
+            <td>Explicitly recommended for the 4–6 bracket. <b>Use the air fryer</b> — it cuts the oil and frees your hands. <span class="dish-tag kid">kid-safe</span></td>
+          </tr>
+          <tr>
+            <td><b>Thịt băm xào hành / xào khoai tây</b><br>minced pork stir-fry</td>
+            <td>pork</td>
+            <td class="num-cell">12′</td>
+            <td>★</td>
+            <td><span class="load passive">Passive</span></td>
+            <td>Minced means easy chewing. The potato version is extremely kid-appealing. <span class="dish-tag kid">kid-safe</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Rau — the vegetable dish</h2>
+
+    <p>
+      <strong>Every one of these is passive.</strong> The vegetable slot never competes for your
+      attention — which is exactly why the <span class="vn">món mặn</span> is allowed to be the active
+      one. And if it is <em>luộc</em> (boiled), <strong>the water becomes your canh</strong>.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:30%">Dish</th><th style="width:10%">Time</th><th style="width:8%">Diff.</th><th style="width:52%">Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>Rau muống xào tỏi</b><br>water spinach, garlic</td><td class="num-cell">7′</td><td>★</td><td>The single most iconic Vietnamese vegetable dish. Chop it short for small mouths. <span class="dish-tag kid">kid-safe</span></td></tr>
+          <tr><td><b>Đậu que / đậu cô ve xào tỏi</b><br>green beans, garlic</td><td class="num-cell">8′</td><td>★</td><td>Sweet, finger-food shaped, low bitterness — a <b>top-tier kid vegetable</b>. <span class="dish-tag kid">kid-safe</span></td></tr>
+          <tr><td><b>Su su xào cà rốt</b><br>chayote + carrot</td><td class="num-cell">10′</td><td>★</td><td>Naturally sweet and colourful. Children eat with their eyes first. <span class="dish-tag kid">kid-safe</span></td></tr>
+          <tr><td><b>Bí đỏ xào tỏi</b><br>pumpkin, garlic</td><td class="num-cell">10′</td><td>★</td><td>Sweet, soft, high beta-carotene. <span class="dish-tag kid">kid-safe</span></td></tr>
+          <tr><td><b>Súp lơ / bông cải xào</b><br>cauliflower or broccoli</td><td class="num-cell">10′</td><td>★</td><td>Blanch first, then a quick stir-fry — it stays green and tender instead of grey and sad.</td></tr>
+          <tr><td><b>Rau lang / mồng tơi xào tỏi</b><br>sweet-potato leaf, Malabar spinach</td><td class="num-cell">7′</td><td>★</td><td>Cheap and ubiquitous in Central Vietnam. <span class="dish-tag trung">miền Trung</span></td></tr>
+          <tr><td><b>Rau luộc thập cẩm</b><br>mixed boiled vegetables</td><td class="num-cell">8′</td><td>★</td><td><b>THE STRATEGIC DISH.</b> Boil bí, cà rốt, súp lơ, bắp cải → <b>the water becomes the canh</b>. Two slots, one pot. Serve the child's portion with the plain broth rather than a salty dip. <span class="dish-tag kid">kid-safe</span></td></tr>
+          <tr><td><b>Cà tím om nước tương</b><br>braised aubergine, soy</td><td class="num-cell">12′</td><td>★</td><td>Soft, savoury, needs no chilli at all. <span class="dish-tag kid">kid-safe</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Canh — the soup</h2>
+
+    <p>
+      Children will <em>drink</em> a vegetable they will not chew. The canh is the highest-yield
+      vegetable delivery mechanism you own — and in Central Vietnam it is structural besides: it is
+      what offsets the salt of the <span class="vn">món mặn</span>.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:32%">Dish</th><th style="width:10%">Time</th><th style="width:8%">Diff.</th><th style="width:50%">Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>Canh bí đao nấu tôm</b><br>winter melon + shrimp</td><td class="num-cell">12′</td><td>★</td><td>Clean, sweet, <em>mát</em> — <b>the go-to Central summer canh</b>. Very mild. <span class="dish-tag trung">miền Trung</span> <span class="dish-tag kid">kid-safe</span></td></tr>
+          <tr><td><b>Canh rau ngót / rau dền nấu thịt băm</b></td><td class="num-cell">10′</td><td>★</td><td>Classic, sweet, extremely mild. <span class="dish-tag kid">kid-safe</span></td></tr>
+          <tr><td><b>Canh cải thảo nấu nấm / đậu phụ</b></td><td class="num-cell">10′</td><td>★</td><td>A naturally sweet broth with no meat needed at all.</td></tr>
+          <tr><td><b>Canh mồng tơi / rau đay nấu cua</b></td><td class="num-cell">15′</td><td>★★</td><td>Slightly viscous — some children love it, some refuse outright. The dried-shrimp version is the fast shortcut.</td></tr>
+          <tr><td><b>Canh chua cá</b><br>sour fish soup</td><td class="num-cell">20′</td><td>★★</td><td><b><em>The</em> Central Vietnamese canh.</b> Cà chua, thơm, me or khế. <b>Cut the chilli entirely for the child</b> — the sour-sweet is the part they will like. <span class="dish-tag trung">miền Trung</span></td></tr>
+          <tr><td><b>Canh rau tập tàng nấu tôm khô</b></td><td class="num-cell">12′</td><td>★</td><td>A Huế home classic — and it uses up whatever greens are left. <span class="dish-tag trung">miền Trung</span></td></tr>
+          <tr><td><b>Canh bí đỏ nấu đậu phộng / nấu xương</b></td><td class="num-cell">15–20′</td><td>★</td><td>Sweet and creamy — often <b>the only canh a picky four-year-old will drink</b>. <span class="dish-tag kid">kid-safe</span></td></tr>
+          <tr><td><b>Canh trứng cà chua</b><br>tomato + egg drop</td><td class="num-cell">8′</td><td>★</td><td><b>The emergency canh.</b> Two ingredients, always in the fridge. Learn it and you can never be caught out. <span class="dish-tag kid">kid-safe</span></td></tr>
+          <tr><td><b>Canh mướp nấu hến / nấu tôm</b><br>luffa + clams or shrimp</td><td class="num-cell">12′</td><td>★</td><td>Very <em>miền Trung</em>, very cheap, very fast. <span class="dish-tag trung">miền Trung</span></td></tr>
+          <tr><td><b>Canh nước luộc rau + chanh / cà chua</b></td><td class="num-cell">0′ extra</td><td>★</td><td><b>Not a recipe — a technique.</b> The water you boiled the greens in, sharpened. <b>Read the caveats</b> in the <a href="slot-grid-and-rotation.html">slot grid</a> §5 before you use it.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Restaurant → home: 11 adaptations</h2>
+
+    <p>
+      Đà Nẵng's restaurant scene is built on <strong>one-dish specialists</strong> — each quán does
+      exactly one thing, for twenty years. That is the <em>opposite</em> of the
+      <span class="vn">cơm nhà</span> model, so it feeds your kitchen in two distinct ways: the
+      <strong>specialist bowl</strong> replaces the three-dish structure entirely on a night you want
+      a break, and the <strong>quán cơm plate</strong> <em>is</em> the weekday template.
+    </p>
+
+    <p>
+      <strong>Go and eat the benchmark before you cook the dish.</strong> You cannot reverse-engineer
+      a taste you have never registered.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:17%">Dish</th>
+            <th style="width:15%">Benchmark quán</th>
+            <th style="width:32%">The home version</th>
+            <th style="width:9%">Time</th>
+            <th style="width:27%">Kid workaround</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>1 · Bánh tráng cuốn thịt heo</b> <span class="dish-tag kid">kid-safe</span></td>
+            <td><b>Quán Mậu</b> (35 Đỗ Thúc Tịnh) — go to see the <em>hai đầu da</em> double-skin cut. <b>Ẩm thực Trần</b> (4 Lê Duẩn) with the child.</td>
+            <td><b>The easiest restaurant dish in the city to steal.</b> The only cooking is <em>boiling pork</em>. Everything else is washing and arranging. Buy rice paper + mì ướt; wash a big herb platter; mix the mắm nêm. It clears the 3-dish bar automatically, because the platter <em>is</em> multiple components.</td>
+            <td class="num-cell">~30′</td>
+            <td>Mắm nêm is the blocker, not the pork. <b>Give the child nước mắm chua ngọt</b> (fish sauce + sugar + lime + water, no chilli). Same meal, different saucer.</td>
+          </tr>
+          <tr>
+            <td><b>2 · Cơm gà Hội An</b> <span class="dish-tag kid">kid-safe</span></td>
+            <td><b>Cơm Gà Bà Buội</b> — Đà Nẵng branch, 253 Hồ Nghinh. You need not drive to Hội An.</td>
+            <td><b>A genuine one-pot.</b> Poach the chicken → cook the rice <em>in the poaching liquid</em> + turmeric → shred and toss the chicken with onion, lime, rau răm. <b>The poaching liquid is also your canh.</b> Mostly unattended.</td>
+            <td class="num-cell">~45′</td>
+            <td><b>The best kid dish here.</b> Plain chicken + golden rice + broth, all trivially separable. Hold the rau răm (peppery); the chilli-ginger sauce is a side, never mixed in.</td>
+          </tr>
+          <tr>
+            <td><b>3 · Bún thịt nướng</b> <span class="dish-tag kid">kid-safe</span></td>
+            <td>Bún Thịt Nướng – Ram Cuốn Cải, Hùng Vương</td>
+            <td>Marinate the pork <b>in the morning</b> (lemongrass, fish sauce, sugar, garlic, shallot). Pan-sear or grill for 10 min at dinner. Everything else is raw: cold bún, herbs, pickles, peanuts.</td>
+            <td class="num-cell">~25′</td>
+            <td>Sweet grilled pork is universally accepted. Nước mắm chua ngọt for the child, rather than the mắm nêm-based sauce.</td>
+          </tr>
+          <tr>
+            <td><b>4 · Mì Quảng (gà)</b> <span class="dish-tag trung">miền Trung</span></td>
+            <td><b>Mì Quảng Bà Mua</b> (95A Nguyễn Tri Phương) — taste the variants side by side.</td>
+            <td><b>Skip the bone stock — that is the part you can cheat.</b> Mì Quảng uses so little liquid that the flavour lives in the <em>nước nhân</em>: stir-fry chicken hard with củ nén / shallot / turmeric + crushed peanuts, then loosen. <b>Buy fresh noodles.</b> Blanch at ~60&nbsp;°C, <b>not boiling</b>, or they go to mush.<a class="cite" href="https://www.huongnghiepaau.com/mi-quang-tom-thit">src</a></td>
+            <td class="num-cell">~40′</td>
+            <td>Very kid-friendly — in this dish the chilli is on the side anyway. Crush the peanuts fine. The sesame cracker will be their favourite part of dinner.</td>
+          </tr>
+          <tr>
+            <td><b>5 · Bún chả cá</b> <span class="dish-tag kid">kid-safe</span></td>
+            <td><b>Bún Chả Cá 109 Nguyễn Chí Thanh</b></td>
+            <td><b>Buy the chả cá</b> (steamed and fried) at the market. Then the broth is fast, because fish stock is <em>meant</em> to be: fish bones + shallot, ~30 min, then <b>pumpkin, tomato, pineapple, cabbage</b> — the Đà Nẵng signature, and the reason the broth comes out light and sweet rather than heavy.</td>
+            <td class="num-cell">~40′</td>
+            <td>The pumpkin and pineapple make it naturally sweet. <b>Keep the ớt nhồi out of the pot</b> — the stuffed chilli belongs on top, per bowl.</td>
+          </tr>
+          <tr>
+            <td><b>6 · Bánh canh (ruộng)</b> <span class="dish-tag kid">kid-safe</span></td>
+            <td>Bánh canh cô Cúc · Bánh canh ruộng Phương</td>
+            <td>Buy the fresh bánh canh noodles. A fast fish or pork broth (~20 min), thickened slightly. Top with chả cá or quail eggs.</td>
+            <td class="num-cell">~30′</td>
+            <td>Thick slippery noodles plus quail eggs is essentially designed for a four-year-old.</td>
+          </tr>
+          <tr>
+            <td><b>7 · Ram cuốn cải</b></td>
+            <td>Ram cuốn cải Đào Duy Từ (near Chợ Cồn)</td>
+            <td>A genuinely Đà Nẵng-invented dish (c. 2000). <b>Buy frozen ram / chả giò → air-fry.</b> Wash the mustard greens, mix a nước chấm chua ngọt. Doubles as the "we have nothing planned" dinner alongside rice.</td>
+            <td class="num-cell">~20′</td>
+            <td>The ram: yes. <b>The raw mustard green: no</b> — far too bitter at 3–6. Give the child ram + rice + a mild dip; the cải is for the adults.</td>
+          </tr>
+          <tr>
+            <td><b>8 · The cơm bình dân tray</b> <span class="dish-tag kid">kid-safe</span></td>
+            <td>Any quán cơm — this is the <em>template</em>, not a dish.</td>
+            <td><b>The default weekday structure.</b> Rice + 1 attention dish + 1 fast stir-fry + 1 canh. Everything else on this page exists to fill it.</td>
+            <td class="num-cell">35–45′</td>
+            <td>This <em>is</em> the kid-safe baseline. Keep the canh mild; the chilli is always a separate saucer on a Vietnamese table.</td>
+          </tr>
+          <tr>
+            <td><b>9 · Bún mắm nêm</b></td>
+            <td><b>Bún Mắm Bà Thuyên</b> — kiệt K424/03 Lê Duẩn</td>
+            <td>Almost no cooking: boil pork, slice. Bún + mít non + herbs + nem/chả from the market. Mắm nêm poured over and tossed.</td>
+            <td class="num-cell">~25′</td>
+            <td><b>The hardest dish here to adapt</b> — the mắm nêm is <em>in</em> the bowl, not beside it. <b>Build the child's bowl separately:</b> same bún, same pork, same herbs, dressed with nước mắm chua ngọt. Structurally identical, mild dressing.</td>
+          </tr>
+          <tr class="weekend">
+            <td><b>10 · Bánh xèo</b> <span class="dish-tag wknd">weekend</span></td>
+            <td><b>Bánh Xèo Bà Dưỡng</b> — 280/23 Hoàng Diệu, 31+ years</td>
+            <td><b>Saturday only, and be honest about why:</b> you need small heavy pans and a screaming-hot surface. Cooking for three, one crepe at a time, means <b>one adult is pinned to the stove for 30 minutes while everything else goes cold.</b> A great family activity. A terrible Tuesday.</td>
+            <td class="num-cell">60′+</td>
+            <td>Kids love the wrapping — as a <em>Saturday activity</em>. Give them the sweet peanut dip.</td>
+          </tr>
+          <tr class="weekend">
+            <td><b>11 · Chả cá, made yourself</b> <span class="dish-tag wknd">weekend</span></td>
+            <td>—</td>
+            <td>Pound cá thác lác with salt, fish sauce, pepper, spring onion. <b><em>Quết</em> until it binds and turns springy</b> — the step everyone skips, and then wonders why theirs is mush.<a class="cite" href="https://www.dienmayxanh.com/vao-bep/cach-nau-bun-cha-ca-thac-lac-thom-ngon-hap-dan-de-lam-tai-nha-07017">src</a> Steam 20 min, pan-fry half. <b>Freezes well.</b></td>
+            <td class="num-cell">weekend batch</td>
+            <td>Once made, <b>the most useful thing in your freezer</b>: bún chả cá, bánh canh, or simply fried with rice. One weekend batch feeds three weeknights.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Two dishes to stop trying to cook</h2>
+
+    <div class="callout warn">
+      <span class="kicker">Go out and order these instead</span>
+      <p>
+        <b>Cao lầu</b> — <b>physically unreproducible outside Hội An.</b> The noodle requires lye water
+        burned from firewood on <b>Cù Lao Chàm</b>, and rice ground with water from the <b>Bá Lễ
+        well</b>. Vendors who move away from Hội An report they simply <em>cannot make it</em>
+        any more, and the sources are unanimous on this. It is a 40-minute drive. Do not try to be a
+        hero.<a class="cite" href="https://hoianmemoriesland.com/vi/cao-lau-dac-san-nhat-dinh-phai-thu-khi-toi-hoi-an-d53">src</a><br><br>
+        <b>Ốc hút</b> — not because it is difficult (it is a 15-minute stir-fry) but because it is a
+        <b>chilli-bomb</b> unsuitable for a 3–6-year-old, it takes <b>an hour to <em>eat</em></b> —
+        the exact opposite of a weeknight — and purging the snails properly is miserable prep. Pure
+        go-out-and-eat-it food.
+      </p>
+    </div>
+
+    <p style="margin-top:var(--space-6)">
+      <a href="../lessons/0001-the-mam-com-is-a-slot-grid.html">Lesson 01 — The Mâm Cơm Is a Slot Grid</a> ·
+      <a href="slot-grid-and-rotation.html">The slot grid &amp; rotation</a> ·
+      <a href="fruit-and-snack-calendar.html">Fruit &amp; snack calendar</a> ·
+      <a href="../index.html">Cơm Nhà</a>
+    </p>
+  </main>
+
+  <script src="../../assets/theme.js"></script>
+</body>
+</html>

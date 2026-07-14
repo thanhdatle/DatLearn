@@ -1,0 +1,461 @@
+/* ============================================================
+   MEALS topic — a leaf-green skin over the shared design system.
+
+   Loaded AFTER ../../assets/course.css and scoped to
+   <html data-topic="meals">, so it can never leak into the hub or any
+   other topic. course.css is the base and is NOT forked.
+
+   What this layer adds:
+     · Display type -> Be Vietnam Pro. Not decoration: this topic is
+       dense with stacked diacritics (mam com, mon man, trang mieng,
+       suon xao chua ngot). Handling them is THE typographic problem
+       here, and Be Vietnam Pro is drawn for it. Reading prose stays
+       Newsreader; UI stays Public Sans.
+     · Reference docs switch to sans — they are read mid-cook, on a
+       phone, with a pan going. Lessons are read once, at a desk.
+     · Topic colour as a token with a real dark-mode variant.
+       MEASURED, not guessed (node scripts/chip-contrast.mjs):
+         #2f7526  hue 113deg   5.69:1 on light --surface (#fff)
+         #86dd7a  hue 113deg  10.27:1 on dark --surface (#1d1c16)
+       HUB.md requires >=4.5:1 in both themes and >=40deg of hue
+       separation. Nearest neighbour is admob at 167deg — 54deg away.
+       Deliberately NOT emerald (~160deg): that collides with admob.
+     · A secondary warm amber/terracotta, used sparingly INSIDE lessons
+       (the tray, the timeline) and never as the hub chip. Green is the
+       vegetable; amber is the heat. Together they are a kitchen.
+     · Meals components: .mam (the four-slot tray — the workhorse),
+       .timeline (T+0 -> T+30), .safety (the choking protocol — the
+       loudest thing on any page it appears on), .now (the seasonal
+       flag), .dish-tag, .evidence badges.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap');
+
+/* ---------- Tokens ---------- */
+:root[data-topic="meals"] {
+  --font-display: 'Be Vietnam Pro', 'Public Sans', system-ui, sans-serif;
+
+  /* Topic colour. Light: 5.69:1 on --surface, 5.44:1 on --paper. Hue 113deg. */
+  --topic: #2f7526;
+  --topic-tint: color-mix(in oklab, var(--topic) 8%, transparent);
+  --topic-edge: color-mix(in oklab, var(--topic) 30%, var(--border));
+
+  /* Secondary accent: the heat. Amber/terracotta, lessons only.
+     Used for the món mặn slot (the salty anchor), timeline markers, and
+     the "this needs your attention" signal. Never a hub chip. */
+  --heat: #a8541c;
+
+  /* Semantic pair for the active/passive distinction — the core rule of
+     this topic. Not decorative: amber = the ONE dish that needs you,
+     green = the dishes that cook themselves. */
+  --active: #a8541c;
+  --passive: #2f7526;
+
+  /* The safety box. Deliberately the shared rust, because a choking
+     protocol must not read as "just another green callout". */
+  --danger: #b0442f;
+}
+
+/* Dark values. Set for BOTH the explicit toggle and the OS preference,
+   mirroring how course.css declares its dark tokens. */
+:root[data-topic="meals"][data-theme="dark"] {
+  --topic: #86dd7a;   /* 10.27:1 on dark --surface */
+  --heat: #e09a5f;
+  --active: #e09a5f;
+  --passive: #86dd7a;
+  --danger: #e0805f;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-topic="meals"]:not([data-theme="light"]) {
+    --topic: #86dd7a;
+    --heat: #e09a5f;
+    --active: #e09a5f;
+    --passive: #86dd7a;
+    --danger: #e0805f;
+  }
+}
+
+/* ---------- Display type ---------- */
+[data-topic="meals"] .hub-title,
+[data-topic="meals"] .topic-hero h1,
+[data-topic="meals"] .lesson-header h1,
+[data-topic="meals"] .ref h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  /* Stacked diacritics need vertical room. The shared 1.08 line-height
+     clips tone marks on a two-line Vietnamese heading. */
+  line-height: 1.15;
+}
+[data-topic="meals"] .topic-hero h1 em { font-style: italic; color: var(--topic); }
+
+[data-topic="meals"] .lesson-body h2,
+[data-topic="meals"] .ref h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+[data-topic="meals"] .lesson-body h3,
+[data-topic="meals"] .ref h3 { font-family: var(--font-display); }
+
+[data-topic="meals"] .kicker { font-family: var(--font-display); color: var(--topic); }
+[data-topic="meals"] .sidenote { border-left-color: var(--topic); }
+[data-topic="meals"] .sidenote .num { color: var(--topic); }
+[data-topic="meals"] .cite { color: var(--topic); }
+[data-topic="meals"] .pull { border-left-color: var(--heat); }
+[data-topic="meals"] .lesson-body .opening::first-letter { color: var(--topic); }
+
+/* Vietnamese terms in running prose. A quiet italic — enough to mark them
+   as vocabulary, not so much that a paragraph with six of them buzzes. */
+[data-topic="meals"] .vn {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* ---------- Reading vs reference ----------
+   Lesson prose keeps the serif: read once, slowly, at a desk.
+   Reference goes sans: read mid-cook, on a phone, with a pan going. */
+[data-topic="meals"] .ref,
+[data-topic="meals"] .ref p,
+[data-topic="meals"] .ref li,
+[data-topic="meals"] .ref dd { font-family: var(--font-ui); }
+[data-topic="meals"] .ref-sub { font-family: var(--font-ui); font-style: normal; color: var(--ink-mute); }
+
+/* ---------- Numbers ----------
+   Times, temperatures, grams, prices. Tabular, so a column of figures
+   does not shimmy as the values change. */
+[data-topic="meals"] table,
+[data-topic="meals"] .timeline,
+[data-topic="meals"] .mam { font-variant-numeric: tabular-nums; }
+
+/* ---------- Tables ----------
+   Wide tables scroll inside their own container, never the page. */
+.table-wrap {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  margin: var(--space-3) 0;
+  border-radius: var(--radius);
+}
+.table-wrap > table { margin: 0; min-width: 40rem; }
+.table-wrap:focus-visible { outline: 2px solid var(--topic); outline-offset: 2px; }
+[data-topic="meals"] tbody tr:last-child td { border-bottom: none; }
+
+/* A dish that must not be attempted on a weeknight. Marked by a left rule,
+   never by colour alone. */
+[data-topic="meals"] tr.weekend td:first-child { box-shadow: inset 3px 0 0 var(--heat); }
+
+/* ============================================================
+   .mam — the four-slot tray. THE workhorse component of this topic.
+
+   The entire pedagogical claim of lesson 1 is that a Vietnamese dinner
+   is a GRID YOU FILL, not a meal you invent. So the grid gets to be a
+   first-class object on the page, and every lesson can drop a filled
+   one in as a worked example.
+   ============================================================ */
+.mam {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr));
+  gap: var(--space-2);
+  margin: var(--space-4) 0;
+}
+.slot {
+  padding: var(--space-2);
+  background: var(--surface);
+  border: var(--rule) solid var(--border);
+  border-top: 3px solid var(--topic);
+  border-radius: var(--radius);
+  min-width: 0;
+  break-inside: avoid;
+}
+.slot h4 {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--topic);
+  margin: 0 0 .35rem;
+}
+.slot p { margin: 0; font-family: var(--font-ui); font-size: var(--text-sm); color: var(--ink-soft); line-height: 1.5; }
+.slot .slot-eg {
+  display: block;
+  margin-top: .5rem;
+  padding-top: .5rem;
+  border-top: var(--rule) solid var(--border);
+  color: var(--ink-mute);
+  font-size: var(--text-xs);
+}
+
+/* The món mặn: the salty anchor, and usually the one dish that needs you. */
+.slot.is-anchor { border-top-color: var(--heat); background: color-mix(in oklab, var(--heat) 5%, var(--surface)); }
+.slot.is-anchor h4 { color: var(--heat); }
+
+/* The dessert slot. Optional in theory; in this house, not optional. */
+.slot.is-sweet { border-top-style: dashed; }
+
+/* Active vs passive — the 45-minute rule, made visible. */
+.slot .load {
+  display: inline-block;
+  margin-top: .5rem;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.slot .load.active { color: var(--active); }
+.slot .load.passive { color: var(--passive); }
+
+/* ============================================================
+   .timeline — T+0 -> T+30, the thing that makes the hour close.
+   A vertical rail with clock marks. Still a list to a screen reader,
+   still a list on paper.
+   ============================================================ */
+.timeline {
+  list-style: none;
+  margin: var(--space-4) 0;
+  padding: 0 0 0 var(--space-3);
+  border-left: 2px solid var(--topic-edge);
+  display: grid;
+  gap: var(--space-3);
+}
+.timeline li { position: relative; min-width: 0; }
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--space-3) - 5px);
+  top: .55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--topic);
+}
+/* The step where the cook is actually pinned to the stove. */
+.timeline li.is-active::before { background: var(--heat); }
+.timeline .t {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--topic);
+  letter-spacing: .04em;
+}
+.timeline li.is-active .t { color: var(--heat); }
+.timeline .what {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.timeline .what b { color: var(--ink); font-weight: 600; }
+
+/* ============================================================
+   .safety — the choking protocol.
+
+   The one box on this site that is allowed to shout. A swallowed longan
+   pit is a real ER case in a Vietnamese July, not a theoretical risk, so
+   this must NOT read as "just another green callout". It borrows the rust
+   --danger, a heavier rule, and a tinted ground.
+   ============================================================ */
+.safety {
+  border: 2px solid var(--danger);
+  border-left-width: 6px;
+  border-radius: var(--radius);
+  background: color-mix(in oklab, var(--danger) 7%, var(--surface));
+  padding: var(--space-3);
+  margin: var(--space-4) 0;
+  break-inside: avoid;
+}
+.safety > .kicker {
+  display: block;
+  color: var(--danger);
+  font-weight: 700;
+  margin-bottom: var(--space-1);
+}
+.safety h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin: 0 0 var(--space-1);
+  color: var(--ink);
+}
+.safety p, .safety li { font-family: var(--font-ui); font-size: var(--text-sm); line-height: 1.6; color: var(--ink-soft); }
+.safety p:last-child, .safety ol:last-child, .safety ul:last-child { margin-bottom: 0; }
+.safety ol { margin: var(--space-1) 0; padding-left: 1.3em; }
+.safety li { margin-bottom: .3rem; }
+.safety li::marker { color: var(--danger); font-weight: 700; }
+.safety strong { color: var(--ink); font-weight: 700; }
+
+/* ---------- .now — the seasonal "right now" flag ----------
+   The fruit calendar is a 12-month table, but only one row is true today.
+   Flag it, or the reader redoes the lookup every single time. */
+.now {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--surface);
+  background: var(--topic);
+  padding: .15em .5em;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+[data-topic="meals"] tr.is-now { background: var(--topic-tint); }
+[data-topic="meals"] tr.is-now td { border-bottom-color: var(--topic-edge); }
+[data-topic="meals"] tr.is-now td:first-child { box-shadow: inset 3px 0 0 var(--topic); }
+
+/* ---------- .dish-tag — inline metadata on a dish ---------- */
+.dish-tag {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: .03em;
+  color: var(--ink-mute);
+  border: var(--rule) solid var(--border);
+  border-radius: 100px;
+  padding: .1em .6em;
+  white-space: nowrap;
+}
+.dish-tag.trung { color: var(--topic); border-color: var(--topic-edge); }   /* miền Trung */
+.dish-tag.kid { color: var(--good); border-color: color-mix(in oklab, var(--good) 35%, var(--border)); }
+.dish-tag.wknd { color: var(--heat); border-color: color-mix(in oklab, var(--heat) 35%, var(--border)); }
+
+/* ---------- Evidence badges ----------
+   Carried from bg3 and strength, because the same rule holds: never
+   present a synthesis as a settled fact. The two-axis rotation in this
+   topic is INFERENCE and is labelled as such wherever it appears. */
+.evidence {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.evidence.src   { color: var(--good); }    /* traceable to RESOURCES.md */
+.evidence.prac  { color: var(--warn); }    /* what home cooks actually do */
+.evidence.infer { color: var(--topic); }   /* my synthesis, flagged as mine */
+h2 > .evidence, h3 > .evidence, dt > .evidence, td > .evidence { margin-left: .6ch; vertical-align: middle; }
+
+/* ---------- Recipe cards (fruit & snack reference) ---------- */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr)); gap: var(--space-2); margin: var(--space-3) 0; }
+.rcard {
+  border: var(--rule) solid var(--border);
+  border-top: 3px solid var(--topic);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: var(--space-2) var(--space-3);
+  min-width: 0;
+  break-inside: avoid;
+}
+.rcard h3 { font-family: var(--font-display); font-size: var(--text-base); font-weight: 700; margin: 0 0 .2rem; }
+.rcard .rcard-sub { font-family: var(--font-ui); font-size: var(--text-xs); color: var(--ink-mute); margin: 0 0 var(--space-1); }
+.rcard p, .rcard li { font-family: var(--font-ui); font-size: var(--text-sm); color: var(--ink-soft); line-height: 1.55; }
+.rcard ol, .rcard ul { margin: var(--space-1) 0 0; padding-left: 1.2em; }
+.rcard li { margin-bottom: .3rem; }
+.rcard .ratio {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink);
+  background: var(--paper);
+  border: var(--rule) solid var(--border);
+  border-radius: var(--radius);
+  padding: .5rem .7rem;
+  margin: var(--space-1) 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Lesson cards on the topic landing page ---------- */
+.lesson-list { display: grid; gap: var(--space-2); margin: var(--space-3) 0; list-style: none; padding: 0; }
+.lesson-link {
+  display: block;
+  padding: var(--space-3);
+  background: var(--surface);
+  border: var(--rule) solid var(--border);
+  border-left: 3px solid var(--topic);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--duration) var(--ease), border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+}
+.lesson-link:hover { transform: translateX(3px); border-color: var(--border-strong); box-shadow: var(--shadow); }
+.lesson-link:focus-visible { outline: 2px solid var(--topic); outline-offset: 3px; }
+.lesson-link .n { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--topic); font-weight: 500; }
+.lesson-link h3 { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; margin: .2rem 0 .3rem; line-height: 1.3; }
+.lesson-link p { margin: 0; color: var(--ink-soft); font-size: var(--text-sm); font-family: var(--font-ui); }
+
+/* ---------- Accessibility fixes carried up from the strength/bg3 audits ---------- */
+
+/* course.css disables every option once a quiz is answered but never styles
+   the disabled state — a dead button looked identical to a live one. */
+[data-topic="meals"] .quiz-option:disabled { opacity: .45; cursor: not-allowed; }
+[data-topic="meals"] .quiz-option.correct:disabled,
+[data-topic="meals"] .quiz-option.wrong:disabled { opacity: 1; cursor: default; }
+
+/* Links had no visible focus ring — keyboard users were flying blind. */
+[data-topic="meals"] a:focus-visible {
+  outline: 2px solid var(--topic);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Superscript citations were ~10px tap targets. Grow the hit area without
+   moving the glyph. */
+[data-topic="meals"] .cite { padding: .5em .45em; margin: -.5em -.2em; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 700px) {
+  .table-wrap > table { min-width: 32rem; }
+  .timeline { padding-left: var(--space-2); }
+  .timeline li::before { left: calc(-1 * var(--space-2) - 5px); }
+}
+
+/* ---------- Print ----------
+   The references exist to be printed and stuck to a kitchen wall, or read
+   on a phone with wet hands. Kill scroll containers and card chrome; keep
+   every semantic distinction as a RULE or a MARK, never as colour alone —
+   a greyscale printout must still say "this dish is a weekend project". */
+@media print {
+  .table-wrap { overflow: visible; }
+  .table-wrap > table { min-width: 0; }
+
+  .slot, .rcard { border: none; border-left: 2px solid #000; background: none; }
+  .slot h4, .rcard h3 { color: #000; }
+  .slot.is-anchor { background: none; }
+  .slot.is-anchor h4::before { content: "* "; }
+  .slot .load.active::before { content: "[!] "; }
+  .slot .load.passive::before { content: "[~] "; }
+  .slot .load.active, .slot .load.passive { color: #000; }
+
+  .timeline { border-left: 1px solid #000; }
+  .timeline li::before { background: #000; }
+  .timeline li.is-active .t::after { content: " [HANDS ON]"; }
+  .timeline .t, .timeline li.is-active .t { color: #000; }
+
+  /* The safety box must survive a black-and-white printout intact. */
+  .safety { border: 3px solid #000; background: none; }
+  .safety > .kicker, .safety h3 { color: #000; }
+  .safety > .kicker::before { content: "!! "; }
+
+  .now { background: none; color: #000; border: 1px solid #000; }
+  tr.is-now { background: none; }
+  tr.is-now td:first-child::before { content: "> "; font-weight: 700; }
+
+  .dish-tag { color: #000; border-color: #000; }
+  .evidence.src::before   { content: "[S] "; }
+  .evidence.prac::before  { content: "[P] "; }
+  .evidence.infer::before { content: "[I] "; }
+  .evidence.src, .evidence.prac, .evidence.infer { color: #000; }
+
+  tr.weekend td:first-child { box-shadow: none; }
+  tr.weekend td:first-child::after { content: " [weekend]"; font-weight: 700; }
+
+  .lesson-list, .lesson-link, .mam, .timeline li { break-inside: avoid; }
+}

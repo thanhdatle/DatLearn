@@ -35,18 +35,34 @@ DatLearn/
 | [Strength](strength/index.html) | Still lifting, still strong, in twenty years — progression without grinding | 1 lesson live |
 | [LLM Foundations](llm/index.html) | Open the black box by building one, on this Mac. The gap to GLM is a number, not a mystery | 2 lessons live |
 | [Baldur's Gate 3](bg3/index.html) | Finish a first playthrough on Balanced without hitting a wall — by deleting the DOS2 reflexes BG3 punishes | 2 lessons live |
+| [Cơm Nhà](meals/index.html) | Three dishes on the table every weeknight in under an hour — the mâm cơm as a grid you fill, not a meal you invent at 5:40pm | 1 lesson live |
 
 ### Topic colours
 
 Topic chips (`--chip`, defined in `index.html`) must clear **4.5:1 contrast in both themes** — they
 are rendered as kicker *text* — **and** sit **≥ 40° apart in hue**, or two topics read as one on the
-grid. Both properties are measured, never guessed. Current: admob 167°, strength 232°, llm 295°,
-bg3 39°.
+grid. Both properties are measured, never guessed: run **`node scripts/chip-contrast.mjs`**, which
+computes WCAG contrast and HSL hue for candidate hexes and prints the arcs still free.
 
-The wheel is now crowded. A fifth topic must land ≥ 40° from **all four**, which leaves exactly two
-usable arcs: **79–127°** (yellow → green) and **335–359°** (crimson). The 167→232 and 232→295 gaps
-are 65° and 63° wide and therefore admit *nothing* — a chip in either would sit < 40° from both
-neighbours. Computed, not eyeballed; recompute when you add the fifth.
+Current: **bg3 39°, meals 113°, admob 167°, strength 232°, llm 295°.**
+
+**The wheel is now essentially full.** Placing meals at 113° consumed the usable middle of the
+79–127° arc that the fifth topic was aiming at. A **sixth** topic must sit ≥ 40° from **all five**
+hues, and the arithmetic leaves exactly **one** viable arc:
+
+| Gap | Width | Room for a chip ≥ 40° from both ends? |
+|---|---|---|
+| bg3 39° → meals 113° | 74° | **No** — a chip would need to be ≥ 79° *and* ≤ 73°. Empty. |
+| meals 113° → admob 167° | 54° | **No.** |
+| admob 167° → strength 232° | 65° | **No.** |
+| strength 232° → llm 295° | 63° | **No.** |
+| llm 295° → bg3 39° (wraps through 0°) | 104° | **Yes — 336°–359°, 24° wide.** |
+
+So topic six is a **crimson / rose** chip in **336–359°**, and it is the last one that fits under this
+rule. A **seventh** topic cannot satisfy ≥ 40° separation anywhere on the wheel — at that point you
+must either relax the policy (drop to ~30°) or stop distinguishing topics by hue alone and add a
+second channel (shape, weight, a mark). Decide that deliberately when it happens, rather than quietly
+shipping two chips that read as one. Computed, not eyeballed; recompute when you add the sixth.
 
 ## Adding a topic
 
