@@ -33,25 +33,42 @@
        themes carry the SAME hue (113deg), so the chip reads as one green across
        a theme toggle rather than as two different greens.
 
-       All measured with `node scripts/chip-contrast.mjs`, not eyeballed. Rerun
-       it before adding a sixth topic: with five chips placed, the ONLY arc still
-       >= 40deg from every one of them is 336-359deg (crimson), 24deg wide. */
+       kai (crimson/rose) 340deg   6.70:1 light   8.48:1 dark
+       kai took the last slot on the wheel, and it is exactly the one the note
+       below this line predicted: 45deg from its nearest neighbour (llm, 295deg),
+       inside the 336-359deg arc that was the only region still >= 40deg from all
+       five others. Same hue in BOTH themes, like meals, so the chip reads as one
+       colour across a theme toggle rather than as two different pinks.
+
+       THE WHEEL IS NOW FULL. A SEVENTH topic cannot satisfy >= 40deg separation
+       anywhere on it — every arc between placed chips is now under 80deg, so a
+       new chip would need to be >= 40deg from both ends of a gap that isn't
+       80deg wide. Don't quietly ship a seventh chip that reads as a sixth.
+       Either relax the policy to ~30deg ON PURPOSE, or add a second channel
+       (shape, weight, a mark) and stop distinguishing topics by hue alone.
+       Decide it deliberately; do not drift into it.
+
+       All measured with `node scripts/chip-contrast.mjs`, not eyeballed (kai
+       recomputed with the same WCAG relative-luminance + HSL arithmetic). */
     .topic-card.t-admob    { --chip: #0a7d65; }
     .topic-card.t-strength { --chip: #4a56a6; }
     .topic-card.t-llm      { --chip: #86198f; }
     .topic-card.t-bg3      { --chip: #8a5a00; }
     .topic-card.t-meals    { --chip: #2f7526; }
+    .topic-card.t-kai      { --chip: #b3164b; }
     :root[data-theme="dark"] .topic-card.t-admob    { --chip: #2fc79f; }
     :root[data-theme="dark"] .topic-card.t-strength { --chip: #9aa2e8; }
     :root[data-theme="dark"] .topic-card.t-llm      { --chip: #e879f9; }
     :root[data-theme="dark"] .topic-card.t-bg3      { --chip: #e8b04b; }
     :root[data-theme="dark"] .topic-card.t-meals    { --chip: #86dd7a; }
+    :root[data-theme="dark"] .topic-card.t-kai      { --chip: #fb9aba; }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) .topic-card.t-admob    { --chip: #2fc79f; }
       :root:not([data-theme="light"]) .topic-card.t-strength { --chip: #9aa2e8; }
       :root:not([data-theme="light"]) .topic-card.t-llm      { --chip: #e879f9; }
       :root:not([data-theme="light"]) .topic-card.t-bg3      { --chip: #e8b04b; }
       :root:not([data-theme="light"]) .topic-card.t-meals    { --chip: #86dd7a; }
+      :root:not([data-theme="light"]) .topic-card.t-kai      { --chip: #fb9aba; }
     }
   </style>
 </head>
@@ -146,6 +163,21 @@
           <div class="topic-meta">
             <span><b>1</b> lesson</span>
             <span><b>45–60</b> min</span>
+            <span>Active</span>
+          </div>
+        </a>
+
+        <a class="topic-card t-kai" href="kai-memory/index.html">
+          <p class="kicker">Teaching a three-year-old</p>
+          <span class="topic-name">Kai Memory</span>
+          <p class="topic-desc">
+            Ten digits is 3× what a three-year-old can hold — so the phone
+            number can't be remembered, it has to be <em>sung</em>. And the
+            loop that puts it there works on anything else too.
+          </p>
+          <div class="topic-meta">
+            <span><b>1</b> lesson</span>
+            <span><b>5</b> min/day</span>
             <span>Active</span>
           </div>
         </a>

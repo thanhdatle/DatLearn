@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="kai">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kai Memory — DatLearn</title>
+  <link rel="stylesheet" href="../assets/course.css">
+  <link rel="stylesheet" href="assets/kai.css">
+  <style>
+    .topic-hero { max-width: 52ch; margin-bottom: var(--space-6); }
+    .topic-hero h1 { font-size: var(--text-hero); font-weight: 700; letter-spacing: -0.01em;
+      line-height: 1.02; margin: .3rem 0 var(--space-2); }
+    .topic-hero h1 em { font-style: italic; color: var(--topic); }
+    .lesson-list { list-style: none; padding: 0; margin: var(--space-2) 0 0; display: grid; gap: var(--space-2); }
+    .lesson-list a { display: flex; gap: var(--space-3); align-items: baseline;
+      text-decoration: none; padding: var(--space-2) var(--space-3);
+      border: var(--rule) solid var(--border); border-radius: var(--radius-lg);
+      background: var(--surface); transition: border-color var(--duration) var(--ease), transform var(--duration) var(--ease); }
+    .lesson-list a:hover { border-color: var(--border-strong); transform: translateX(3px); }
+    .lesson-list a:focus-visible { outline: 2px solid var(--topic); outline-offset: 2px; }
+    .lesson-num { font-family: var(--font-mono); color: var(--topic); font-size: var(--text-sm); }
+    .lesson-title { font-size: var(--text-lg); font-weight: 600; }
+    .lesson-desc { color: var(--ink-soft); font-family: var(--font-ui); font-size: var(--text-sm); margin: .2rem 0 0; }
+    .lesson-list li.planned a { opacity: .6; border-style: dashed; pointer-events: none; }
+    .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: var(--space-3); }
+    .mini { font-family: var(--font-ui); }
+    .mini h2 { font-family: var(--font-ui); font-size: var(--text-base); font-weight:600;
+      text-transform: uppercase; letter-spacing:.08em; color: var(--ink-mute); margin: 0 0 var(--space-1); }
+    .mini ul { margin: 0; padding-left: 1.1em; color: var(--ink-soft); font-size: var(--text-sm); line-height:1.6; }
+    .mini a { text-decoration-color: var(--topic); }
+    .the-number { font-family: var(--font-mono); font-weight: 600; letter-spacing: .1em; color: var(--topic); }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="lesson">
+    <nav class="lesson-nav">
+      <a href="../index.html">← All topics</a>
+    </nav>
+
+    <header class="topic-hero">
+      <p class="kicker">Teaching a three-year-old</p>
+      <h1>Ten digits,<br><em>in a song.</em></h1>
+      <p class="hub-sub">
+        Kai is three. Ten digits is about <strong>three times</strong> what his mind can hold — so
+        <span class="the-number">0862 145 286</span> cannot be <em>remembered</em>. It has to be
+        <em>sung</em>: one object, retrieved whole, the way he already sings the alphabet. This workspace
+        teaches <strong>you</strong> how to put it there — and then how to put anything else there too.
+      </p>
+    </header>
+
+    <section aria-labelledby="lessons-h">
+      <h2 id="lessons-h" class="kicker">Lessons — for the coach, not the child</h2>
+      <ol class="lesson-list">
+        <li>
+          <a href="lessons/0001-the-phone-number-song.html">
+            <span class="lesson-num">01</span>
+            <span>
+              <span class="lesson-title">The Phone Number Song</span>
+              <p class="lesson-desc">Why it must be a song, the exact tune and lyrics, and the week-one rule that saves you a month. ~10 min + 4 drills.</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">02</span>
+            <span>
+              <span class="lesson-title">From singing it to <em>saying</em> it</span>
+              <p class="lesson-desc">The failure you should expect, and the sing → chant → speak ladder that fixes it. (planned — once he can sing it)</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">03</span>
+            <span>
+              <span class="lesson-title">Rehearsing "lost" without frightening him</span>
+              <p class="lesson-desc">Fire-drill framing, the mum-with-kids rule, and the unhelpful-adult drill. (planned)</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">04</span>
+            <span>
+              <span class="lesson-title">Teaching Kai the next thing</span>
+              <p class="lesson-desc">Running the loop on new material, once the number has proved it works. (planned)</p>
+            </span>
+          </a>
+        </li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="print-h" style="margin-top:var(--space-6)">
+      <h2 id="print-h" class="kicker">Print these three — today</h2>
+      <p class="lesson-desc" style="max-width:60ch;margin-bottom:var(--space-1)">
+        The lessons are read once, at a desk. <strong>These are read on a fridge, in a hurry, with a
+        toddler pulling at your leg.</strong> They are built to be printed, and each fits on one page.
+      </p>
+      <ol class="lesson-list">
+        <li>
+          <a href="reference/song-sheet.html">
+            <span class="lesson-num">§1</span>
+            <span>
+              <span class="lesson-title">The song sheet</span>
+              <p class="lesson-desc">The lyric-to-digit mapping, the butterfly hook, the five-minute daily cadence, the backward-chaining ladder. <strong>Fridge.</strong></p>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="reference/lost-child-protocol.html">
+            <span class="lesson-num">§2</span>
+            <span>
+              <span class="lesson-title">The lost-child protocol</span>
+              <p class="lesson-desc">Six steps, the one-sentence script, the unhelpful-adult drill, and the backup ID measures. <strong>Wall.</strong></p>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="reference/transferable-system.html">
+            <span class="lesson-num">§3</span>
+            <span>
+              <span class="lesson-title">The transferable system</span>
+              <p class="lesson-desc">The five-step loop for teaching Kai <em>anything</em>. What works at 3–4, and what has to wait. <strong>The real point of all this.</strong></p>
+            </span>
+          </a>
+        </li>
+      </ol>
+    </section>
+
+    <section class="two-col" style="margin-top:var(--space-6)">
+      <div class="mini">
+        <h2>The mission</h2>
+        <ul>
+          <li>If Kai gets lost, he can hand a safe adult my number.</li>
+          <li>And I gain a coaching loop that works on anything else.</li>
+          <li><strong>The song is the goal. The tag is the insurance.</strong></li>
+          <li><a href="MISSION.md">MISSION.md</a> · <a href="RESOURCES.md">RESOURCES.md</a></li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h2>What's honest about this</h2>
+        <ul>
+          <li><strong>No study has ever taught ten digits to a three-year-old.</strong> The nearest used five-year-olds and seven digits.</li>
+          <li><strong>No organisation publishes a target age</strong> — not the AAP, not NCMEC.</li>
+          <li>The 2–6 week timeline is <strong>parent anecdote</strong>, not research.</li>
+          <li>Partial mastery at 3–4 is <strong>on track</strong>, not failure.</li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h2>Primary sources</h2>
+        <ul>
+          <li><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2018.01446/full">A recipe for a testing effect in preschoolers</a> — Kliegl 2018. How to quiz a small child.</li>
+          <li><a href="https://doi.org/10.1093/jmt/30.2.100">Melodies as structural prompts</a> — Wolfe &amp; Hom 1993. Preschoolers, phone numbers, sung.</li>
+          <li><a href="https://www.kidpower.org/library/article/getting-lost/">What if I get lost?</a> — Kidpower. The scripts, including the unhelpful adult.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="../assets/theme.js"></script>
+</body>
+</html>

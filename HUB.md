@@ -36,6 +36,7 @@ DatLearn/
 | [LLM Foundations](llm/index.html) | Open the black box by building one, on this Mac. The gap to GLM is a number, not a mystery | 2 lessons live |
 | [Baldur's Gate 3](bg3/index.html) | Finish a first playthrough on Balanced without hitting a wall — by deleting the DOS2 reflexes BG3 punishes | 2 lessons live |
 | [Cơm Nhà](meals/index.html) | Three dishes on the table every weeknight in under an hour — the mâm cơm as a grid you fill, not a meal you invent at 5:40pm | 1 lesson live |
+| [Kai Memory](kai-memory/index.html) | Get my phone number into a 3-year-old — as a song, because ten digits is 3× his span — and keep the coaching loop for everything after it | 1 lesson live |
 
 ### Topic colours
 
@@ -44,11 +45,15 @@ are rendered as kicker *text* — **and** sit **≥ 40° apart in hue**, or two 
 grid. Both properties are measured, never guessed: run **`node scripts/chip-contrast.mjs`**, which
 computes WCAG contrast and HSL hue for candidate hexes and prints the arcs still free.
 
-Current: **bg3 39°, meals 113°, admob 167°, strength 232°, llm 295°.**
+Current: **bg3 39°, meals 113°, admob 167°, strength 232°, llm 295°, kai 340°.**
 
-**The wheel is now essentially full.** Placing meals at 113° consumed the usable middle of the
-79–127° arc that the fifth topic was aiming at. A **sixth** topic must sit ≥ 40° from **all five**
-hues, and the arithmetic leaves exactly **one** viable arc:
+**The wheel is now full.** The previous version of this section predicted that topic six had exactly
+one viable arc — **336°–359°, 24° wide** — because it was the only gap where a chip could sit ≥ 40°
+from both of its neighbours. That prediction held. **`kai` was placed at 340°** (`#b3164b` light,
+6.70:1 · `#fb9aba` dark, 8.48:1), **45° from its nearest neighbour (llm, 295°)**, same hue in both
+themes so it reads as one colour across a theme toggle.
+
+That was the last slot. Every arc between placed chips is now **under 80°**:
 
 | Gap | Width | Room for a chip ≥ 40° from both ends? |
 |---|---|---|
@@ -56,13 +61,14 @@ hues, and the arithmetic leaves exactly **one** viable arc:
 | meals 113° → admob 167° | 54° | **No.** |
 | admob 167° → strength 232° | 65° | **No.** |
 | strength 232° → llm 295° | 63° | **No.** |
-| llm 295° → bg3 39° (wraps through 0°) | 104° | **Yes — 336°–359°, 24° wide.** |
+| llm 295° → **kai 340°** | 45° | **No.** |
+| **kai 340°** → bg3 39° (wraps through 0°) | 59° | **No.** |
 
-So topic six is a **crimson / rose** chip in **336–359°**, and it is the last one that fits under this
-rule. A **seventh** topic cannot satisfy ≥ 40° separation anywhere on the wheel — at that point you
-must either relax the policy (drop to ~30°) or stop distinguishing topics by hue alone and add a
-second channel (shape, weight, a mark). Decide that deliberately when it happens, rather than quietly
-shipping two chips that read as one. Computed, not eyeballed; recompute when you add the sixth.
+**A seventh topic cannot satisfy ≥ 40° separation anywhere on the wheel.** There is no arithmetic left
+to do — the next topic forces a decision, and it must be made **deliberately**, not drifted into.
+Either **relax the policy to ~30°** on purpose, or **stop distinguishing topics by hue alone** and add
+a second channel (shape, weight, a mark). Do not quietly ship a seventh chip that reads as one of the
+six. Computed with `node scripts/chip-contrast.mjs`, never eyeballed.
 
 ## Adding a topic
 

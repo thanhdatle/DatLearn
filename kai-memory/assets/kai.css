@@ -1,0 +1,286 @@
+/* ============================================================
+   Kai Memory topic — a warm, playful skin over the shared design system.
+
+   Loaded AFTER ../../assets/course.css and scoped to
+   <html data-topic="kai">, so it can never leak into the hub or any
+   other topic. course.css is the base and is NOT forked.
+
+   What this layer changes:
+     · Display type -> Baloo 2 (rounded, warm — this topic is about a
+       three-year-old). UI/labels -> Nunito.
+     · Reading prose stays Newsreader: the PARENT reads the lessons, at
+       a desk, once. Kai reads nothing here. Don't "childify" the prose —
+       the coach is an adult and deserves adult typography.
+     · Topic colour is a token with a real dark-mode variant. Both values
+       sit at hue 340deg (crimson/rose) — the only arc still >= 40deg from
+       all five existing topics, per HUB.md's own arithmetic.
+         light #b3164b  6.70:1 on --surface, 6.42:1 on --paper
+         dark  #fb9aba  8.48:1 on --surface, 9.16:1 on --paper
+       Nearest neighbour: llm (295deg), 45deg away. Measured, not guessed.
+     · Components: .song (lyric-to-digit mapping), .ladder + .step
+       (backward chaining; the lost-child protocol), .cadence (the daily
+       table), .say (a line that comes out of a child's mouth).
+     · Every component is print-safe. The three reference sheets get
+       printed and stuck on a wall — that is their entire job.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap');
+
+/* ---------- Tokens ---------- */
+:root[data-topic="kai"] {
+  --font-display: 'Baloo 2', 'Public Sans', system-ui, sans-serif;
+  --font-ui: 'Nunito', 'Public Sans', system-ui, sans-serif;
+
+  --topic: #b3164b;
+  --topic-tint: color-mix(in oklab, var(--topic) 8%, transparent);
+  --topic-edge: color-mix(in oklab, var(--topic) 30%, var(--border));
+}
+
+:root[data-topic="kai"][data-theme="dark"] { --topic: #fb9aba; }
+@media (prefers-color-scheme: dark) {
+  :root[data-topic="kai"]:not([data-theme="light"]) { --topic: #fb9aba; }
+}
+
+/* ---------- Display type ---------- */
+[data-topic="kai"] .hub-title,
+[data-topic="kai"] .topic-hero h1,
+[data-topic="kai"] .lesson-header h1,
+[data-topic="kai"] .ref h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+[data-topic="kai"] .topic-hero h1 { line-height: 1.02; }
+[data-topic="kai"] .topic-hero h1 em { font-style: italic; }
+
+[data-topic="kai"] .lesson-body h2,
+[data-topic="kai"] .ref h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: calc(var(--text-xl) * 1.05);
+  letter-spacing: 0;
+}
+[data-topic="kai"] .kicker { color: var(--topic); }
+
+/* Reference sheets go sans — printed, pinned, read at a glance by a
+   parent halfway out the door. Lesson prose stays serif. */
+[data-topic="kai"] .ref,
+[data-topic="kai"] .ref p,
+[data-topic="kai"] .ref li,
+[data-topic="kai"] .ref dd { font-family: var(--font-ui); }
+[data-topic="kai"] .ref-sub { font-family: var(--font-ui); font-style: normal; color: var(--ink-mute); }
+
+/* ---------- Numbers ---------- */
+[data-topic="kai"] table { font-variant-numeric: tabular-nums; }
+[data-topic="kai"] .num-cell { font-weight: 600; }
+
+/* ---------- Tables ----------
+   Wide tables scroll inside their own container, never the page. */
+.table-wrap {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  margin: var(--space-3) 0;
+  border-radius: var(--radius);
+}
+.table-wrap > table { margin: 0; min-width: 30rem; }
+.table-wrap:focus-visible { outline: 2px solid var(--topic); outline-offset: 2px; }
+
+[data-topic="kai"] th,
+[data-topic="kai"] td { padding: .55rem .8rem; }
+[data-topic="kai"] tbody tr:last-child td { border-bottom: none; }
+
+/* ---------- The song ----------
+   A lyric line paired with the digits it carries. The digits are the
+   payload; the words are the vehicle. Show both, aligned, always. */
+.song {
+  margin: var(--space-3) 0;
+  border: var(--rule) solid var(--border);
+  border-left: 3px solid var(--topic);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  overflow: hidden;
+  break-inside: avoid;
+}
+.song-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .4rem 1rem;
+  padding: .5rem .9rem;
+  border-bottom: var(--rule) solid var(--border);
+}
+.song-line:last-child { border-bottom: none; }
+.song-line .bar {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-mute);
+  min-width: 2.5ch;
+}
+.song-line .words {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  color: var(--ink);
+  flex: 1 1 14ch;
+}
+.song-line .digits {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: .18em;
+  color: var(--topic);
+  white-space: nowrap;
+}
+/* The two lines that carry no digits — the call to action. */
+.song-line.tag .words { color: var(--accent); }
+.song-line.tag .digits { color: var(--ink-mute); letter-spacing: 0; font-style: italic; }
+
+/* ---------- The ladder ----------
+   Backward chaining, and the six steps of the lost-child protocol.
+   An ordered list where the ordinal is the whole point. */
+.ladder {
+  list-style: none;
+  margin: var(--space-3) 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-1);
+  counter-reset: rung;
+}
+.ladder > .step {
+  display: grid;
+  grid-template-columns: 2.1rem 1fr;
+  gap: .9rem;
+  align-items: start;
+  padding: .6rem .8rem;
+  background: var(--surface);
+  border: var(--rule) solid var(--border);
+  border-radius: var(--radius);
+  break-inside: avoid;
+}
+.ladder > .step::before {
+  counter-increment: rung;
+  content: counter(rung);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  color: var(--topic);
+  background: var(--topic-tint);
+  border-radius: 999px;
+  width: 2.1rem;
+  height: 2.1rem;
+  display: grid;
+  place-items: center;
+}
+.ladder .step b { display: block; font-family: var(--font-ui); font-weight: 700; }
+.ladder .step p { margin: .15rem 0 0; font-size: var(--text-sm); color: var(--ink-soft); font-family: var(--font-ui); }
+.ladder .step .cue {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+.ladder .step .cue b { display: inline; color: var(--topic); font-family: var(--font-mono); }
+
+/* ---------- A spoken script line ----------
+   Words that come out of a child's mouth. Set them apart from prose
+   ABOUT those words — a parent skimming must never confuse the two. */
+.say {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  line-height: 1.4;
+  margin: var(--space-2) 0;
+  padding: .7rem .9rem;
+  background: var(--topic-tint);
+  border-left: 3px solid var(--topic);
+  border-radius: var(--radius);
+  color: var(--ink);
+  break-inside: avoid;
+}
+.say .num {
+  font-family: var(--font-mono);
+  letter-spacing: .12em;
+  color: var(--topic);
+  white-space: nowrap;
+}
+
+/* ---------- The daily cadence table ---------- */
+.cadence td:first-child { font-weight: 700; font-family: var(--font-ui); white-space: nowrap; }
+.cadence td:last-child { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--ink-mute); white-space: nowrap; }
+
+/* ---------- Evidence badges ---------- */
+.evidence {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.evidence.peer { color: var(--good); }
+.evidence.coach { color: var(--warn); }
+.evidence.none { color: var(--accent); }
+
+/* ---------- Fixes carried forward from the strength UX audit ---------- */
+
+/* course.css disables every option once a quiz is answered but never
+   styles the disabled state — a dead button looked identical to a live
+   one. Fade the untaken options; keep the touched ones vivid. */
+[data-topic="kai"] .quiz-option:disabled { opacity: .45; cursor: not-allowed; }
+[data-topic="kai"] .quiz-option.correct:disabled,
+[data-topic="kai"] .quiz-option.wrong:disabled { opacity: 1; cursor: default; }
+
+/* Links had no visible focus ring — keyboard users were flying blind. */
+[data-topic="kai"] a:focus-visible {
+  outline: 2px solid var(--topic);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Superscript citations were ~10px tap targets. Grow the hit area
+   without moving the glyph. */
+[data-topic="kai"] .cite { padding: .5em .45em; margin: -.5em -.2em; }
+
+/* Sidenote rules follow the topic, not the global accent. */
+[data-topic="kai"] .sidenote { border-left-color: var(--topic); }
+[data-topic="kai"] .sidenote .num { color: var(--topic); }
+
+.drill-set { display: grid; gap: var(--space-2); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .table-wrap > table { min-width: 26rem; }
+  .song-line { gap: .2rem .6rem; }
+  .song-line .words { flex-basis: 100%; }
+  .ladder > .step { grid-template-columns: 1.8rem 1fr; gap: .6rem; }
+  .ladder > .step::before { width: 1.8rem; height: 1.8rem; }
+}
+
+/* ---------- Print ----------
+   These sheets get printed and stuck on a wall. Kill the scroll
+   containers and the fills; keep every emphasis as a RULE, so it
+   survives a black-and-white printer with nothing lost. */
+@media print {
+  .table-wrap { overflow: visible; }
+  .table-wrap > table { min-width: 0; }
+
+  .song { border: 1px solid #000; border-left: 2px solid #000; background: none; }
+  .song-line { border-bottom: 1px solid #999; }
+  .song-line .digits { color: #000; }
+  .song-line.tag .words { color: #000; }
+
+  .ladder > .step {
+    border: none;
+    border-left: 2px solid #000;
+    border-radius: 0;
+    padding: .2rem 0 .2rem .6rem;
+    background: none;
+  }
+  .ladder > .step::before { background: none; color: #000; border: 1px solid #000; }
+
+  .say { background: none; border-left: 2px solid #000; }
+  .say .num { color: #000; }
+
+  .evidence.peer, .evidence.coach, .evidence.none { color: #000; }
+}
