@@ -181,6 +181,14 @@ Shared `assets/course.css`, **not forked** — plus `meals/assets/meals.css`, a 
 - **Reference docs go sans-serif.** Same rule the other topics use: lessons are read once, slowly, at
   a desk; **references are read mid-cook, on a phone, with a pan going.**
 
+## The live plan
+
+**`reference/two-week-menu-july.html` covers Wed 15 → Tue 28 July 2026** — 14 dinners, 14 lunches,
+two Sunday batch-prep blocks (19th, 26th), two shopping lists, and a self-audit of the rotation. It
+is the *concrete* artifact; the slot grid is the *method*. **It expires on 28 July** — when it does,
+either write the next fortnight or delete it, but do not leave a stale menu on the shelf pretending
+to be current.
+
 ## Evidence labelling — carried from every other DatLearn topic
 
 | Badge | Means |

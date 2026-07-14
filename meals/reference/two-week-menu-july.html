@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="meals">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Two-Week Menu · 15–28 July — Cơm Nhà — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/meals.css">
+  <style>
+    /* page-local: the calendar. Nothing here belongs in meals.css yet —
+       promote it if a second dated menu ever gets written. */
+    .wk { font-family: var(--font-display); font-weight: 700; letter-spacing: .01em; }
+
+    /* One day = one card. A table would have been wrong: a day is not a row of
+       parallel fields, it is a little document. Stacks on a phone, 2-up on a
+       desktop, 2-up on paper. */
+    .days { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(21rem, 100%), 1fr)); gap: var(--space-2); margin: var(--space-3) 0; }
+    .day {
+      border: var(--rule) solid var(--border);
+      border-left: 3px solid var(--topic);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: var(--space-2) var(--space-3);
+      min-width: 0;
+      break-inside: avoid;
+    }
+    .day.is-break { border-left-color: var(--heat); }
+    .day.is-prep  { border-left-width: 6px; }
+    .day-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .6ch; margin-bottom: var(--space-1); padding-bottom: var(--space-1); border-bottom: var(--rule) solid var(--border); }
+    .day-head .date { font-family: var(--font-display); font-weight: 700; font-size: var(--text-base); color: var(--ink); }
+    .prot {
+      font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase; color: var(--topic);
+      border: var(--rule) solid var(--topic-edge); border-radius: 100px; padding: .05em .6em;
+    }
+    .day-head .load-count { margin-left: auto; font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+    .load-count.one  { color: var(--active); }
+    .load-count.zero { color: var(--passive); }
+
+    .meal { margin: 0 0 var(--space-1); font-family: var(--font-ui); font-size: var(--text-sm); line-height: 1.55; color: var(--ink-soft); }
+    .meal:last-child { margin-bottom: 0; }
+    .meal .lbl {
+      display: inline-block; min-width: 6.2em;
+      font-weight: 700; font-size: var(--text-xs); letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink-mute);
+    }
+    .meal b { color: var(--ink); font-weight: 600; }
+    .meal .a { color: var(--active); font-weight: 700; }   /* the one active dish */
+    .kidnote { display: block; margin-top: .3rem; font-size: var(--text-xs); color: var(--ink-mute); font-style: italic; }
+
+    /* Compact pit-and-quarter marker. Loud enough to catch the eye on a phone,
+       small enough to sit inline on a dessert line. */
+    .pit {
+      display: inline-block; font-family: var(--font-ui); font-size: var(--text-xs);
+      font-weight: 700; letter-spacing: .03em; white-space: nowrap;
+      color: var(--danger); border: 1px solid var(--danger); border-radius: 3px;
+      padding: 0 .35em; margin-left: .2em;
+    }
+
+    .brk { font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--heat); }
+
+    @media print {
+      .days { grid-template-columns: 1fr 1fr; }
+      .day { border: none; border-left: 2px solid #000; background: none; }
+      .prot, .pit { border-color: #000; color: #000; }
+      .load-count.one::before  { content: "[!] "; }
+      .load-count.zero::before { content: "[~] "; }
+      .load-count.one, .load-count.zero, .meal .a, .brk { color: #000; }
+      .pit::before { content: "!! "; }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="ref">
+    <nav class="lesson-nav">
+      <a href="../../index.html">← All topics</a>
+      <span class="sep">·</span>
+      <a href="../index.html">Cơm Nhà</a>
+      <span class="sep">·</span>
+      <span>Two-week menu</span>
+    </nav>
+
+    <p class="kicker">Reference · concrete plan · 15–28 July 2026</p>
+    <h1>The Two-Week Menu</h1>
+    <p class="ref-sub">
+      Fourteen dinners, fourteen lunches, two Sundays, two shopping lists. The rules live in
+      <a href="slot-grid-and-rotation.html">the slot grid</a>; the options live in
+      <a href="dish-bank.html">the dish bank</a>; the fruit lives in
+      <a href="fruit-and-snack-calendar.html">the calendar</a>. <strong>This page is the answer,
+      already filled in.</strong> You do not have to think. You have to shop, and then cook.
+    </p>
+
+    <div class="callout">
+      <span class="kicker">How to read a day</span>
+      <p>
+        <span class="load-count one">1 active</span> — exactly one dish tonight wants your hands and
+        your judgement. Everything else runs on rails.<br>
+        <span class="load-count zero">0 active</span> — <b>nothing tonight needs you.</b> A reheat, a
+        boil, a platter. These are not slack days; they are the days the system pays you back, and
+        there are <b>five of them in this fortnight.</b><br>
+        <span class="brk">Break</span> — a restaurant-inspired dish that replaces the slot grid.<br>
+        <span class="pit">pit + quarter</span> — this dessert contains nhãn, vải or chôm chôm.
+        <b>Not optional.</b> See the box below.
+      </p>
+      <p style="margin-top:var(--space-1)">
+        The chip on each day — <span class="prot">cá</span> — is the <b>anchor protein</b>, the one in
+        the <span class="vn">món mặn</span>. <b>No two consecutive days share one.</b> Check it
+        yourself; that is the whole rotation.
+      </p>
+    </div>
+
+    <div class="safety">
+      <span class="kicker">The one rule here that is not about dinner</span>
+      <h3>Nhãn, vải and chôm chôm: peel → split → remove the pit → quarter. Every time.</h3>
+      <p>
+        <strong>This fortnight serves them on six separate days</strong> — Wed 15, Tue 21, Wed 22,
+        Thu 23, Mon 27, Tue 28. It is July, they are at peak, and they are also <strong>the classic
+        Vietnamese paediatric choking emergency</strong>.
+        A child's airway is ~<strong>10&nbsp;mm</strong>; a whole longan is
+        <strong>17–20&nbsp;mm</strong>, round and slippery — a near-perfect
+        plug.<a class="cite" href="https://www.cdc.gov/infant-toddler-nutrition/foods-and-drinks/choking-hazards.html">CDC</a>
+        Vietnamese hospitals report recurring ER cases from <strong>hạt nhãn</strong>, including a
+        27-month-old resuscitated after swallowing
+        one.<a class="cite" href="https://nhathuoclongchau.com.vn/bai-viet/hoc-hat-nhan-khi-dang-an-be-trai-tim-tai-toan-than-phai-cap-cuu-khan-cap-10009.html">case</a>
+      </p>
+      <ol>
+        <li><strong>Peel.</strong></li>
+        <li><strong>Split the flesh and take the pit out.</strong> Never hand over a peeled-but-whole fruit — the child pops it in and the pit follows.</li>
+        <li><strong>Quarter</strong> at 3–4. Halve lengthwise at 4–5.</li>
+        <li><strong>Seated, on a plate.</strong> Never walking, never laughing, never in front of a screen.</li>
+      </ol>
+      <p>
+        Every day below that serves one carries a <span class="pit">pit + quarter</span> marker. Full
+        protocol, and the first-aid mistakes to avoid, in
+        <a href="fruit-and-snack-calendar.html">the fruit calendar</a>.
+      </p>
+    </div>
+
+    <!-- ================= WEEK 1 ================= -->
+    <h2 class="wk">Week 1 · Wed 15 – Tue 21 July</h2>
+
+    <p>
+      The week that proves the grid works. It is deliberately front-loaded: <strong>six of its seven
+      dinners carry one active dish</strong> — and the seventh is Tuesday, which Sunday already
+      cooked for you.
+    </p>
+
+    <div class="days">
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">Wed 15</span>
+          <span class="prot">cá</span>
+          <span class="load-count one">1 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Lunch</span> Cơm · <b>trứng chiên thịt băm</b> · rau luộc.
+          <br><span class="lbl"></span><b>Sữa chua trái cây</b> — xoài + thanh long, on unsweetened yogurt.</p>
+        <p class="meal"><span class="lbl">Dinner</span>
+          <b class="a">Cá nục sốt cà</b> <span class="a">← active</span> · rau muống xào tỏi ·
+          canh bí đao nấu tôm · cơm.<a class="cite" href="https://www.dienmayxanh.com/vao-bep/goi-y-7-thuc-don-bua-com-gia-dinh-mien-trung-de-lam-don-gian-10767">src</a>
+          <br><span class="lbl">Tráng miệng</span> Chôm chôm + măng cụt <span class="pit">pit + quarter</span>
+          <span class="kidnote">Kid: the sweet tomato covers the fishiness — this is the most reliable way to get a preschooler eating fish. Fish sauce on the side, never poured over their portion.</span>
+        </p>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">Thu 16</span>
+          <span class="prot">heo</span>
+          <span class="load-count one">1 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Lunch</span> <b>Leftover cá nục sốt cà</b> + cơm + rau muống.
+          <br><span class="lbl"></span>Sữa chua trơn + chuối.</p>
+        <p class="meal"><span class="lbl">Dinner</span>
+          <b class="a">Sườn xào chua ngọt</b> <span class="a">← active</span> · đậu que xào tỏi ·
+          canh trứng cà chua · cơm.
+          <br><span class="lbl">Tráng miệng</span> Thanh long + chuối
+          <span class="kidnote">Kid: sweet-and-sour is the most reliably accepted flavour in the whole repertoire. Stir-fried, not braised — allowed, and always was.</span>
+        </p>
+      </article>
+
+      <article class="day is-break">
+        <div class="day-head">
+          <span class="date">Fri 17</span>
+          <span class="prot">gà</span>
+          <span class="load-count one">1 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Lunch</span> Cơm chiên trứng + dưa leo.
+          <br><span class="lbl"></span>Fruit plate — dưa hấu.</p>
+        <p class="meal"><span class="lbl">Dinner</span> <span class="brk">Break</span>
+          <b class="a">Mì Quảng gà</b> <span class="a">← the nước nhân is the active bit</span> —
+          one bowl, no slot grid. Buy fresh noodles. <b>Skip the bone stock:</b> the flavour lives in
+          the nước nhân (chicken hard-fried with củ nén, shallot, turmeric, crushed peanuts).
+          <b>Blanch the noodles at ~60&nbsp;°C, NOT boiling</b>, or they turn to
+          mush.<a class="cite" href="https://www.huongnghiepaau.com/mi-quang-tom-thit">src</a>
+          Herb plate + bánh tráng mè nướng snapped over the top.
+          <br><span class="lbl">Tráng miệng</span> Dưa hấu
+          <span class="kidnote">Calibrate first at <b>Mì Quảng Bà Mua</b>, 95A Nguyễn Tri Phương — it runs the variants side by side. Kid: the chilli sits on the side in this dish anyway. Crush the peanuts fine. The sesame cracker is the best part of their week.</span>
+        </p>
+      </article>
+
+      <article class="day is-break">
+        <div class="day-head">
+          <span class="date">Sat 18</span>
+          <span class="prot">mực</span>
+          <span class="load-count one">1 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Lunch</span> <span class="brk">Break · family activity</span>
+          <b>BÁNH XÈO.</b> This is why it is a Saturday lunch and not a Tuesday dinner: someone is
+          pinned to the stove for half an hour, one crepe at a time. On a Tuesday that person is
+          furious. On a Saturday they are having a nice time. Small heavy pan, screaming heat.
+          Everyone rolls their own.
+          <br><span class="lbl"></span>Fruit — thanh long.
+          <span class="kidnote">Calibrate at <b>Bánh Xèo Bà Dưỡng</b>, 280/23 Hoàng Diệu (down the alley), 31+ years, ~12-herb platter. Kid: give them the sweet peanut dip, and let them do the wrapping — for a five-year-old the wrapping <em>is</em> the meal.</span>
+        </p>
+        <p class="meal"><span class="lbl">Afternoon</span> <b>Bánh chuối nướng</b> — this week's bake.
+          It is <b>90 minutes of the oven doing its own thing</b> (or much less in the air fryer), so
+          it costs you an afternoon you are already at home for, and it hands you next week's
+          breakfasts. Soak the peeled bananas in salt water first; slice them thick.
+          <span class="kidnote">Use the over-ripe chuối and the stale bánh mì from Shopping List 1 — you bought them for this. <b>Freeze half.</b></span>
+        </p>
+        <p class="meal"><span class="lbl">Dinner</span>
+          <b class="a">Mực xào chua ngọt</b> <span class="a">← active</span> · rau lang luộc ·
+          <b>canh from the rau-lang water</b> + cà chua · cơm.
+          <br><span class="lbl">Tráng miệng</span> <b>Bòn bon</b> (Quảng Nam — the one fruit this city genuinely owns) + thanh long
+          <span class="kidnote">A deliberately tiny dinner after a bánh xèo lunch. Squid goes to rubber in seconds — that is the <em>only</em> reason it counts as active. Very light on the chilli.</span>
+        </p>
+      </article>
+
+      <article class="day is-prep">
+        <div class="day-head">
+          <span class="date">Sun 19</span>
+          <span class="prot">cá</span>
+          <span class="load-count one">1 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Morning</span> <b>BATCH-PREP BLOCK 1</b> (~90 min) — see below.
+          The week's chia pudding goes in the fridge now.</p>
+        <p class="meal"><span class="lbl">Lunch</span> <b>Leftover mực</b> + cơm + canh.
+          <br><span class="lbl"></span>Sữa chua trái cây — măng cụt.</p>
+        <p class="meal"><span class="lbl">Dinner</span>
+          <b class="a">Cá nục kho — COOK A BIG POT</b> <span class="a">← active</span> ·
+          súp lơ xào · canh rau ngót nấu thịt băm · cơm.
+          <br><span class="lbl">Tráng miệng</span> <b>Chè chuối</b> — the one chè of the week. <b>Halve the sugar</b>; the bananas and the coconut milk carry it.
+          <span class="kidnote">Cook enough cá kho for <b>tonight AND Tuesday.</b> It genuinely tastes better on day two. This one decision is what makes Tuesday a zero-active night.</span>
+        </p>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">Mon 20</span>
+          <span class="prot">gà</span>
+          <span class="load-count one">1 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Lunch</span> <b>Leftover cá nục kho</b> + cơm + rau luộc.
+          <br><span class="lbl"></span>Sữa chua trơn + bơ.</p>
+        <p class="meal"><span class="lbl">Dinner</span>
+          <b class="a">Gà kho sả nghệ</b> <span class="a">← active</span> · bí đỏ xào tỏi ·
+          canh cải thảo nấu nấm · cơm.
+          <br><span class="lbl">Tráng miệng</span> Măng cụt + bơ
+          <span class="kidnote">Kid: go light on the chilli and it is golden, aromatic, mild. Chicken, not pork — this is <em>kho</em>, and <em>kho</em> was never the problem.</span>
+        </p>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">Tue 21</span>
+          <span class="prot">cá</span>
+          <span class="load-count zero">0 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Lunch</span> <b>Bánh canh</b> — buy the fresh noodles, fast broth, quail eggs on top. One bowl, ~30 min.
+          <br><span class="lbl"></span>Chôm chôm <span class="pit">pit + quarter</span></p>
+        <p class="meal"><span class="lbl">Dinner</span>
+          <b>Cá nục kho — reheated from Sunday</b> · rau muống xào tỏi · canh trứng cà chua · cơm.
+          <br><span class="lbl">Tráng miệng</span> Nhãn <span class="pit">pit + quarter</span> + đu đủ
+          <span class="kidnote"><b>Nothing tonight needs you.</b> A reheat, one 7-minute stir-fry, a two-ingredient canh. This is Sunday paying you back — and it lands on the worst night of the week on purpose.</span>
+        </p>
+      </article>
+
+    </div>
+
+    <h3>Sunday 19 July — Batch-prep block 1</h3>
+
+    <div class="callout good">
+      <span class="kicker">~90 minutes. It buys back four evenings.</span>
+      <p>
+        <b>1 · Cook the big pot.</b> <b>Cá nục kho</b> — enough for Sunday dinner <em>and</em> Tuesday.
+        Cool it properly before it goes in the fridge.<br>
+        <b>2 · Marinate and portion</b> the week's proteins into single-meal bags: chicken thigh with
+        sả + nghệ (→ Mon 20); anything for next week straight into the freezer.
+        <b>Marinated meat freezes better and tastes better</b> — it absorbs the seasoning while it
+        thaws.<br>
+        <b>3 · The sauce jar.</b> Nước mắm + đường + tỏi + ớt, made once. A weeknight dish becomes
+        <em>"spoon two tablespoons"</em> instead of <em>"measure five things."</em> <b>Make a second,
+        chilli-free jar for the child</b> — that is their nước chấm for the whole fortnight, and it is
+        what makes Wednesday's mắm nêm night painless.<br>
+        <b>4 · Greens:</b> wash, spin dry, box with a paper towel to take up the moisture.
+        <b>Aromatics:</b> peel and mince garlic and shallots in bulk; freeze in an ice-cube tray.<br>
+        <b>5 · Chia pudding</b> — 3 tbsp chia : 1 cup milk. <b>Stir, wait 10 min, stir again HARD.</b>
+        Keeps ~5 days → Monday-to-Friday breakfast, handled.<br>
+        <b>6 · Thaw tonight:</b> nothing. Monday's chicken is fresh.
+      </p>
+    </div>
+
+    <!-- ================= WEEK 2 ================= -->
+    <h2 class="wk">Week 2 · Wed 22 – Tue 28 July</h2>
+
+    <p>
+      Week two looks lazier, and it <em>is</em> lazier — <strong>only three of its seven dinners carry
+      an active dish.</strong> That is not the plan degrading. That is the plan working: the batch
+      pot, the platter, the one-pot, the reheat. <strong>If week two feels easier than week one, you
+      have understood the course.</strong>
+    </p>
+
+    <div class="days">
+
+      <article class="day is-break">
+        <div class="day-head">
+          <span class="date">Wed 22</span>
+          <span class="prot">heo</span>
+          <span class="load-count zero">0 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Lunch</span> <b>Leftover gà kho sả nghệ</b> + cơm.
+          <br><span class="lbl"></span>Sữa chua trái cây — nhãn <span class="pit">pit + quarter</span> + xoài.</p>
+        <p class="meal"><span class="lbl">Dinner</span> <span class="brk">Break · hot evening</span>
+          <b>Bánh tráng cuốn thịt heo.</b> <b>The only cooking is boiling pork.</b> Everything else is
+          washing and arranging: rice paper, mì ướt, a mountain of herbs, mắm nêm. It clears the
+          three-dish bar automatically, because the platter <em>is</em> multiple components.
+          <br><span class="lbl">Tráng miệng</span> Dưa hấu
+          <span class="kidnote"><b>Kid — mắm nêm is the blocker, not the pork.</b> Give them their own saucer of nước mắm chua ngọt (no chilli) from the jar you made on Sunday. Same meal, different dip. Calibrate the cut at <b>Quán Mậu</b> (35 Đỗ Thúc Tịnh) — go and <em>look</em> at "thịt heo hai đầu da" before you ask a butcher for it. Take the child to <b>Ẩm thực Trần</b> (4 Lê Duẩn) instead; it is the comfortable one.</span>
+        </p>
+      </article>
+
+      <article class="day is-break">
+        <div class="day-head">
+          <span class="date">Thu 23</span>
+          <span class="prot">cá</span>
+          <span class="load-count one">1 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Lunch</span> Cơm · <b>chả cá chiên</b> (market-bought) · rau luộc.
+          <br><span class="lbl"></span>Fruit — dưa hấu.</p>
+        <p class="meal"><span class="lbl">Dinner</span> <span class="brk">Break</span>
+          <b class="a">Bún chả cá</b> <span class="a">← the broth is the active bit</span> —
+          <b>buy the chả cá at the market</b> (steamed and fried). That is a legitimate shortcut, not a
+          cheat: making it yourself is a weekend project. Fish bones + shallot, ~30 min, then
+          <b>pumpkin, tomato, pineapple and cabbage cooked into the broth</b> — the Đà Nẵng signature,
+          and the reason it comes out light and sweet instead of heavy.
+          <br><span class="lbl">Tráng miệng</span> Nhãn <span class="pit">pit + quarter</span> + thanh long
+          <span class="kidnote">Calibrate at <b>Bún Chả Cá 109 Nguyễn Chí Thanh</b>. Kid: the pumpkin and pineapple make it naturally sweet — one of the easiest bowls of the fortnight for them. <b>Keep the ớt nhồi OUT of the pot</b>; the stuffed chilli goes on top, per bowl.</span>
+        </p>
+      </article>
+
+      <article class="day is-break">
+        <div class="day-head">
+          <span class="date">Fri 24</span>
+          <span class="prot">gà</span>
+          <span class="load-count one">1 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Lunch</span> <b>Leftover bún chả cá</b> broth + bún.
+          <br><span class="lbl"></span>Sữa chua trái cây — mít + chuối.</p>
+        <p class="meal"><span class="lbl">Dinner</span> <span class="brk">Break · one-pot</span>
+          <b class="a">Cơm gà Hội An</b> <span class="a">← active: shred &amp; dress</span> —
+          poach the chicken → <b>cook the rice in the poaching liquid</b> + turmeric → shred it and
+          toss with onion, lime, rau răm. <b>The poaching liquid is also your canh.</b> One pot
+          produces the protein, the rice AND the soup. Mostly unattended.
+          <br><span class="lbl">Tráng miệng</span> Dưa hấu + măng cụt
+          <span class="kidnote">Calibrate at <b>Cơm Gà Bà Buội</b> — Đà Nẵng branch, 253 Hồ Nghinh. You do not need to drive to Hội An. Kid: plain chicken + golden rice + a bowl of broth, all trivially separable. <b>Hold the rau răm</b> (peppery); the chilli-ginger sauce is a side, never mixed in.</span>
+        </p>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">Sat 25</span>
+          <span class="prot">bò</span>
+          <span class="load-count zero">0 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Lunch</span> <b>Ram cuốn cải</b> — frozen ram straight into the
+          <b>air fryer</b>, wash the mustard greens, mix a nước chấm chua ngọt. ~20 min. A
+          Đà Nẵng-invented dish, barely 25 years old.
+          <br><span class="lbl"></span>Fruit — mít.
+          <span class="kidnote">Kid: the ram, yes. <b>The raw mustard green, no</b> — far too bitter at 3–6. Give them ram + rice + the sweet dip; the cải is for the adults.</span>
+        </p>
+        <p class="meal"><span class="lbl">Dinner</span>
+          <b>Bò xào ớt chuông hành tây</b> · súp lơ luộc · <b>canh from the súp-lơ water</b> + cà chua · cơm.
+          <br><span class="lbl">Tráng miệng</span> <b>Chè đậu xanh</b> — the one chè of the week. <b>Halve the sugar.</b>
+          <span class="kidnote">Slice the beef thin and cook it fast. Nothing tonight needs judgement — a Saturday should not.</span>
+        </p>
+      </article>
+
+      <article class="day is-prep">
+        <div class="day-head">
+          <span class="date">Sun 26</span>
+          <span class="prot">heo</span>
+          <span class="load-count one">1 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Morning</span> <b>BATCH-PREP BLOCK 2</b> (~90 min) — see below.
+          Chia pudding again. <b>Banana bread bake</b> — halved sugar, freeze one loaf.</p>
+        <p class="meal"><span class="lbl">Lunch</span> <b>Leftover cơm gà</b> + its broth.
+          <br><span class="lbl"></span>Sữa chua trơn + <b>bòn bon</b>.</p>
+        <p class="meal"><span class="lbl">Dinner</span>
+          <b class="a">Sườn rim mặn ngọt — COOK A BIG POT</b> <span class="a">← active</span> ·
+          bí đỏ xào tỏi · canh rau ngót · cơm.
+          <br><span class="lbl">Tráng miệng</span> Bơ + mít
+          <span class="kidnote"><b>Allowed, and confirmed directly with you.</b> It is a caramel glaze on <em>ribs</em>. The dish you don't eat is thịt kho tàu — caramel + coconut water + hard-boiled egg — and this is not that. Cook enough for <b>tonight AND Tuesday.</b></span>
+        </p>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">Mon 27</span>
+          <span class="prot">tôm</span>
+          <span class="load-count zero">0 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Lunch</span> <b>Leftover sườn rim</b> + cơm + rau.
+          <br><span class="lbl"></span>Sữa chua trái cây — thanh long + xoài.</p>
+        <p class="meal"><span class="lbl">Dinner</span>
+          <b>Tôm rim</b> · cà tím om nước tương · canh cải thảo nấu nấm · cơm.
+          <br><span class="lbl">Tráng miệng</span> Chôm chôm <span class="pit">pit + quarter</span> + đu đủ
+          <span class="kidnote">Ten-minute shrimp, a soft braised aubergine, a soup that simmers itself. <b>Peel the shrimp for the child.</b> Đà Nẵng is a seafood city — lean on this.</span>
+        </p>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">Tue 28</span>
+          <span class="prot">heo</span>
+          <span class="load-count zero">0 active</span>
+        </div>
+        <p class="meal"><span class="lbl">Lunch</span> <b>Leftover tôm rim</b> + cơm + canh.
+          <br><span class="lbl"></span>Sữa chua trơn + măng cụt.</p>
+        <p class="meal"><span class="lbl">Dinner</span>
+          <b>Sườn rim — reheated from Sunday</b> · đậu que xào tỏi · canh trứng cà chua · cơm.
+          <br><span class="lbl">Tráng miệng</span> Nhãn <span class="pit">pit + quarter</span> + thanh long
+          <span class="kidnote">The fortnight ends the way it should: <b>a Tuesday that costs you nothing.</b></span>
+        </p>
+      </article>
+
+    </div>
+
+    <h3>Sunday 26 July — Batch-prep block 2</h3>
+
+    <div class="callout good">
+      <span class="kicker">~90 minutes, plus the oven doing its own thing</span>
+      <p>
+        <b>1 · Cook the big pot.</b> <b>Sườn rim mặn ngọt</b> — Sunday dinner <em>and</em> Tuesday 28.<br>
+        <b>2 · Bake.</b> <b>Banana bread</b> — and <b>HALVE the brown sugar</b> (to ⅓ cup, or even
+        2 tbsp). King Arthur explicitly blesses the cut; it stays moist and simply tastes more
+        banana-y.<a class="cite" href="https://www.kingarthurbaking.com/recipes/banana-bread-recipe">src</a>
+        <b>Double the batch and freeze one loaf.</b> <b>Omit the walnuts</b> — whole nuts are a
+        choking hazard at this age — or grind them fine.<br>
+        <b>3 · Marinate and portion:</b> shrimp, peeled and deveined (→ Mon 27) · beef, sliced thin
+        (→ Sat 25 if you did not already) · a spare bag of marinated chicken for the fortnight
+        after.<br>
+        <b>4 · Top up both sauce jars</b> — the adult one, and the chilli-free one for the child.<br>
+        <b>5 · Greens and aromatics:</b> exactly as last Sunday.<br>
+        <b>6 · Chia pudding</b> — Monday to Friday breakfast.<br>
+        <b>7 · Thaw tonight:</b> Monday's shrimp, into the fridge. <b>Cold running water over a sealed
+        bag, or the microwave's defrost setting — never hot water.</b> It part-cooks the outside and
+        grows bacteria while the middle is still frozen.
+      </p>
+    </div>
+
+    <!-- ================= BREAKFAST ================= -->
+    <h2>The breakfast strip</h2>
+
+    <p>
+      You do not eat a planned breakfast every day, and this page will not pretend you do.
+      <strong>Two things, occasionally.</strong> Both are made <em>once</em> and eaten several times,
+      which is the only reason either survives a weekday morning.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:22%">What</th><th style="width:22%">Made when</th><th style="width:56%">The rule that actually matters</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Chia pudding</b></td>
+            <td><b>Sun 19</b> and <b>Sun 26</b>.<br>Keeps ~5 days → it covers Mon–Fri each week.</td>
+            <td>
+              <b>3 tbsp chia : 1 cup (240 ml) milk.</b> Stir → <b>wait 10 min → STIR AGAIN, HARD.</b>
+              Everybody skips the second stir and then gets a gel raft floating on watery
+              seeds.<a class="cite" href="https://www.katheats.com/easy-chia-pudding-recipes">src</a>
+              Overnight in the fridge. <b>Kid: ~⅓ of an adult portion</b> — it is high-fibre — and it
+              must be <b>fully hydrated and set</b>, never under-soaked. Top with July fruit: mango,
+              longan <span class="pit">pit + quarter</span>, dragon fruit, banana coins.
+            </td>
+          </tr>
+          <tr>
+            <td><b>Banana cake</b><br>one bake per week</td>
+            <td><b>Sat 18</b> — bánh chuối nướng<br><b>Sun 26</b> — banana bread</td>
+            <td>
+              <b>Two genuinely different things. Keep both.</b> <b>Bánh chuối nướng</b> is the
+              Vietnamese one — dense, sticky, bread-and-coconut, pudding-like, not a loaf. Soak the
+              peeled bananas in <b>salt water 15–30 min</b> (stops browning, gives the reddish tone);
+              slice them <b>thick</b>; cover with foil and bake ~90 min at 150 °C, then uncover for
+              15 more at 180 °C.<a class="cite" href="https://whattocooktoday.com/banh-chuoi-nuong.html">src</a>
+              <b>The air fryer works and is much faster</b> — you have one.<br>
+              <b>Banana bread</b> is the loaf, and the sugar gets halved (see block 2).
+              <b>Freeze half of whatever you bake.</b> A slice thawed on a weekday morning is exactly
+              the light breakfast this family actually wants.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ================= SHOPPING ================= -->
+    <h2>Shopping</h2>
+
+    <div class="callout">
+      <span class="kicker">The shape of the market run</span>
+      <p>
+        <b>Proteins: once a week.</b> Meat and fish survive the week once they are portioned and
+        marinated and in the freezer. <b>Leafy greens: near-daily, or every other day.</b> They do not
+        survive a week, and pretending otherwise is how you end up with a drawer full of slime.<br><br>
+        <b>Chợ Cồn</b> is the default — a long stretch of fruit stalls, everyday prices, no tourist
+        markup. <b>Chợ đầu mối Hòa Cường</b> (32 Lê Thanh Nghị) is the wholesale hub and genuinely
+        cheaper, but <b>peak activity is 03:00–05:00</b> — worth <em>one</em> early run in this
+        fortnight, not two.<a class="cite" href="https://kinhdoanh.ahamove.com/cho-dau-moi-hoa-cuong">src</a>
+        <b>Chợ Hàn</b> is tourist-facing; you will pay for the convenience.
+      </p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:16%">List</th><th style="width:42%">Proteins &amp; pantry — one run</th><th style="width:42%">Produce &amp; fruit — top up midweek</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <b>List 1</b><br>
+              <span class="dish-tag">buy Tue 14 eve, or Wed 15 morning</span><br><br>
+              covers <b>Wed 15 – Tue 21</b>
+            </td>
+            <td>
+              <b>Cá nục</b> — two lots (Wed sốt cà · Sun's big kho pot) · <b>sườn</b> (Thu) ·
+              <b>gà</b> — thigh for Mon, plus enough for Fri's mì Quảng · <b>mực</b> (Sat) ·
+              <b>tôm</b>, small, for the canh · <b>trứng</b> — a lot (three canh plus a lunch) ·
+              <b>thịt băm</b> (canh rau ngót, and Wednesday's lunch omelette).<br><br>
+              <b>Pantry:</b> fresh mì Quảng noodles (Fri) · bánh tráng mè nướng · bánh canh noodles
+              (Tue lunch) · bánh xèo flour + turmeric · <b>củ nén</b> · sả · nghệ · đậu phộng ·
+              nước mắm · đường · tỏi · ớt · <b>chia seeds</b> · sữa tươi không đường ·
+              <b>sữa chua KHÔNG ĐƯỜNG</b> · đậu xanh · bánh mì cũ (bánh chuối).
+            </td>
+            <td>
+              <b>Greens — split across two trips:</b> rau muống ×2 · đậu que · rau lang · súp lơ ·
+              bí đỏ · cải thảo · rau ngót · nấm · cà chua (a lot — three canh) · bí đao · hành lá ·
+              ngò rí · dưa leo · <b>the bánh xèo herb platter</b> (Sat: xà lách, húng quế, tía tô,
+              giá đỗ).<br><br>
+              <b>Fruit:</b> chôm chôm · măng cụt · nhãn · thanh long · dưa hấu · đu đủ · bơ ·
+              <b>bòn bon</b> · xoài · <b>chuối</b> — buy extra and let them go over-ripe for Saturday's
+              bánh chuối.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>List 2</b><br>
+              <span class="dish-tag">buy Tue 21 eve, or Wed 22 morning</span><br><br>
+              covers <b>Wed 22 – Tue 28</b>
+            </td>
+            <td>
+              <b>Thịt ba chỉ / heo hai đầu da</b> (Wed, the platter) · <b>sườn</b> (Sun, the big rim
+              pot) · <b>cá</b> — bones and heads for Thursday's broth · <b>chả cá</b>, market-bought,
+              steamed + fried (Thu — <em>do not</em> make it) · <b>gà</b>, a whole bird (Fri — you need
+              the poaching liquid) · <b>bò</b> (Sat) · <b>tôm</b> (Mon) · <b>trứng</b> ·
+              <b>thịt băm</b>.<br><br>
+              <b>Pantry:</b> bún ×2 (Thu, and Fri lunch) · bánh tráng + mì ướt (Wed) · <b>mắm nêm</b> ·
+              <b>ram / chả giò, frozen</b> (Sat lunch) · <b>thơm/dứa</b> — for the bún chả cá broth
+              <em>and</em> the mắm nêm · bột mì · baking soda · <b>bơ lạt</b> · mật ong · mứt
+              (banana bread) · top up chia + yogurt.
+            </td>
+            <td>
+              <b>Greens — two or three trips:</b> đậu que · bí đỏ · rau ngót · cà tím · cải thảo ·
+              nấm · súp lơ · ớt chuông · hành tây · cà chua · <b>bắp cải + bí đỏ</b> (these go
+              <em>into</em> the bún chả cá broth — that is the whole point of it) · <b>cải xanh</b>
+              (Sat, for the ram) · <b>rau răm</b> (Fri) · a big herb platter (Wed) · rau muống.<br><br>
+              <b>Fruit:</b> nhãn · chôm chôm · măng cụt · dưa hấu · thanh long · mít · bơ ·
+              <b>bòn bon</b> · xoài · đu đủ · <b>chuối over-ripe</b> for Sunday's loaf.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ================= AUDIT ================= -->
+    <h2>Audit the rotation yourself <span class="evidence infer">Inference</span></h2>
+
+    <p>
+      Do not take my word for it. The two-axis rotation is <strong>my synthesis, not a cited
+      algorithm</strong> — no source states it as one. So here is this plan's own homework, marked:
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:14%">Check</th><th style="width:56%">The fortnight</th><th style="width:30%">Verdict</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Protein axis</b></td>
+            <td><code>cá · heo · gà · mực · cá · gà · cá</code> → <code>heo · cá · gà · bò · heo · tôm · heo</code></td>
+            <td><b>No two consecutive days share an anchor</b> — including across the week boundary. Six proteins used. ✓</td>
+          </tr>
+          <tr>
+            <td><b>Seafood bias</b></td>
+            <td>cá ×4 · mực ×1 · tôm ×1 = <b>6 of 14 dinners</b> — plus market chả cá and the shrimp inside the canh.</td>
+            <td>A coastal city; cheap and fresh; and it is what <span class="vn">cơm–rau–cá</span> says the tray should be. ✓</td>
+          </tr>
+          <tr>
+            <td><b>Technique axis</b></td>
+            <td>sốt cà · xào chua ngọt · (mì Quảng) · xào · <b>kho</b> · <b>kho</b> · reheat →
+                luộc/platter · (bún) · luộc one-pot · xào · <b>rim</b> · <b>rim</b> · reheat</td>
+            <td>Seven techniques across fourteen nights, and no technique twice running. ✓</td>
+          </tr>
+          <tr>
+            <td><b>Thịt kho</b></td>
+            <td><b>Zero</b> thịt kho tàu / trứng / tiêu — anywhere. But <b>cá kho</b> (Sun 19),
+                <b>gà kho</b> (Mon 20), <b>sườn rim</b> (Sun 26) and <b>tôm rim</b> (Mon 27) all
+                appear.</td>
+            <td>The technique is fully alive. You lost one recipe, not a method. ✓</td>
+          </tr>
+          <tr>
+            <td><b>One active dish</b></td>
+            <td>Nine dinners at 1 active, <b>five at 0</b>. <b>Never two.</b></td>
+            <td>The rule is <em>"never two,"</em> not <em>"always one."</em> Zero is a gift, and it is what batching buys. ✓</td>
+          </tr>
+          <tr>
+            <td><b>Sugar budget</b></td>
+            <td><b>Two chè in fourteen days</b> (Sun 19, Sat 25); one bake per week at halved sugar;
+                <b>unsweetened</b> yogurt throughout — the fruit does the sweetening.</td>
+            <td>Comfortably under the 25 g added-sugar ceiling.<a class="cite" href="https://publications.aap.org/aapnews/news/7400/AHA-Limit-children-s-sugar-consumption-to-6">AAP</a> ✓</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <span class="kicker">The one thing this plan cannot do for you</span>
+      <p>
+        <b>It cannot check the child's protein.</b> On the shared-fish nights — <b>Wed 15, Sun 19,
+        Thu 23</b> — the dish is sized correctly <em>for the tray</em>. A dietitian reviewing a real
+        family-of-three tray found exactly this case: the fish was right for the table, but the
+        <b>child fell short once it was split three ways</b>, because adults quietly moderate their
+        own portion and nobody actively checks the
+        child's.<a class="cite" href="https://alobacsi.com/bua-com-gia-dinh-3-nguoi-dep-mat-ngon-mieng-du-chat.html">src</a>
+        <b>Fry an extra egg. Boil a few quail eggs.</b> Do not rely on their share of the communal
+        plate.
+      </p>
+      <p style="margin-top:var(--space-1)">
+        And the standing rules, every night, without exception: <b>take the child's portion out of the
+        pot BEFORE the salt goes in</b> — if it tastes right to you, it is already too salty for
+        them<a class="cite" href="https://vnexpress.net/tre-em-viet-an-man-theo-khau-vi-nguoi-lon-4451922.html">src</a> —
+        <b>chilli on the table and never in the pot</b>, and <b>end the meal at 30 minutes</b> however
+        little they ate.<a class="cite" href="https://benhviennhitrunguong.gov.vn/cach-khac-phuc-bieng-an-o-tre.html">src</a>
+      </p>
+    </div>
+
+    <p style="margin-top:var(--space-6)">
+      <a href="../lessons/0001-the-mam-com-is-a-slot-grid.html">Lesson 01 — The Mâm Cơm Is a Slot Grid</a> ·
+      <a href="slot-grid-and-rotation.html">The slot grid &amp; rotation</a> ·
+      <a href="dish-bank.html">The dish bank</a> ·
+      <a href="fruit-and-snack-calendar.html">Fruit &amp; snack calendar</a> ·
+      <a href="../index.html">Cơm Nhà</a>
+    </p>
+  </main>
+
+  <script src="../../assets/theme.js"></script>
+</body>
+</html>
