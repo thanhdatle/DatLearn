@@ -1,0 +1,145 @@
+# Session log — the issue FORM that feeds the ordered rule.
+#
+# TWO CONTRACTS LIVE IN THIS FILE. Breaking either one breaks the pipeline.
+#
+# 1. FIELD IDS are the URL-PREFILL contract.
+#    GitHub prefills an issue form from query params keyed on the field `id`:
+#
+#      https://github.com/thanhdatle/DatLearn/issues/new
+#        ?template=session-log.yml
+#        &date=2026-07-21
+#        &lift=Back+squat
+#        &equipment=Smith+machine
+#        &load_kg=20
+#        &last_set_reps=5
+#        &last_set_rpe=8
+#        &knee=2
+#        &notes=Blue+Life+Fitness+Smith
+#
+#    The ids, in order, and they are STABLE — a web form elsewhere in the repo
+#    builds that URL:
+#
+#      date  lift  equipment  load_kg  last_set_reps  last_set_rpe  knee  notes
+#
+#    Renaming an id silently breaks every prefill link that already exists.
+#    Dropdown prefill matches on the OPTION TEXT, so the option strings below are
+#    part of this contract too.
+#
+# 2. FIELD LABELS are the PARSE contract.
+#    GitHub renders a submitted form into the issue body as `### <label>` followed
+#    by the value. scripts/session-log.mjs parses that body with a LABEL -> id map
+#    (`LABEL_TO_ID`). Change a label here and you MUST change it there, or the
+#    field silently vanishes and the run fails closed with "... is missing".
+
+name: Session log
+description: Log one main lift. Three numbers. The ordered rule runs and tells you what goes on the bar next time.
+title: "[log] "
+labels: ["session-log"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Log it at the rack, before you rack the bar.** A dictated reconstruction is where the reps go.
+
+        One lift per issue. Fill it, submit it, and the verdict comes back as a comment: which rule
+        fired, what it means, and the load and target reps for next session.
+
+  - type: input
+    id: date
+    attributes:
+      label: Date
+      description: The day you trained. YYYY-MM-DD.
+      placeholder: "2026-07-21"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: lift
+    attributes:
+      label: Lift
+      description: >-
+        One lift per issue. "Other" is rejected on purpose — a shared "Other" bucket would merge two
+        different lifts into one load history. Name the lift and it gets added here.
+      options:
+        - Back squat
+        - Bench press
+        - Deadlift
+        - Overhead press
+        - Romanian deadlift
+        - Leg press
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: equipment
+    attributes:
+      label: Equipment
+      description: >-
+        REQUIRED, and not a formality. A Smith-machine back squat and a free-bar back squat are
+        DIFFERENT LIFTS with separate load histories. The numbers do not convert in either direction,
+        ever. Get this wrong and the rule compares two loads that have nothing to do with each other.
+      options:
+        - Free barbell
+        - Smith machine
+        - Machine
+        - Dumbbell
+    validations:
+      required: true
+
+  - type: input
+    id: load_kg
+    attributes:
+      label: Load (total kg)
+      description: >-
+        TOTAL kilograms — plates per side x2 + the bar. Not per-side. If it was a Smith, name the
+        machine in the notes: the carriage weight is unpublished and varies by tens of kilos between
+        makes, so the same number on a different Smith is a different load.
+      placeholder: "100"
+    validations:
+      required: true
+
+  - type: input
+    id: last_set_reps
+    attributes:
+      label: Last-set reps
+      description: Reps completed on your LAST set of this lift. Not the best set. The last one.
+      placeholder: "5"
+    validations:
+      required: true
+
+  - type: input
+    id: last_set_rpe
+    attributes:
+      label: Last-set RPE
+      description: >-
+        RPE of that same last set. A WHOLE NUMBER, 4-10. RPE = 10 - reps in reserve. 8 = two clean reps
+        left. 9 = one, maybe. 10 = nothing left. No half points: the ordered rule has no branch for an
+        8.5, and it is not getting one behind your back.
+      placeholder: "8"
+    validations:
+      required: true
+
+  - type: input
+    id: knee
+    attributes:
+      label: Knee (0-10)
+      description: >-
+        Lower-body days only. Worst pain during the session, out of ten. Over 3/10 trips the tripwire.
+        Leave it blank on upper days.
+      placeholder: "0"
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: >-
+        Which Smith machine, if it was a Smith. And the one thing that breaks the three-number log:
+        IF ANY EARLIER SET FELT WORSE THAN YOUR LAST, SAY SO HERE — then give all four sets for this
+        lift. Otherwise the rule reads the session as cleaner than it was.
+      placeholder: "Set 2 was worse than my last — 6,5,5,6. Smith is the blue Life Fitness one."
+    validations:
+      required: false

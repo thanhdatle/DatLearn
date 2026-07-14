@@ -13,6 +13,7 @@
     .wk { font-family: var(--font-display); font-weight: 700; letter-spacing: .01em; }
     .logsheet td { height: 2.1rem; }
     .logsheet .blank { background: color-mix(in oklab, var(--ink) 3%, transparent); }
+    .logsheet .opt, .logsheet th.opt { width: 6.5rem; color: var(--ink-mute); font-weight: 400; }
     @media print { .print-hint { display: none; } }
   </style>
 </head>
@@ -55,23 +56,23 @@
         <tbody>
           <tr>
             <td>Monday</td>
-            <td><a href="../sessions/S01-lower-squat.html">Lower — squat</a></td>
-            <td><a href="../sessions/S01-lower-squat.html">Lower — squat</a></td>
+            <td><a href="../sessions/S02-upper-bench.html">Upper — bench</a></td>
+            <td><a href="../sessions/S02-upper-bench.html">Upper — bench</a></td>
           </tr>
           <tr>
             <td>Tuesday</td>
-            <td><a href="../sessions/S02-upper-bench.html">Upper — bench</a></td>
-            <td><a href="../sessions/S02-upper-bench.html">Upper — bench</a></td>
+            <td><a href="../sessions/S01-lower-squat.html">Lower — squat</a></td>
+            <td><a href="../sessions/S01-lower-squat.html">Lower — squat</a></td>
           </tr>
           <tr>
             <td>Wednesday</td>
-            <td><a href="../sessions/S03-lower-deadlift.html">Lower — deadlift</a></td>
-            <td><a href="../sessions/S03-lower-deadlift.html">Lower — deadlift</a></td>
+            <td><a href="../sessions/S04-upper-press.html">Upper — overhead press</a></td>
+            <td><a href="../sessions/S04-upper-press.html">Upper — overhead press</a></td>
           </tr>
           <tr>
             <td>Thursday</td>
-            <td><a href="../sessions/S04-upper-press.html">Upper — overhead press</a></td>
-            <td><a href="../sessions/S04-upper-press.html">Upper — overhead press</a></td>
+            <td><a href="../sessions/S03-lower-deadlift.html">Lower — deadlift</a></td>
+            <td><a href="../sessions/S03-lower-deadlift.html">Lower — deadlift</a></td>
           </tr>
           <tr>
             <td>Friday</td>
@@ -110,10 +111,10 @@
       <p style="margin-top:var(--space-1)">Four sets is enough to find it. Don't hunt past four.</p>
     </div>
 
-    <h3>The calibration test — Tuesday and Thursday only</h3>
+    <h3>The calibration test — Monday and Wednesday only</h3>
 
-    <p>Here is how you find out whether your RPE is honest. On <strong>Tuesday's lat pulldown</strong>
-    and <strong>Thursday's seated cable row</strong> — machine movements, no spotter, nothing to drop —
+    <p>Here is how you find out whether your RPE is honest. On <strong>Monday's lat pulldown</strong>
+    and <strong>Wednesday's seated cable row</strong> — machine movements, no spotter, nothing to drop —
     do this on the <em>last</em> set:</p>
 
     <ol>
@@ -171,36 +172,56 @@
       <li><strong>Five minutes of easy cycling before lower days.</strong> Not before upper days.</li>
       <li><strong>Two-second descent</strong> on the first two working sets of squat and leg press.</li>
       <li><strong>Deadlift guardrails</strong> — see <a href="five-day-split.html">the split</a>. If form
-      degrades, or Monday's fatigue is still with you on Wednesday, cut to 2–3 sets or swap to trap-bar.</li>
+      degrades, or Tuesday's fatigue is still with you on Thursday, cut to 2–3 sets or swap to trap-bar.</li>
       <li><strong>Rest:</strong> 2–3 min main lift, ~2 min secondary, 60–90 s supersetted accessories.</li>
     </ul>
 
     <h2>Log sheet</h2>
-    <p class="print-hint">Print this. Fill it in at the rack, not from memory afterwards. The rule
-    cannot run without the last two columns.</p>
+    <p class="print-hint">Print this. Fill it in at the rack, not from memory afterwards. <strong>The rule
+    cannot run without three numbers per lift: load, last-set reps, last-set RPE.</strong> Everything else
+    on this sheet is a bonus.</p>
 
     <div class="table-wrap">
       <table class="logsheet">
         <thead>
-          <tr><th>Session</th><th>Main lift</th><th>Load (kg)</th><th>Reps ×4</th><th>Last-set RPE</th><th>Knee /10</th></tr>
+          <tr><th>Session</th><th>Main lift</th><th>Load — kg + which machine</th><th>Last-set reps</th><th>Last-set RPE</th><th>Knee /10</th><th class="opt">All 4 sets <em>(optional)</em></th></tr>
         </thead>
         <tbody>
-          <tr><td>Mon W1</td><td>Back squat</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr><td>Tue W1</td><td>Bench press</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td>—</td></tr>
-          <tr><td>Wed W1</td><td>Deadlift</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr><td>Thu W1</td><td>Overhead press</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td>—</td></tr>
-          <tr><td>Fri W1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Mon W2</td><td>Back squat</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr><td>Tue W2</td><td>Bench press</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td>—</td></tr>
-          <tr><td>Wed W2</td><td>Deadlift</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr><td>Thu W2</td><td>Overhead press</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td>—</td></tr>
-          <tr><td>Fri W2</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Mon W1</td><td>Bench press</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td>—</td><td class="opt blank"></td></tr>
+          <tr><td>Tue W1</td><td>Squat — <em>circle:</em> free bar / Smith</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="opt blank"></td></tr>
+          <tr><td>Wed W1</td><td>Overhead press</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td>—</td><td class="opt blank"></td></tr>
+          <tr><td>Thu W1</td><td>Deadlift</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="opt blank"></td></tr>
+          <tr><td>Fri W1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="opt">—</td></tr>
+          <tr><td>Mon W2</td><td>Bench press</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td>—</td><td class="opt blank"></td></tr>
+          <tr><td>Tue W2</td><td>Squat — <em>circle:</em> free bar / Smith</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="opt blank"></td></tr>
+          <tr><td>Wed W2</td><td>Overhead press</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td>—</td><td class="opt blank"></td></tr>
+          <tr><td>Thu W2</td><td>Deadlift</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="opt blank"></td></tr>
+          <tr><td>Fri W2</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="opt">—</td></tr>
         </tbody>
       </table>
     </div>
 
+    <div class="callout good">
+      <span class="kicker">Why the log shrank — and what it costs</span>
+      <p>You asked whether the last set alone would do. It will: the ordered rule reads its input almost
+      entirely off the last set, and the full derivation is in
+      <a href="progression-protocol.html">the progression protocol, §3</a>. This is not a concession, and
+      the rule has not been softened — only the paperwork has.</p>
+      <p style="margin-top:var(--space-1)">It holds on one assumption: <strong>your last set is your worst
+      set.</strong> If an earlier set was <em>worse</em> — you scraped a 3 on set two, then rallied — the
+      three-number log will miss it. So: <strong>if any earlier set felt worse than your last, say so</strong>,
+      and fill the optional column for that lift. That sentence is the whole safety net.</p>
+    </div>
+
+    <p class="print-hint">On a <a href="exercise-library.html#smith-machine-squat">Smith machine</a>, write
+    the <strong>machine</strong> as well as the plates — "Smith, far wall, 2×20 + 2×10 a side." The bar on a
+    Smith is not 20 kg: commercial machines use different resistance mechanisms and manufacturers state
+    effective bar weights anywhere from roughly 3 to 20 kg, so plate weight alone does not identify the load.
+    Same machine every week and the progression is honest; a different machine, or a free bar, and the number
+    means something else entirely.</p>
+
     <p>Two extra rows worth keeping on paper: your <strong>predicted vs actual</strong> reps from the
-    Tuesday and Thursday calibration tests in week one. That single pair of numbers tells us more about
+    Monday and Wednesday calibration tests in week one. That single pair of numbers tells us more about
     your training than any weight on this sheet.</p>
 
     <h2>What happens on Sunday 26 July</h2>
@@ -222,9 +243,9 @@
         <a href="five-day-split.html">The five-day split</a> — every exercise, set, and rest interval.<br>
         <a href="../lessons/0001-double-progression-and-rir.html">Lesson 01</a> — why the rule works.
       </p>
-      <p class="ask-teacher">Dictate me the log at the end of each session — weight, the four rep
-      numbers, last-set RPE, knee out of ten. I'll run the rule and tell you what goes on the bar next
-      time. That is the whole loop, and it takes you ten seconds.</p>
+      <p class="ask-teacher">Dictate me the log at the end of each session — <strong>load, last-set reps,
+      last-set RPE</strong>, plus knee out of ten on lower days. Three numbers. I'll run the rule and tell
+      you what goes on the bar next time. That is the whole loop, and it takes you ten seconds.</p>
     </footer>
   </main>
 

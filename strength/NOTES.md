@@ -74,12 +74,105 @@ The five sessions are stable across a block. Only the RPE cap and the loading ch
 which is why `reference/two-week-block.html` links the *same* five session pages for both weeks.
 
 ## Block cadence
-- **Block 1: Mon 13 – Fri 24 July 2026.** Week 1 caps main lifts at RPE 7 and *establishes* loads
-  (no kilograms were ever logged — see [[0003-first-session-executed]]). Week 2 caps at RPE 8 and
-  runs the ordered rule live. Review Sunday 26 July.
-- Week 1 carries the **RPE calibration test** on two machine exercises (Tue lat pulldown, Thu seated
+- **Block 1: Mon 13 – Fri 24 July 2026.** Week 1 caps main lifts at RPE 7 and *establishes* loads.
+  Week 2 caps at RPE 8 and runs the ordered rule live. Review Sunday 26 July.
+- **First loads arrived 14 July** — see [[0004-first-loads-and-the-smith-substitution]]. Kilograms,
+  yes; **reps and RPE, still no.** The block plan's "why this block has no kilograms in it" callout
+  is now half-stale and will need rewriting the moment he sends reps. Don't rewrite it before then —
+  loads alone still can't start week 2.
+- Week 1 carries the **RPE calibration test** on two machine exercises (Mon lat pulldown, Wed seated
   cable row): predict reps-to-failure, then go to failure, compare. Never on squat/deadlift/OHP.
   This finally answers the standing "can he rate RPE?" question while producing the loads.
+
+### Day order (moved 2026-07-14, at his request)
+
+| Day | Session | File |
+|-----|---------|------|
+| Mon | Upper — bench | `S02-upper-bench.html` |
+| Tue | Lower — squat | `S01-lower-squat.html` |
+| Wed | Upper — overhead press | `S04-upper-press.html` |
+| Thu | Lower — deadlift | `S03-lower-deadlift.html` |
+| Fri | Arms & weak points | `S05-arms.html` |
+
+**Why Wed/Thu swapped too, and not just Mon/Tue.** The constraint that survives any reshuffle is the
+spacing of the two heavy lower days: **2 days squat → deadlift (Tue → Thu), and 5 days from deadlift
+back round to squat.** Moving bench to Monday alone would have left the deadlift one day after the
+squat. The press went to Wednesday so it sits *between* them — it is the one upper day that asks
+nothing of the erectors, which is what protects both the recovering squat and the coming pull.
+
+**The price, stated honestly.** The squat no longer leads the week, so it no longer gets the freshest
+body. The "technique degrades with fatigue" rationale that originally justified Monday **does not
+survive the move, and the pages now say so.** The cost is small — nothing below the waist is loaded on
+Monday, so legs and knee arrive fresh; what is given up is *systemic* freshness, not local recovery —
+but it is not zero. Do not let this get quietly re-spun into "it makes no difference." He asked for the
+schedule; he is owed the trade-off in writing.
+
+**S-numbers are session IDs, not day ordinals.** `S01`…`S05` are keyed to the **lift**, permanently —
+S01 is the squat wherever the squat lands. They are *not* day 1…day 5, and after this move they no
+longer read in day order: the week now runs **S2, S1, S4, S3, S5**. **Never rename the files to restore
+a tidy 1-2-3-4-5** — every cross-link, every footer "Next" link, and every calendar row in
+`reference/two-week-block.html` is keyed to those filenames. If the days move again, change labels and
+ordering only. `index.html` says this explicitly above the session cards, so the out-of-order numbering
+doesn't read as a bug.
+
+## He squats on a Smith machine (found 2026-07-14)
+He ran the prescribed free-barbell back squat on a **Smith machine** and did not flag it as a change
+— it surfaced only because I asked what bar he used. **Ask what equipment he used, every session.**
+The library now covers it (`exercise-library.html#smith-machine-squat`, R25–R31). Three things not to
+get wrong when it comes up again:
+
+1. **It is not a downgrade.** Schwanbeck 2020 (8-wk RCT, the machine arm squatted on a Smith): 11–19%
+   strength gain in *both* arms, no difference, no difference in quad thickness. Haugen 2023 agrees.
+   Never imply he wasted the session.
+2. **The number does not transfer, ever.** Smith loads get their own column. Never convert to a bar.
+3. **It does NOT protect his knee — say so out loud.** Zero human comparison of Smith vs free-bar knee
+   loading. No knee-history trials, no pain outcomes. The feet-forward modelling cuts knee torque by
+   *raising hip and low-back torque* — the same trade as R16. If he picked the Smith for his knee, he
+   picked it on an untested inference. **This is the claim I am most likely to be tempted to fudge.**
+
+## The blocking failure is instrumentation, not adherence
+Three sessions logged, three sessions with **no reps and no RPE.** He reliably reports what he can
+read off a plate and omits the two numbers that require attention *during* a set. He is not lazy — he
+is not yet instrumented. Consequences:
+
+- The ordered rule has never once run on real data. It is, so far, a rule he has been taught and never
+  used.
+- This promotes **lesson 0002 (Calibrating RPE) from "important" to blocking.** Nothing downstream —
+  volume, stalls, deloads — can be taught on numbers he cannot produce.
+- Ask for the log **at the rack**, not afterwards. A dictated reconstruction is where the reps go.
+
+### The log was reduced to three numbers (2026-07-14, at his request)
+
+He asked "can we just record the last set?" **Yes — and it is a derived result, not a concession.** The
+log is now **load, last-set reps, last-set RPE** (+ knee /10 on lower days, which feeds the *monitoring*
+rule, not the ordered one). Written up in `progression-protocol.html` §3; log sheet and all four session
+pages updated to match.
+
+**The rule itself is unchanged.** Only what he writes down changed. Never let this get restated as
+"we relaxed the standard."
+
+Why it holds, under **one assumption — the last set is the worst (lowest-rep) set**:
+- **R1** ("any set < 4"): last set ≥ 4 ⟹ all sets ≥ 4. The RPE-10 clause was already last-set-only.
+- **R3** ("every set at 6"): needs the assumption **and** the 6-rep ceiling. Lowest set = 6 + nothing can
+  exceed 6 ⟹ all four = 6.
+- **R4**: last-set-only by definition.
+- **R5**: the residual of an ordered, total rule — its conditions are never checked.
+- **R2** is the one that did **not** fall out for free. "No rep added" was ambiguous (added to *which*
+  set?). I **pinned** it: *a stall is three sessions at the same load with no rep added to the last set.*
+  That is a definitional choice, not a deduction, and it makes R2 fire **sooner** than a
+  count-any-set reading — which is the right direction for this course. Glossary updated to match.
+
+**The blind spot, and it is bidirectional.** If reps *increase* across sets (a bad earlier set, then a
+rally), the three-number log misreads in two ways: **R1 gets missed** (sub-4 set unseen), *and*
+**R3 false-fires** (last set 6, earlier sets 5 → the log says add load when the rule says add reps).
+Escape hatch, one line and it is in all five pages: **"if any earlier set felt worse than your last,
+say so"** — then log all four for that lift.
+
+**If the data still doesn't arrive after this, the problem is not friction.** Three numbers is the floor;
+there is nothing left to cut without breaking the rule. A continued blank means it is habit, timing, or
+motivation — and the next intervention is behavioural (log *at the rack*, before racking the bar; a
+standing prompt; or asking him what actually stops him), **not another simplification.** Do not respond
+to a fourth empty log by simplifying further. There is nowhere left to go.
 
 ## Teaching plan (rough, revise freely)
 1. ✅ **0001 — Double progression & RIR.** The ordered rule. Four drills, one per branch.
@@ -96,9 +189,19 @@ which is why `reference/two-week-block.html` links the *same* five session pages
    costs. The mission's payoff lesson — and where the knee work belongs long-term.
 
 ## Open questions to ask the learner
+- **Last-set reps and last-set RPE. Asked three times, never received.** The ask is now two numbers, not
+  five — see the log reduction above. Everything else on this list is secondary.
+  See [[0004-first-loads-and-the-smith-substitution]].
 - **Can he actually rate RPE yet?** Gating question for the whole rule. Ask before teaching volume.
-- Bodyweight and current working loads on the four main lifts? Future drills should use his real
-  numbers, not my invented ones.
+- **Why the Smith?** Preference, availability, or a belief it spares the knee? If it's the third, that
+  belief is untested and he must be told. The answer changes whether we adopt it or correct it.
+- **Which Smith machine (make/model)?** The carriage is unknowable otherwise, and manufacturer-stated
+  effective bar weights span ~3–20 kg. Irrelevant for progression on the same machine; fatal for any
+  comparison to a free bar.
+- **"Leg raise, 55 kg"** — the S01 A2 slot is a *seated leg curl*. Probably that; possibly a leg
+  extension. Don't map it silently.
+- Bodyweight? Still unknown. Loads on the four main lifts: **squat only, and Smith-bound.** Bench,
+  deadlift and OHP are still blank.
 - Eating at maintenance, surplus, or deficit? Changes how to read a stall.
 - Which knee, and what happened? The modifications are generic patellofemoral-friendly defaults. A
   meniscus tear and anterior knee pain want different things.
@@ -110,3 +213,10 @@ Proximity-to-failure contested. Singer 2024 says *no detected* benefit past ~90 
 weaker than "no benefit"; don't overstate it again. Nothing in the literature addresses the 5-day
 upper/lower split or the 45–60 min constraint directly — the split is best understood as a
 volume-distribution vehicle, which is **my inference, not a cited finding.**
+
+Added 2026-07-14 (gaps 5–6): **no study compares knee loading between a Smith squat and a free-bar
+squat in the same lifters** — no knee-history trials, no pain outcomes, nothing. "The Smith is kinder
+to my knee" is an untested inference and must never be implied anywhere in this workspace. And **no
+peer-reviewed measurement of effective bar weight across commercial Smith machines** — the
+counterweight *mechanism* is evidenced (R31), the 3–20 kg numbers are manufacturer claims. Convention,
+not measurement.

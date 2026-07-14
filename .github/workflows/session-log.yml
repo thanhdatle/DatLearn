@@ -1,0 +1,123 @@
+# Session log -> ordered rule -> CSV -> verdict comment.
+#
+# SECURITY. THIS REPO IS PUBLIC. ANYONE CAN OPEN AN ISSUE.
+#
+#   a) THE JOB IS GATED. It runs only when the issue AUTHOR is the repo owner AND
+#      the issue carries the `session-log` label. An issue from anyone else is a
+#      silent no-op — the job is skipped, nothing runs, nothing is written.
+#
+#   b) NO USER TEXT ON A COMMAND LINE. `github.event.issue.body` is fully
+#      attacker-controlled. It is NEVER interpolated into a `run:` block — that is
+#      the classic Actions script-injection hole: `${{ }}` is substituted into the
+#      shell script *before* the shell ever sees it, so a body carrying backticks
+#      or $(...) simply executes. It travels via `env:` and is read from
+#      `process.env` inside Node. The verdict comment and the commit message are
+#      likewise handed over as FILES, never as arguments.
+#
+# Neither measure substitutes for the other. Both are load-bearing. Keep both.
+
+name: Session log
+
+on:
+  issues:
+    types: [opened, edited]
+
+# Exactly what is needed, and nothing else.
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  # One log run at a time. Two concurrent runs would race on the same CSV.
+  group: session-log
+  cancel-in-progress: false
+
+jobs:
+  log:
+    # THE GATE. Do not loosen this.
+    if: >-
+      github.event.issue.user.login == github.repository_owner &&
+      contains(github.event.issue.labels.*.name, 'session-log')
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify the rule engine before trusting it with a verdict
+        # If the rule is broken, do not tell him what to put on the bar.
+        #
+        # The glob is UNQUOTED on purpose, so the SHELL expands it into explicit
+        # file paths. Node 20 does not accept a glob as a `--test` positional
+        # (that landed later), and `node --test scripts/` — the directory form —
+        # is broken on Node 26. Shell expansion is the one spelling that works on
+        # every version.
+        run: node --test scripts/*.test.mjs
+
+      - name: Parse the log, run the ordered rule
+        id: rule
+        env:
+          # The ONLY route the attacker-controlled body takes into this job.
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          COMMENT_FILE: ${{ runner.temp }}/comment.md
+          COMMIT_MSG_FILE: ${{ runner.temp }}/commit-msg.txt
+        run: node scripts/run-session-log.mjs
+
+      # --- Parse failed: say why, change nothing, leave the issue open --------
+
+      - name: Comment the parse error
+        if: steps.rule.outputs.status == 'error'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          COMMENT_FILE: ${{ runner.temp }}/comment.md
+        run: gh issue comment "$ISSUE_NUMBER" --body-file "$COMMENT_FILE"
+
+      - name: Fail the run
+        if: steps.rule.outputs.status == 'error'
+        run: |
+          echo "::error::Could not parse the session log. Nothing committed, issue left open."
+          exit 1
+
+      # --- Parsed cleanly: commit, comment, close ----------------------------
+
+      - name: Commit the log to main
+        if: steps.rule.outputs.status == 'ok'
+        env:
+          COMMIT_MSG_FILE: ${{ runner.temp }}/commit-msg.txt
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add strength/log/sessions.csv
+          git commit -F "$COMMIT_MSG_FILE"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Comment the verdict
+        if: steps.rule.outputs.status == 'ok'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          COMMENT_FILE: ${{ runner.temp }}/comment.md
+        run: gh issue comment "$ISSUE_NUMBER" --body-file "$COMMENT_FILE"
+
+      - name: Close the issue
+        if: steps.rule.outputs.status == 'ok'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: gh issue close "$ISSUE_NUMBER" --reason completed
+
+      # status == 'noop' — the issue was edited but nothing about the session
+      # changed. No commit, no comment, no close. It falls through to here.

@@ -126,6 +126,55 @@ the learner — see `reference/exercise-library.html`.
   [chest-supported row](https://www.barbellmedicine.com/blog/chest-supported-row-hypertrophy/).
   **Use for:** cues. All **expert consensus**, none RCT-backed on the cue itself. Label accordingly.
 
+### Smith machine vs free barbell (added 2026-07-14)
+
+Added because the prescribed free-barbell back squat was performed on a **Smith machine**. The
+headline is reassuring; the caveats are not optional. See
+`reference/exercise-library.html#smith-machine-squat`.
+
+- **R25.** Schwanbeck S, Chilibeck PD, Binsted G. **A comparison of free weight squat to Smith machine squat using electromyography.** *J Strength Cond Res*, 2009;23(9):2588–91. DOI 10.1519/JSC.0b013e3181b1b181 — [PubMed 19855308](https://pubmed.ncbi.nlm.nih.gov/19855308/)
+  The source of the widely-quoted "free squat produces 43% more muscle activity" figure.
+  **Use for:** explaining why that number is everywhere — and why it should not decide anything.
+  *Caveat: n=6, a single acute set. Acute EMG measures activation, not adaptation. The same research
+  group then ran the training study (R26) and found no difference in outcomes. This is the least
+  decision-relevant number in this section.*
+
+- **R26.** Schwanbeck SR, Cornish SM, Barss T, Chilibeck PD. **Effects of training with free weights versus machines on muscle mass, strength, free testosterone, and free cortisol levels.** *J Strength Cond Res*, 2020;34(7):1851–9. DOI 10.1519/JSC.0000000000003349 — [PubMed 32358310](https://pubmed.ncbi.nlm.nih.gov/32358310/)
+  **The decisive source.** 8-week RCT, n=46; the machine group squatted on a Smith machine. Free-weight
+  squat strength **and** Smith squat strength rose **11–19% in both groups, with no difference between
+  them**, and no difference in quadriceps thickness. **Use for:** the verdict that a Smith squat is
+  **not a downgrade in adaptation.**
+
+- **R27.** Cotterman ML, Darby LA, Skelly WA. **Comparison of muscle force production using the Smith machine and free weights for bench press and squat exercises.** *J Strength Cond Res*, 2005;19(1):169–76. DOI 10.1519/14433.1 — [PubMed 15705030](https://pubmed.ncbi.nlm.nih.gov/15705030/)
+  Squat 1RM was **greater** on the Smith machine than with free weights — reaching significance for
+  **women only**. **Use for:** refuting the folk belief that you always lift *less* on a Smith.
+  *Caveat: it shows the two numbers differ, and that the direction is not the one people assume. It
+  does not license a conversion factor in either direction.*
+
+- **R28.** Haugen ME, Vårvik FT, Larsen S, Haugen AS, van den Tillaar R, Bjørnsen T. **Effect of free-weight vs. machine-based strength training on maximal strength, hypertrophy and jump performance — a systematic review and meta-analysis.** *BMC Sports Sci Med Rehabil*, 2023;15:103. DOI 10.1186/s13102-023-00713-4 — [PubMed 37582807](https://pubmed.ncbi.nlm.nih.gov/37582807/)
+  Direct comparison: **no difference** in dynamic strength, isometric strength, jump, or hypertrophy.
+  But adaptations are **specific to the tested modality** — free-weight training favoured free-weight
+  strength tests (SMD −0.210, p=0.023). **Use for:** both halves of the verdict at once — the
+  *adaptation* holds up, the *number* does not transfer.
+
+- **R29.** Biscarini A, Benvenuti P, Botti F, Mastrandrea F, Zanuso S. **Modelling the joint torques and loadings during squatting at the Smith machine.** *J Sports Sci*, 2011;29(5):457–69. DOI 10.1080/02640414.2010.534859 — [PubMed 21225486](https://pubmed.ncbi.nlm.nih.gov/21225486/)
+  Moving the feet **forward** on a Smith reduces modelled knee torque and compressive force — by
+  **raising hip and lumbosacral torque.** **Use for:** the foot-position trade-off *within* the Smith.
+  *Caveat: analytical modelling, **no human subjects.** It compares Smith positions to other Smith
+  positions; it never compares the Smith to a free bar. This is the same transfer-of-load bargain as
+  R16 — not knee relief. See Gaps 5.*
+
+- **R30.** Abelbeck KG. **Biomechanical model and evaluation of a linear motion squat type exercise.** *J Strength Cond Res*, 2002;16(4):516–24 — [PubMed 12423179](https://pubmed.ncbi.nlm.nih.gov/12423179/)
+  Corroborates R29: foot position along the fixed vertical bar path governs the knee/hip torque split.
+  **Use for:** a second modelling source on the same trade. *Caveat: a model, not an outcome study.*
+
+- **R31.** Arandjelović O. **Common variants of the resistance mechanism in the Smith machine.** *J Strength Cond Res*, 2012;26(2):350–63. DOI 10.1519/JSC.0b013e318220e6d2 — [PubMed 22228113](https://pubmed.ncbi.nlm.nih.gov/22228113/) · Corroborated by Kobayashi Y, et al. *Int J Sports Med*, 2013;34(9):820–4. DOI 10.1055/s-0032-1329955 — [PubMed 23459856](https://pubmed.ncbi.nlm.nih.gov/23459856/)
+  Commercial Smith machines use **three distinct resistance mechanisms** (plain constrained barbell,
+  counterweighted, viscous) — so **plate weight is not the load.** Kobayashi found that ignoring the
+  counterweight made calculated force and power "significantly lower" at **all** loads.
+  **Use for:** why a Smith load needs its own column and can never be set against a free-bar number.
+  *Caveat: the mechanism is evidenced; the effective bar weights are not measured — see Gaps 6.*
+
 ## Wisdom (communities)
 
 Learner has opted **in** to online communities; in-person not requested.
@@ -162,3 +211,16 @@ Named explicitly, because the mission depends on them and I could not close them
    Frequency research suggests frequency has little independent effect once weekly volume is
    equated, so the split is best understood as a *volume-distribution vehicle* — but that
    inference is mine, not a cited finding.
+
+5. **No study compares knee loading between a Smith squat and a free barbell squat in the same
+   lifters.** Everything that exists is modelling *within* the Smith (R29, R30) — feet forward vs.
+   feet back, no free-bar comparison, and in R29's case no human subjects at all. There are **no
+   trials of Smith squatting in patellofemoral-pain or knee-injury populations**, and **no pain or
+   injury outcome data of any kind.** "The Smith is kinder to my knee" is an **untested inference.**
+   It is not supported here, and it must not be implied anywhere in this workspace.
+
+6. **No peer-reviewed measurement of effective bar weight across commercial Smith machines.** The
+   *mechanism* is evidenced (R31 — three resistance variants; the counterweight materially changes
+   computed force and power). The *numbers* are manufacturer claims, roughly 3–20 kg depending on
+   the machine. Treat any specific figure as **Convention**, never as measurement — and never
+   convert a Smith load into a free-bar load using one.

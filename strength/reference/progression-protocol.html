@@ -103,7 +103,99 @@
       <li><strong>Rule 2 stall reset</strong>: back to ~90% of the stalled load, then climb again</li>
     </ul>
 
-    <h2>3 · Rest between sets</h2>
+    <h2>3 · The minimum viable log</h2>
+    <p>Per main lift, <strong>three numbers</strong>. That is the entire input to the rule above:</p>
+
+    <ul>
+      <li><strong>Load</strong> — kg, plus which machine if it isn't a free bar.</li>
+      <li><strong>Last-set reps.</strong></li>
+      <li><strong>Last-set RPE.</strong></li>
+    </ul>
+
+    <p>On lower days, add your <strong>knee /10</strong>. That number does not feed the ordered rule —
+    it feeds the monitoring rule in §5, which runs independently and can stop a session the ordered
+    rule would happily have progressed.</p>
+
+    <p>This is a <strong>derived simplification, not a lowered standard.</strong> The rule has not
+    changed. What changed is how much of the session you have to write down in order to run it —
+    because the last set turns out to carry everything the rule actually reads.</p>
+
+    <h3>Why the last set is enough</h3>
+
+    <div class="table-wrap">
+      <table class="rule-table">
+        <thead>
+          <tr><th>#</th><th>What the rule asks</th><th>Does the last set answer it?</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rule-n">1</td>
+            <td>Any set below <span class="num-cell">4</span> reps · last set RPE <span class="num-cell">10</span></td>
+            <td><strong>Yes — given the assumption.</strong> If the last set is your lowest-rep set,
+            then last set ≥ 4 means every set was ≥ 4. The RPE half was already last-set-only.</td>
+          </tr>
+          <tr>
+            <td class="rule-n">2</td>
+            <td>Same load, no rep added, <span class="num-cell">3</span> sessions running</td>
+            <td><strong>Yes — once "no rep added" is pinned to the last set.</strong> It needs a
+            <em>history</em>, not a fourth number. See the pin below: this one is a definition, not a
+            deduction.</td>
+          </tr>
+          <tr>
+            <td class="rule-n">3</td>
+            <td>Every set at <span class="num-cell">6</span> reps, RPE ≤ <span class="num-cell">8</span></td>
+            <td><strong>Yes — given the assumption.</strong> The rep range stops at 6, so no set can go
+            above it. If your <em>lowest</em> set hit 6, all four did.</td>
+          </tr>
+          <tr>
+            <td class="rule-n">4</td>
+            <td>Last set at RPE <span class="num-cell">9</span></td>
+            <td><strong>Yes, trivially.</strong> It only ever asked about the last set.</td>
+          </tr>
+          <tr>
+            <td class="rule-n">5</td>
+            <td>Otherwise</td>
+            <td><strong>Yes, trivially.</strong> Rule 5 is the residual. If 1–4 didn't fire, it fires —
+            you never check its conditions at all.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Rules 1 and 3 rest on <strong>one assumption: your last set is your worst set.</strong> Reps do
+    not go <em>up</em> across sets at a fixed load. That is very nearly always true — fatigue
+    accumulates, and you are stopping at an RPE cap rather than at failure — but it is an assumption,
+    not a law, and it is the only thing holding this up.</p>
+
+    <div class="callout warn">
+      <span class="kicker">The blind spot — say this out loud, don't bury it</span>
+      <p>If an <em>earlier</em> set was worse than your last — you ground out a 3 on set two, then
+      rallied — the three-number log hides it, and the rule misreads the session in one of two
+      directions. Either <strong>rule 1 is missed</strong> (a sub-4 set goes unseen, so the load doesn't
+      drop when it should), or <strong>rule 3 fires when it shouldn't</strong> (last set 6, earlier sets
+      5: the real rule says add reps, a last-set log says add load).</p>
+      <p style="margin-top:var(--space-1)">The escape hatch costs one sentence. <strong>If any earlier
+      set felt worse than your last, say so</strong> — then write all four for that lift and we'll run
+      it properly. You don't have to catch it perfectly. You only have to say "actually" when something
+      was off.</p>
+    </div>
+
+    <div class="callout">
+      <span class="kicker">The pin on rule 2</span>
+      <p>"No rep added" was ambiguous: added to <em>which</em> set? It is now pinned. <strong>A stall is
+      three consecutive sessions at the same load with no rep added to the <em>last</em> set.</strong>
+      That is a choice, not a derivation — and it makes rule 2 fire slightly <em>sooner</em> than a
+      count-any-set reading would, because a rep gained on set one no longer holds off the reset. The
+      direction is deliberate: this course resets early rather than grinding late.</p>
+    </div>
+
+    <p>None of this is an empirical finding. It is arithmetic about the rule as written — which is
+    exactly why it is allowed to be this confident, and exactly why the one assumption underneath it has
+    to stay in view. Log all four sets whenever you want; it is strictly more information and always
+    welcome. But three numbers is enough to decide what goes on the bar, and <strong>three numbers you
+    actually write down beat sixteen you don't.</strong></p>
+
+    <h2>4 · Rest between sets</h2>
     <div class="table-wrap">
       <table>
         <thead>
@@ -125,7 +217,7 @@
       load fall off a cliff between sets.</p>
     </div>
 
-    <h2>4 · Your knee: the monitoring rule</h2>
+    <h2>5 · Your knee: the monitoring rule</h2>
     <p>You have a knee history and no current pain. That means you don't need rehab — you need a
     tripwire, so a niggle never becomes a diagnosis. Judge every knee-loaded session against all three:</p>
 
@@ -156,7 +248,7 @@
       evidence's.</strong> Now you know, and you can disagree with it on purpose.</p>
     </div>
 
-    <h2>5 · How much of this is actually proven?</h2>
+    <h2>6 · How much of this is actually proven?</h2>
     <p>Keep these labels in mind. A protocol you trust for the wrong reason is fragile.</p>
 
     <div class="table-wrap">
@@ -210,6 +302,12 @@
             <td><span class="evidence coach">Convention</span></td>
             <td>What the plates allow.</td>
           </tr>
+          <tr>
+            <td>The last set alone is enough to run the ordered rule</td>
+            <td><span class="evidence coach">Logical derivation</span></td>
+            <td>Not evidence — arithmetic on the rule (§3). True <em>if</em> the last set is your worst
+            set. Nobody has tested that assumption on you.</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -222,7 +320,7 @@
       Train there and you are defensible whichever way the evidence settles.</p>
     </div>
 
-    <h2>6 · Glossary</h2>
+    <h2>7 · Glossary</h2>
     <dl class="glossary">
       <dt>Hard set <span class="tag">unit</span></dt>
       <dd>A working set taken close enough to failure to drive adaptation — in practice, 1–3 RIR.
@@ -243,8 +341,9 @@
       exceeds the cap doesn't count as earned, even if the reps were there.</dd>
 
       <dt>Stall <span class="tag">diagnosis</span></dt>
-      <dd>Three consecutive sessions with the same load and no rep added. Not a bad day — a signal to
-      reset, not to push.</dd>
+      <dd>Three consecutive sessions at the same load with no rep added <em>to the last set</em>. Not a
+      bad day — a signal to reset, not to push. (The "last set" wording is the pin from §3; it is what
+      makes the stall readable from a three-number log.)</dd>
     </dl>
 
     <footer class="lesson-foot">
