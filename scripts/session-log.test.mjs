@@ -17,10 +17,15 @@ import {
   LogError,
 } from './session-log.mjs';
 
-/** What GitHub actually posts as the body of a submitted issue FORM. */
+/**
+ * What GitHub actually posts as the body of a submitted issue FORM.
+ * The Block week value is the dropdown's OPTION TEXT, because that is what
+ * GitHub renders into the body — not the bare digit.
+ */
 const formBody = (over = {}) => {
   const f = {
     'Date': '2026-07-21',
+    'Block week': 'Week 2 — execution (cap RPE 8, the ordered rule runs)',
     'Lift': 'Back squat',
     'Equipment': 'Smith machine',
     'Load (total kg)': '20',
@@ -35,12 +40,15 @@ const formBody = (over = {}) => {
     .join('\n');
 };
 
+const WEEK_1 = 'Week 1 — calibration (cap RPE 7, find the loads)';
+
 // --- Issue-form parsing -----------------------------------------------------
 
 test('parses a well-formed issue-form body', () => {
   const e = parseIssueBody(formBody());
   assert.deepEqual(e, {
     date: '2026-07-21',
+    block_week: 2,
     lift: 'Back squat',
     equipment: 'Smith machine',
     load_kg: 20,
@@ -49,6 +57,12 @@ test('parses a well-formed issue-form body', () => {
     knee: 2,
     notes: '',
   });
+});
+
+test('block week reads the LEADING digit, not the "(cap RPE 8)" inside the option text', () => {
+  assert.equal(parseIssueBody(formBody({ 'Block week': WEEK_1 })).block_week, 1);
+  assert.equal(parseIssueBody(formBody({ 'Block week': '1' })).block_week, 1);
+  assert.equal(parseIssueBody(formBody({ 'Block week': '2' })).block_week, 2);
 });
 
 test('_No response_ on an optional field becomes empty, not the literal string', () => {
@@ -101,23 +115,53 @@ test('rejects an out-of-range knee', () => rejects({ 'Knee (0-10)': '11' }, /bet
 test('rejects equipment that is not on the list', () =>
   rejects({ 'Equipment': 'Hack squat sled' }, /not one of the options/));
 
-test('rejects a HALF-POINT RPE — the ordered rule has no branch for 8.5', () => {
-  // 8.5 is over the cap but is not 9, so it would fall past rules 3 and 4 into
-  // rule 5 and EARN A REP at an effort the protocol forbids. Refuse the input
-  // rather than let the rule quietly mis-fire. Flagged to the author.
-  rejects({ 'Last-set RPE': '8.5' }, /whole number/);
-});
-
 test('rejects lift = Other rather than merging two lifts into one history', () => {
   rejects({ 'Lift': 'Other' }, /Smith-machine mistake/);
+});
+
+test('rejects a missing or nonsense block week rather than assuming week 2', () => {
+  rejects({ 'Block week': '' }, /missing/i);
+  rejects({ 'Block week': 'Week 3 — the one that does not exist' }, /week 1 or week 2/i);
+  rejects({ 'Block week': 'sometime in July' }, /week 1 or week 2/i);
+});
+
+// --- Half-point RPE: accepted, because the rule now handles it ---------------
+
+test('ACCEPTS a half-point RPE — 8.5 is a real rating and rule 4 now covers it', () => {
+  // This used to be REJECTED, and the rejection was a patch over a bug: rule 4
+  // read `RPE === 9`, so an 8.5 fell past rules 3 and 4 into rule 5 and earned a
+  // REP at an effort already over the cap. Rule 4 now reads `RPE > 8`.
+  assert.equal(parseIssueBody(formBody({ 'Last-set RPE': '8.5' })).last_set_rpe, 8.5);
+  assert.equal(parseIssueBody(formBody({ 'Last-set RPE': '7.5' })).last_set_rpe, 7.5);
+  assert.equal(parseIssueBody(formBody({ 'Last-set RPE': '9.5' })).last_set_rpe, 9.5);
+  assert.equal(parseIssueBody(formBody({ 'Last-set RPE': '8' })).last_set_rpe, 8);
+});
+
+test('an 8.5 is HELD by rule 4, not rewarded with a rep by rule 5', () => {
+  // The end-to-end shape of the bug, from the form body to the verdict.
+  const entry = parseIssueBody(formBody({ 'Last-set reps': '6', 'Last-set RPE': '8.5' }));
+  const { verdict } = applyEntry([], entry, 'https://github.com/o/r/issues/1');
+  assert.equal(verdict.rule, 4);
+  assert.equal(verdict.action, 'repeat');
+  assert.equal(verdict.next_load_kg, 20, 'nothing moves');
+});
+
+test('still rejects a QUARTER-point RPE — the scale is not that precise', () => {
+  rejects({ 'Last-set RPE': '8.25' }, /whole or half point/);
+  rejects({ 'Last-set RPE': '8.7' }, /whole or half point/);
+  rejects({ 'Last-set RPE': '8.5.5' }, /whole or half point/);
+});
+
+test('the knee is still an INTEGER — half a point of pain is not a thing', () => {
+  rejects({ 'Knee (0-10)': '3.5' }, /whole number/);
 });
 
 // --- CSV --------------------------------------------------------------------
 
 test('CSV round-trips, and a blank number reads back as null and NOT as zero', () => {
   const csv = [
-    'date,lift,equipment,load_kg,last_set_reps,last_set_rpe,knee,verdict,issue_url,notes',
-    '2026-07-14,Back squat,Smith machine,20,,,,,,"20 kg of plate; carriage unknown"',
+    'date,lift,equipment,load_kg,last_set_reps,last_set_rpe,knee,verdict,issue_url,notes,block_week',
+    '2026-07-14,Back squat,Smith machine,20,,,,,,"20 kg of plate; carriage unknown",1',
   ].join('\n');
 
   const rows = readLog(csv);
@@ -127,8 +171,25 @@ test('CSV round-trips, and a blank number reads back as null and NOT as zero', (
   assert.equal(rows[0].last_set_rpe, null);
   assert.equal(rows[0].knee, null);
   assert.equal(rows[0].notes, '20 kg of plate; carriage unknown');
+  assert.equal(rows[0].block_week, 1, 'the seeded 14 July session was a week-1 calibration session');
 
-  assert.equal(readLog(serialiseCsv(rows))[0].last_set_reps, null, 'null survives a round-trip');
+  const back = readLog(serialiseCsv(rows))[0];
+  assert.equal(back.last_set_reps, null, 'null survives a round-trip');
+  assert.equal(back.block_week, 1, 'the block week survives a round-trip');
+});
+
+test('block_week is APPENDED — a pre-schema row still reads, and reads as unknown', () => {
+  // Old rows have ten columns, not eleven. They must not blow up, and a missing
+  // week must not silently become a 1 (which would drop the row out of every
+  // stall window) or a 2 (which would run the rule on a calibration session).
+  const legacy = [
+    'date,lift,equipment,load_kg,last_set_reps,last_set_rpe,knee,verdict,issue_url,notes',
+    '2026-07-14,Back squat,Free barbell,100,5,8,,Rule 5 — Add reps keep load,https://x/1,',
+  ].join('\n');
+
+  const rows = readLog(legacy);
+  assert.equal(rows[0].load_kg, 100);
+  assert.equal(rows[0].block_week, undefined, 'absent, not fabricated');
 });
 
 test('CSV quotes commas and quotes inside a note', () => {
@@ -141,12 +202,26 @@ test('CSV quotes commas and quotes inside a note', () => {
 
 const entryFor = (over = {}) => parseIssueBody(formBody(over));
 
-test('a new issue APPENDS a row', () => {
+test('a new issue APPENDS a row, carrying the block week', () => {
   const { rows, changed, verdict } = applyEntry([], entryFor(), 'https://github.com/o/r/issues/1');
   assert.equal(rows.length, 1);
   assert.equal(changed, true);
   assert.equal(verdict.rule, 5);
   assert.equal(rows[0].verdict, 'Rule 5 — Add reps, keep load');
+  assert.equal(rows[0].block_week, 2);
+});
+
+test('a WEEK 1 row records the session and says no rule ran', () => {
+  const entry = entryFor({ 'Block week': WEEK_1, 'Last-set reps': '6', 'Last-set RPE': '8' });
+  const { rows, verdict } = applyEntry([], entry, 'https://github.com/o/r/issues/1');
+
+  // 6 reps @ RPE 8 is rule 3 in week 2 — "add load". In week 1 it is an
+  // OVER-CAP calibration set and must not add anything.
+  assert.equal(verdict.rule, null);
+  assert.equal(verdict.action, 'calibrate');
+  assert.equal(rows[0].block_week, 1);
+  assert.equal(rows[0].verdict, "Week 1 calibration — Find the load, don't progress it");
+  assert.doesNotMatch(rows[0].verdict, /^Rule /, 'no rule number, because no rule ran');
 });
 
 test('an EDITED issue corrects its own row instead of appending a second one', () => {
@@ -202,6 +277,30 @@ test('the verdict comment names the rule, the prescription, and the knee line', 
   assert.match(md, /## Rule 3 — Add load, reset reps/);
   assert.match(md, /Smith machine/);
   assert.match(md, /25 kg/); // 20 + 5, lower body
+  assert.match(md, /block week 2 \(cap RPE 8\)/);
+  assert.match(md, /shorten the range of motion/i);
+  assert.match(md, /not medical advice/i);
+});
+
+test('a WEEK 1 comment says the rule did not run, and never prints a rule number', () => {
+  const entry = entryFor({ 'Block week': WEEK_1, 'Last-set reps': '6', 'Last-set RPE': '8' });
+  const { verdict } = applyEntry([], entry, 'https://github.com/o/r/issues/1');
+  const md = renderVerdict(entry, verdict);
+
+  assert.match(md, /## Week 1 · calibration/);
+  assert.match(md, /block week 1 \(cap RPE 7\)/);
+  assert.match(md, /the ordered rule did not run/i);
+  assert.match(md, /over the RPE 7 cap/i, 'say plainly that the set blew the week-1 cap');
+  assert.doesNotMatch(md, /Rule \d/, 'no rule fired, so no rule may be named');
+  assert.doesNotMatch(md, /add load/i, 'the week-2 verdict for this set — and it must not appear');
+});
+
+test('a WEEK 1 comment still carries the knee warning', () => {
+  const entry = entryFor({ 'Block week': WEEK_1, 'Last-set RPE': '6', 'Knee (0-10)': '5' });
+  const { verdict } = applyEntry([], entry, 'https://github.com/o/r/issues/1');
+  const md = renderVerdict(entry, verdict);
+
+  assert.match(md, /## Week 1 · calibration/);
   assert.match(md, /shorten the range of motion/i);
   assert.match(md, /not medical advice/i);
 });

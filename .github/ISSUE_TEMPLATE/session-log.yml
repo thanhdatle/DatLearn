@@ -8,18 +8,24 @@
 #      https://github.com/thanhdatle/DatLearn/issues/new
 #        ?template=session-log.yml
 #        &date=2026-07-21
+#        &block_week=Week+2+%E2%80%94+execution+(cap+RPE+8,+the+ordered+rule+runs)
 #        &lift=Back+squat
 #        &equipment=Smith+machine
 #        &load_kg=20
 #        &last_set_reps=5
-#        &last_set_rpe=8
+#        &last_set_rpe=8.5
 #        &knee=2
 #        &notes=Blue+Life+Fitness+Smith
 #
 #    The ids, in order, and they are STABLE — a web form elsewhere in the repo
 #    builds that URL:
 #
-#      date  lift  equipment  load_kg  last_set_reps  last_set_rpe  knee  notes
+#      date  block_week  lift  equipment  load_kg  last_set_reps  last_set_rpe
+#      knee  notes
+#
+#    `block_week` was ADDED, not substituted. No existing id changed, so every
+#    prefill link that already exists still works — it simply leaves the new
+#    dropdown on its default (week 2, the steady state).
 #
 #    Renaming an id silently breaks every prefill link that already exists.
 #    Dropdown prefill matches on the OPTION TEXT, so the option strings below are
@@ -45,12 +51,32 @@ body:
         One lift per issue. Fill it, submit it, and the verdict comes back as a comment: which rule
         fired, what it means, and the load and target reps for next session.
 
+        **In week 1 of a block the ordered rule does not run.** Week 1 caps at RPE 7 and its job is to
+        find the loads — so you get calibration guidance instead. Say which week it was and the right
+        thing happens.
+
   - type: input
     id: date
     attributes:
       label: Date
       description: The day you trained. YYYY-MM-DD.
       placeholder: "2026-07-21"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: block_week
+    attributes:
+      label: Block week
+      description: >-
+        Which week of the two-week block this session was. This decides whether the ordered rule runs at
+        all. WEEK 1 IS CALIBRATION — it caps at RPE 7 and its job is to FIND the loads, so the ordered
+        rule DOES NOT RUN and you get calibration guidance instead. Week 2 caps at RPE 8 and the rule
+        runs. The knee tripwire runs in both.
+      options:
+        - Week 1 — calibration (cap RPE 7, find the loads)
+        - Week 2 — execution (cap RPE 8, the ordered rule runs)
+      default: 1
     validations:
       required: true
 
@@ -114,9 +140,10 @@ body:
     attributes:
       label: Last-set RPE
       description: >-
-        RPE of that same last set. A WHOLE NUMBER, 4-10. RPE = 10 - reps in reserve. 8 = two clean reps
-        left. 9 = one, maybe. 10 = nothing left. No half points: the ordered rule has no branch for an
-        8.5, and it is not getting one behind your back.
+        RPE of that same last set. 4-10, HALF POINTS ALLOWED (7.5, 8.5, 9.5) — but no quarter points;
+        the scale is not that precise. RPE = 10 - reps in reserve. 8 = two clean reps left. 9 = one,
+        maybe. 10 = nothing left. Anything ABOVE 8 is over the week-2 cap and the rule will hold you
+        there — an 8.5 does not earn a rep.
       placeholder: "8"
     validations:
       required: true

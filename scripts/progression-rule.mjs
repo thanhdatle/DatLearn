@@ -8,16 +8,30 @@
  * An earlier unordered version was neither mutually exclusive nor exhaustive:
  * `6,6,6,6 @ RPE 10` matched two rows and `5,4,4,4 @ RPE 9` matched none.
  * Do not reorder these. Do not collapse them. The totality test in
- * progression-rule.test.mjs proves exactly one rule fires for every (reps, RPE).
+ * progression-rule.test.mjs proves exactly one rule fires for every (reps, RPE)
+ * — INCLUDING half-point RPEs.
+ *
+ * THE ORDERED RULE RUNS IN WEEK 2 ONLY. Week 1 of a block is calibration: it
+ * caps at RPE 7 and its job is to FIND the loads, not to progress them. Running
+ * the ordered rule on a week-1 session would tell him to ADD LOAD off a set that
+ * blew that week's own cap. See `calibrate()` below, and two-week-block.html.
  *
  * Zero dependencies. Plain Node ESM.
  */
 
-// --- Rep range, set count, RPE cap ------------------------------------------
+// --- Rep range, set count, RPE caps -----------------------------------------
 
 export const REP_MIN = 4;
 export const REP_MAX = 6;
-export const RPE_CAP = 8; // week 1 of a block caps at 7 — see the NOTE at the bottom of this file.
+
+/** The week-2 cap. The ordered rule is written against THIS number. */
+export const RPE_CAP = 8;
+
+/** The week-1 cap. Calibration only — the ordered rule never runs against it. */
+export const RPE_CAP_WEEK1 = 7;
+
+/** Week 1 finds each load with a set of five. That is the reference set. */
+const CALIBRATION_REPS = 5;
 
 const PLATE_STEP_KG = 2.5;
 const STALL_SESSIONS = 3; // current + 2 prior
@@ -89,6 +103,20 @@ const hasNumber = (v) => typeof v === 'number' && Number.isFinite(v);
 const hasReps = (e) => hasNumber(e?.last_set_reps);
 
 /**
+ * A week-1 session is a CALIBRATION session, not a progression session. It was
+ * run under a different cap (7, not 8) and it was deliberately ramping the load
+ * to find it. It is therefore not evidence of a stall, and it must not be
+ * allowed to complete a stall triple — the same reasoning that keeps a
+ * reps-less entry out of the window: rule 2 counts progression sessions, and a
+ * calibration session is not one.
+ *
+ * A row with NO block_week is a pre-schema row. It is counted, because every
+ * such row was logged under the old week-agnostic rule, i.e. as a week-2
+ * progression session.
+ */
+const isCalibrationSession = (e) => e?.block_week === 1;
+
+/**
  * Rule 1 / rule 2 reset: 90% of the current load, rounded to the nearest 2.5 kg.
  * Guard: on very light loads 90% can round back UP to the same number
  * (10 kg -> 9 -> rounds to 10). A "drop" that does not drop is a bug, so fall
@@ -118,10 +146,13 @@ function dropLoad(currentKg) {
  *
  * An entry with no reps logged cannot be a stall data point, so it cannot
  * complete a triple. We do not drop someone's load on the strength of a blank.
+ * Nor on the strength of a week-1 calibration session — see
+ * `isCalibrationSession`.
  */
 function isStalled(entry, priors) {
-  if (priors.length < STALL_SESSIONS - 1) return false;
-  const [p2, p1] = priors.slice(-2); // p2 older, p1 immediately prior
+  const progressionPriors = priors.filter((p) => !isCalibrationSession(p));
+  if (progressionPriors.length < STALL_SESSIONS - 1) return false;
+  const [p2, p1] = progressionPriors.slice(-2); // p2 older, p1 immediately prior
   const window = [p2, p1, entry];
 
   if (!window.every(hasReps)) return false;
@@ -194,12 +225,104 @@ function kneeCheck(entry, priors) {
  * @property {string} equipment
  * @property {number} load_kg
  * @property {number} last_set_reps
- * @property {number} last_set_rpe
+ * @property {number} last_set_rpe  4-10, half points allowed (7.5, 8.5, 9.5)
+ * @property {1|2} block_week       1 = calibration, 2 = execution
  * @property {number|null} [knee]   0-10, lower-body days only
  */
 
 /**
- * Run the ordered rule.
+ * WEEK 1 — CALIBRATION. The ordered rule does not run.
+ *
+ * Week 1 caps at RPE 7 and exists to FIND each load, not to progress it. The
+ * ordered rule only knows the week-2 cap of 8, so a week-1 set of 6 @ RPE 8
+ * would fire rule 3 and tell him to ADD LOAD — off a set that went OVER that
+ * week's own cap, which the glossary says is not "earned". The rule and the
+ * programme contradicted each other; this branch is where that stops.
+ *
+ * Guidance is the block plan's own, verbatim in substance
+ * (two-week-block.html, "Finding the load, set by set").
+ */
+function calibrate(entry, verdict, region, increment) {
+  const rpe = entry.last_set_rpe;
+  const reps = entry.last_set_reps;
+  const load = entry.load_kg;
+
+  const status = rpe < RPE_CAP_WEEK1 ? 'under' : rpe > RPE_CAP_WEEK1 ? 'over' : 'at';
+
+  const preamble =
+    `**Week 1 is calibration — the ordered rule does not run.** Its job is to find the load, not to ` +
+    `progress it. Nothing you did this session can earn you a kilo or cost you one. The week-1 cap is ` +
+    `**RPE ${RPE_CAP_WEEK1}**, one notch below the programme's real cap of ${RPE_CAP}.`;
+
+  const noIncrement =
+    `I have no body-region on file for "${entry.lift}", so I will not pick an increment for you — ` +
+    `+5 kg and +2.5 kg are not interchangeable. Name the lift and I will give you the number.`;
+
+  if (status === 'under') {
+    const next = increment === null ? null : load + increment;
+    return verdict({
+      rule: null,
+      action: 'calibrate',
+      name: 'Find the load, don\'t progress it',
+      calibration: 'under',
+      why:
+        `${preamble}\n\nYour last set came in at **RPE ${rpe} — under the RPE ${RPE_CAP_WEEK1} cap.** ` +
+        `That is week 1 working exactly as intended, and it means ${load} kg is not yet the load you ` +
+        `came here to find.`,
+      next_load_kg: next,
+      next_target_reps: CALIBRATION_REPS,
+      prescription: next === null
+        ? noIncrement
+        : `Add **${increment} kg** (${region} body) and go again on the next set — **${next} kg**. ` +
+          `Whatever weight lands you at RPE ${RPE_CAP_WEEK1} for a set of ${CALIBRATION_REPS} ` +
+          `**is your week-2 starting load.** Four sets is enough to find it; don't hunt past four.`,
+    });
+  }
+
+  if (status === 'over') {
+    const next = increment === null || load - increment <= 0 ? null : load - increment;
+    return verdict({
+      rule: null,
+      action: 'calibrate',
+      name: 'Find the load, don\'t progress it',
+      calibration: 'over',
+      why:
+        `${preamble}\n\nYour last set came in at **RPE ${rpe} — over the RPE ${RPE_CAP_WEEK1} cap.** ` +
+        `A set over the cap is not earned, even when the reps are there — and in week 1 it is not even ` +
+        `information: you have overshot the load you were trying to locate.`,
+      next_load_kg: next,
+      next_target_reps: CALIBRATION_REPS,
+      prescription: next === null
+        ? noIncrement
+        : `Come back down one step — **${next} kg** — and re-rate it. Same ramp, run backwards. Start ` +
+          `deliberately too light and climb; the load that lands at RPE ${RPE_CAP_WEEK1} for a set of ` +
+          `${CALIBRATION_REPS} is the one you want, and you have just proved it is below ${load} kg.`,
+    });
+  }
+
+  return verdict({
+    rule: null,
+    action: 'calibrate',
+    name: 'Find the load, don\'t progress it',
+    calibration: 'at',
+    why:
+      `${preamble}\n\nYour last set came in **at the RPE ${RPE_CAP_WEEK1} cap** — ${reps} reps at ` +
+      `RPE ${rpe}. That is the number this week existed to produce.`,
+    next_load_kg: load,
+    next_target_reps: CALIBRATION_REPS,
+    prescription:
+      `**${load} kg is your week-2 starting load** for this lift. Write it down and stop hunting. In ` +
+      `week 2 the cap goes to RPE ${RPE_CAP}, you start here, and the ordered rule runs after every ` +
+      `main lift.`,
+  });
+}
+
+/**
+ * Run the rule.
+ *
+ * In WEEK 2 that is the five ordered rules. In WEEK 1 it is `calibrate()` —
+ * the ordered rule is not run at all. The knee tripwire runs in BOTH weeks; it
+ * was never part of the ordered rule.
  *
  * @param {Entry} entry      the session just logged
  * @param {Entry[]} history  prior sessions. MAY contain other lifts and other
@@ -211,10 +334,17 @@ function kneeCheck(entry, priors) {
 export function decide(entry, history = []) {
   const reps = entry.last_set_reps;
   const rpe = entry.last_set_rpe;
+  const week = entry.block_week;
 
   if (!hasNumber(entry.load_kg)) throw new Error('load_kg is required to run the rule.');
   if (!hasNumber(reps)) throw new Error('last_set_reps is required to run the rule.');
   if (!hasNumber(rpe)) throw new Error('last_set_rpe is required to run the rule.');
+  // Not defaulted. Which week it was decides whether the ordered rule runs at
+  // all, and guessing "2" on a week-1 session is the exact bug this branch
+  // exists to kill.
+  if (week !== 1 && week !== 2) {
+    throw new Error('block_week is required (1 or 2) — the ordered rule only runs in week 2.');
+  }
 
   const key = historyKey(entry);
   const priors = history.filter((h) => historyKey(h) === key);
@@ -231,9 +361,16 @@ export function decide(entry, history = []) {
     load_kg: entry.load_kg,
     last_set_reps: reps,
     last_set_rpe: rpe,
+    block_week: week,
+    rpe_cap: week === 1 ? RPE_CAP_WEEK1 : RPE_CAP,
     knee,
     ...fields,
   });
+
+  // -- Week 1 ---------------------------------------------------------------
+  // Calibration. The ordered rule does not run. The knee tripwire (computed
+  // above, attached below) does.
+  if (week === 1) return calibrate(entry, verdict, region, increment);
 
   // -- Rule 1 ---------------------------------------------------------------
   // Any set below 4 reps, OR the last set hit RPE 10.
@@ -303,14 +440,22 @@ export function decide(entry, history = []) {
   }
 
   // -- Rule 4 ---------------------------------------------------------------
-  // Last set hit RPE 9. BELOW rule 3: a 6 at RPE 9 is over the cap, so it does
-  // not earn load. ABOVE rule 5: for the same reason, it does not earn a rep.
-  if (rpe === 9) {
+  // Last set went ABOVE the cap: RPE > 8, and (rule 1 having passed) below 10.
+  //
+  // `rpe > RPE_CAP`, NOT `rpe === 9`. Half-point RPEs are standard practice, and
+  // an 8.5 is over the cap. Written as `=== 9` it missed rule 1 (not >= 10),
+  // missed rule 3 (not <= 8), missed rule 4 (not === 9) and fell into rule 5 —
+  // which ADDED A REP at an effort that had already blown the cap. Exactly
+  // backwards. Integer behaviour is unchanged: RPE 9 still lands here.
+  //
+  // BELOW rule 3: a 6 above the cap does not earn load. ABOVE rule 5: for the
+  // same reason, it does not earn a rep either. Over the cap = hold.
+  if (rpe > RPE_CAP) {
     return verdict({
       rule: 4,
       action: 'repeat',
       name: 'Repeat load and reps',
-      why: `RPE ${rpe} — over the cap of ${RPE_CAP}. Those reps were not earned at that effort.`,
+      why: `RPE ${rpe} — above the cap of ${RPE_CAP}. Those reps were not earned at that effort.`,
       next_load_kg: entry.load_kg,
       next_target_reps: reps,
       prescription:
@@ -337,16 +482,18 @@ export function decide(entry, history = []) {
 }
 
 /*
- * NOTE ON THE WEEK-1 CAP (flagged to the author, not silently resolved).
+ * THE WEEK-1 CAP — RESOLVED, and resolved in the PROTOCOL, not just here.
  *
- * The block runs week 1 at an RPE cap of 7 and week 2 at 8. The ordered rule as
- * written in the protocol only knows about 8: on a week-1 session, reps=6 @
- * RPE 8 fires rule 3 (add load) even though RPE 8 is OVER that week's cap — and
- * the glossary says "a set that exceeds the cap doesn't count as earned, even
- * if the reps were there." The rule and the glossary disagree in week 1.
+ * The gap: the block runs week 1 at an RPE cap of 7 and week 2 at 8, but the
+ * ordered rule only ever knew about 8. A week-1 set of 6 reps @ RPE 8 fired
+ * rule 3 and said ADD LOAD — during a calibration week, off a set that had blown
+ * that week's own cap, while the glossary says a set over the cap is not earned.
  *
- * This engine implements the rule EXACTLY as the protocol states it (cap 8),
- * because the protocol is the spec, and inventing a week-aware branch would be
- * a quiet rewrite of it. The log carries no week number, so it could not run a
- * week-aware branch anyway. Raised in the handover report.
+ * The programme had already answered this and nobody had told the rule:
+ * two-week-block.html says week 1 establishes the loads and week 2 is where
+ * "after every main lift you walk the ordered rule". So the fix is not a new
+ * policy, it is wiring: the log now carries `block_week`, week 1 returns a
+ * CALIBRATION verdict, and the ordered rule runs in week 2 only.
+ *
+ * progression-protocol.html §2 now states this. The rule and the programme agree.
  */

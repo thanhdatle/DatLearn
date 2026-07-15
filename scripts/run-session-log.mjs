@@ -86,7 +86,8 @@ function main() {
     commitMsgFile,
     [
       `log(strength): ${entry.date} — ${entry.lift} (${entry.equipment}), ` +
-        `${entry.load_kg} kg × ${entry.last_set_reps} @ RPE ${entry.last_set_rpe}`,
+        `${entry.load_kg} kg × ${entry.last_set_reps} @ RPE ${entry.last_set_rpe} ` +
+        `[block week ${entry.block_week}]`,
       '',
       verdictCell(verdict),
       `Next: ${verdict.next_load_kg === null ? 'load TBD' : `${verdict.next_load_kg} kg`}, ` +

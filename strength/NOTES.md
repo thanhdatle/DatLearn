@@ -57,6 +57,31 @@ A Codex review found the original five-row table was neither mutually exclusive 
 **ordered** rules, first match wins, which is provably total. All four drills were re-verified to
 have exactly one correct answer under the ordering. If you ever restate the rule, restate the order.
 
+### Two gap fixes (2026-07-14, third review — both surfaced by implementing the rule in code)
+
+**1. Rule 4 is `RPE > 8`, not `RPE == 9`.** An 8.5 — a standard half-point rating — missed rule 1
+(not ≥ 10), missed rule 3 (over the cap), missed rule 4 (not 9), and fell into **rule 5, which added a
+rep at an effort that had already blown the cap.** Exactly backwards. Rule 4 now reads *above the cap*,
+which is what it always meant: **you went over — hold, don't progress.** Integer behaviour is unchanged
+(RPE 9 → rule 4), so every taught drill still has the same answer and every "last set at RPE 9" line in
+the lessons is still correct. Half points are now **accepted** by the issue form; **quarter points are
+still refused** — the scale is not that precise. Totality re-proved over half-steps (r 0–8, e 4–10 step
+0.5) in `progression-rule.test.mjs`.
+
+**2. The ordered rule runs in WEEK 2 ONLY.** Week 1 caps at RPE 7 and its job is to *find* the loads.
+The engine only knew the cap of 8, so a week-1 set of 6 @ RPE 8 fired rule 3 and said **add load** —
+during a calibration week, off a set that blew that week's own cap, while the glossary says an over-cap
+set is not earned. The programme had already settled this in `reference/two-week-block.html`; nobody had
+told the rule. The log now carries **`block_week`** (column appended, dropdown on the issue form,
+default 2) and a week-1 session returns a **calibration verdict** — under / at / over the RPE 7 cap,
+plus the week-1 ramp — instead of a rule number. **The knee tripwire runs in BOTH weeks; it was never
+part of the ordered rule.**
+
+One judgement call inside fix 2, flagged rather than buried: **a week-1 session cannot complete a rule-2
+stall.** Rule 2 counts *progression* sessions, and a calibration session — different cap, deliberately
+ramping the load — is not one. Same reasoning that already keeps a reps-less entry out of the stall
+window. Reverse it if you disagree, but do it on purpose.
+
 ## Two parallel streams (requested 2026-07-09)
 The workspace now teaches on two tracks. Don't merge them.
 

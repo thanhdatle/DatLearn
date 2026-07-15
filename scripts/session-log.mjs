@@ -18,6 +18,12 @@ import { decide } from './progression-rule.mjs';
  * your last, say so" — is delivered THROUGH the notes field. With nowhere to
  * land, that sentence is decoration. Drop this column and you drop the only
  * mitigation the three-number log has for its known blind spot.
+ *
+ * `block_week` is APPENDED, never inserted. Every existing column keeps its
+ * position, so an old row still reads. It is not bookkeeping either: week 1 caps
+ * at RPE 7 and CALIBRATES, week 2 caps at 8 and PROGRESSES, and the ordered rule
+ * runs in WEEK 2 ONLY. Without this column the rule cannot know which week it is
+ * in — and a week-1 calibration set gets told to add load.
  */
 export const COLUMNS = [
   'date',
@@ -30,9 +36,16 @@ export const COLUMNS = [
   'verdict',
   'issue_url',
   'notes',
+  'block_week',
 ];
 
-const NUMERIC_COLUMNS = new Set(['load_kg', 'last_set_reps', 'last_set_rpe', 'knee']);
+const NUMERIC_COLUMNS = new Set([
+  'load_kg',
+  'last_set_reps',
+  'last_set_rpe',
+  'knee',
+  'block_week',
+]);
 
 /** RFC4180-ish reader. Handles quoted fields, escaped quotes, CRLF. */
 export function parseCsv(text) {
@@ -114,6 +127,7 @@ export function readLog(text) {
  */
 export const LABEL_TO_ID = new Map(Object.entries({
   'Date': 'date',
+  'Block week': 'block_week',
   'Lift': 'lift',
   'Equipment': 'equipment',
   'Load (total kg)': 'load_kg',
@@ -134,6 +148,17 @@ export const LIFT_OPTIONS = [
 ];
 
 export const EQUIPMENT_OPTIONS = ['Free barbell', 'Smith machine', 'Machine', 'Dumbbell'];
+
+/**
+ * Dropdown option TEXT, which is also what a prefill URL has to match.
+ * The parser below reads the leading digit rather than string-matching these,
+ * so a bare "1" or "2" typed by hand also works. The wording can be improved
+ * without breaking the parse; the LEADING DIGIT cannot move.
+ */
+export const BLOCK_WEEK_OPTIONS = [
+  'Week 1 — calibration (cap RPE 7, find the loads)',
+  'Week 2 — execution (cap RPE 8, the ordered rule runs)',
+];
 
 const NO_RESPONSE = '_No response_';
 
@@ -184,6 +209,44 @@ const intInRange = (raw, name, lo, hi) => {
 };
 
 /**
+ * RPE, on the half point. 8, 8.5, 9 — but not 8.25 and not 8.7.
+ *
+ * Half points are standard practice and the rule now handles them: rule 4 fires
+ * on `RPE > 8`, not on `RPE === 9`, so an 8.5 is held rather than rewarded with a
+ * rep it did not earn. Quarter points are still refused — the scale is not that
+ * precise, and pretending it is would be a false precision the whole course is
+ * written against.
+ */
+const halfStepInRange = (raw, name, lo, hi) => {
+  if (!/^\d+(\.[05])?$/.test(raw)) {
+    fail(
+      `**${name}** must be a whole or half point — 8, 8.5, 9. I got \`${raw}\`. ` +
+      'Quarter points are not a thing; the scale is not that precise.',
+    );
+  }
+  const n = Number(raw);
+  if (n < lo || n > hi) fail(`**${name}** must be between ${lo} and ${hi}. I got \`${n}\`.`);
+  return n;
+};
+
+/**
+ * Which week of the block this was. Reads the LEADING DIGIT of the dropdown
+ * option, so "Week 2 — execution (cap RPE 8...)" and a bare "2" both work — and
+ * the "(cap RPE 8)" inside the option text cannot be mistaken for the answer.
+ */
+const parseBlockWeek = (raw) => {
+  const m = /^(?:week\s*)?([12])\b/i.exec(raw);
+  if (!m) {
+    fail(
+      `**Block week** must be week 1 or week 2. I got \`${raw}\`. This is not a formality: week 1 ` +
+      'caps at RPE 7 and its job is to find the loads, so **the ordered rule does not run in week 1.** ' +
+      'Tell me the wrong week and I will give you the wrong verdict.',
+    );
+  }
+  return Number(m[1]);
+};
+
+/**
  * Free text bound for a CSV cell: one line, no control characters, capped.
  * Order matters. Fold newlines into a separator FIRST — newlines are themselves
  * control characters, so stripping control characters first would run two lines
@@ -214,6 +277,8 @@ export function parseIssueBody(body) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) fail(`**Date** must be \`YYYY-MM-DD\`. I got \`${date}\`.`);
   if (Number.isNaN(Date.parse(`${date}T00:00:00Z`))) fail(`**Date** \`${date}\` is not a real date.`);
 
+  const block_week = parseBlockWeek(need('block_week', 'Block week'));
+
   const lift = need('lift', 'Lift');
   if (!LIFT_OPTIONS.includes(lift)) fail(`**Lift** \`${lift}\` is not one of the options.`);
   if (lift === 'Other') {
@@ -236,18 +301,20 @@ export function parseIssueBody(body) {
 
   const last_set_reps = intInRange(need('last_set_reps', 'Last-set reps'), 'Last-set reps', 0, 50);
 
-  // RPE is an INTEGER here on purpose. The ordered rule branches on `RPE == 9`
-  // and `RPE <= 8`. An 8.5 would fall past rule 3 and rule 4 into rule 5 and
-  // earn a REP at an effort that is over the cap. The rule as written has no
-  // half-point branch, so the form does not accept one. Flagged to the author.
-  const last_set_rpe = intInRange(need('last_set_rpe', 'Last-set RPE'), 'Last-set RPE', 1, 10);
+  // HALF POINTS ARE ACCEPTED. They used to be refused, as a stopgap: rule 4 read
+  // `RPE == 9`, so an 8.5 fell past rules 3 and 4 into rule 5 and earned a REP at
+  // an effort already over the cap. Rule 4 now reads `RPE > 8`, which covers 8.5,
+  // so the input no longer has to be crippled to protect the rule.
+  const last_set_rpe = halfStepInRange(need('last_set_rpe', 'Last-set RPE'), 'Last-set RPE', 1, 10);
 
   const kneeRaw = (f.knee ?? '').trim();
   const knee = kneeRaw === '' ? null : intInRange(kneeRaw, 'Knee', 0, 10);
 
   const notes = sanitiseNotes(f.notes ?? '');
 
-  return { date, lift, equipment, load_kg, last_set_reps, last_set_rpe, knee, notes };
+  return {
+    date, block_week, lift, equipment, load_kg, last_set_reps, last_set_rpe, knee, notes,
+  };
 }
 
 // --- The verdict comment ----------------------------------------------------
@@ -257,17 +324,29 @@ const PROTOCOL =
 
 const kg = (n) => (n === null ? '—' : `${n} kg`);
 
+/** Week 1 returns a calibration verdict, which has no rule number by design. */
+const isCalibration = (verdict) => verdict.rule === null;
+
 /**
  * Direct, no padding, no false confidence. Name the rule that fired, say what
  * it means, give the number that goes on the bar next time.
+ *
+ * In week 1 there is no rule to name, and saying "Rule 3" over a calibration
+ * session would be a lie about what just happened. Say instead that the rule did
+ * not run, and why.
  */
 export function renderVerdict(entry, verdict) {
   const parts = [];
 
-  parts.push(`## Rule ${verdict.rule} — ${verdict.name}`);
+  parts.push(
+    isCalibration(verdict)
+      ? `## Week 1 · calibration — ${verdict.name}`
+      : `## Rule ${verdict.rule} — ${verdict.name}`,
+  );
   parts.push(
     `**${entry.lift}** · ${entry.equipment} · ${kg(entry.load_kg)} · ` +
-    `last set **${entry.last_set_reps} reps @ RPE ${entry.last_set_rpe}**` +
+    `last set **${entry.last_set_reps} reps @ RPE ${entry.last_set_rpe}** · ` +
+    `block week ${entry.block_week} (cap RPE ${verdict.rpe_cap})` +
     (entry.knee === null ? '' : ` · knee ${entry.knee}/10`),
   );
   parts.push(verdict.why);
@@ -290,8 +369,11 @@ export function renderVerdict(entry, verdict) {
 
   parts.push('---');
   parts.push(
-    `Logged to \`strength/log/sessions.csv\`. Rule ${verdict.rule} of five, first match wins — ` +
-    `[the ordered rule](${PROTOCOL}).` +
+    (isCalibration(verdict)
+      ? 'Logged to `strength/log/sessions.csv`. **The ordered rule did not run** — it runs in week 2, ' +
+        `not week 1 — [the ordered rule](${PROTOCOL}).`
+      : `Logged to \`strength/log/sessions.csv\`. Rule ${verdict.rule} of five, first match wins — ` +
+        `[the ordered rule](${PROTOCOL}).`) +
     // The knee block already carries the disclaimer. Saying it twice in one
     // comment turns it into boilerplate, which is how a disclaimer stops being
     // read at all.
@@ -311,8 +393,12 @@ export function renderError(message) {
 
 // --- Orchestration (pure — no IO) -------------------------------------------
 
-/** The one-line summary stored in the CSV `verdict` column. */
-export const verdictCell = (v) => `Rule ${v.rule} — ${v.name}`;
+/**
+ * The one-line summary stored in the CSV `verdict` column.
+ * A week-1 row gets no rule number, because no rule ran.
+ */
+export const verdictCell = (v) =>
+  (isCalibration(v) ? `Week 1 calibration — ${v.name}` : `Rule ${v.rule} — ${v.name}`);
 
 /**
  * Upsert by issue_url, so an `edited` issue CORRECTS its row rather than
@@ -336,6 +422,7 @@ export function applyEntry(existingRows, entry, issueUrl) {
     verdict: verdictCell(verdict),
     issue_url: issueUrl,
     notes: entry.notes,
+    block_week: entry.block_week,
   };
 
   const existing = existingRows.find((r) => r.issue_url === issueUrl);

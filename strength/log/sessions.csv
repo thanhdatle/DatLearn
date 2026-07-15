@@ -1,2 +1,2 @@
-date,lift,equipment,load_kg,last_set_reps,last_set_rpe,knee,verdict,issue_url,notes
-2026-07-14,Back squat,Smith machine,20,,,,,,"20 kg of plate (10/side). The Smith carriage is NOT included — the machine has not been named, so the true total is unknown. Reps and RPE were never supplied, so the rule has never run on this session. Not fabricated, not inferred: blank."
+date,lift,equipment,load_kg,last_set_reps,last_set_rpe,knee,verdict,issue_url,notes,block_week
+2026-07-14,Back squat,Smith machine,20,,,,,,"20 kg of plate (10/side). The Smith carriage is NOT included — the machine has not been named, so the true total is unknown. Reps and RPE were never supplied, so the rule has never run on this session. Not fabricated, not inferred: blank.",1
