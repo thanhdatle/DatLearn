@@ -1,0 +1,229 @@
+/* ============================================================
+   UA topic — an instrument-panel skin over the shared design system.
+
+   Loaded AFTER ../../assets/course.css and scoped to
+   <html data-topic="ua">, so it can never leak into the hub or any
+   other topic. course.css is the base and is NOT forked.
+
+   What this layer changes:
+     · Reading prose stays Newsreader — this is a money document read at
+       a desk. Figures lean harder on JetBrains Mono than elsewhere,
+       because almost every claim in this topic is a number.
+     · Topic colour sits at hue 76deg (citron). It exists only because
+       HUB.md's hue rule was deliberately relaxed from 40deg to 30deg —
+       at 40deg the wheel was full and no seventh topic was placeable.
+         light #486300  6.86:1 on --surface, 6.57:1 on --paper
+         dark  #c9ff39 14.51:1 on --surface, 15.67:1 on --paper
+       Nearest neighbours: bg3 (39deg) and meals (113deg), 37deg each.
+       Measured with `node scripts/chip-contrast.mjs --min-gap=30
+       --band=74,78 --exclude=ua`. Never eyeballed.
+     · Components: .calc (live calculator panel), .verdict (a pass/fail
+       judgement with a state), .formula (a displayed equation),
+       .ledger (spend/return rows), .gate (a go/no-go checkpoint).
+     · Print-safe: the reference sheets get printed and kept beside the
+       Ads Manager tab. Inputs print as their current values.
+   ============================================================ */
+
+/* ---------- Tokens ---------- */
+:root[data-topic="ua"] {
+  --topic: #486300;
+  --topic-tint: color-mix(in oklab, var(--topic) 8%, transparent);
+  --topic-edge: color-mix(in oklab, var(--topic) 30%, var(--border));
+}
+
+:root[data-topic="ua"][data-theme="dark"] { --topic: #c9ff39; }
+@media (prefers-color-scheme: dark) {
+  :root[data-topic="ua"]:not([data-theme="light"]) { --topic: #c9ff39; }
+}
+
+/* ---------- Calculator panel ---------- */
+[data-topic="ua"] .calc {
+  margin: var(--space-6) 0;
+  border: var(--rule) solid var(--topic-edge);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+[data-topic="ua"] .calc-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  background: var(--topic-tint);
+  border-bottom: var(--rule) solid var(--topic-edge);
+}
+
+[data-topic="ua"] .calc-head h3 {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--topic);
+}
+
+[data-topic="ua"] .calc-head .hint {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--ink-mute);
+}
+
+[data-topic="ua"] .calc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-3);
+}
+
+[data-topic="ua"] .calc-field { display: flex; flex-direction: column; gap: 0.35rem; }
+
+[data-topic="ua"] .calc-field label {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+
+[data-topic="ua"] .calc-field .sub {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  color: var(--ink-mute);
+}
+
+[data-topic="ua"] .calc-field .row { display: flex; align-items: center; gap: 0.5rem; }
+
+[data-topic="ua"] .calc-field input[type="number"] {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  padding: 0.45rem 0.6rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: var(--rule) solid var(--border-strong);
+  border-radius: var(--radius);
+}
+
+[data-topic="ua"] .calc-field input[type="number"]:focus-visible {
+  outline: 2px solid var(--topic);
+  outline-offset: 1px;
+  border-color: var(--topic);
+}
+
+[data-topic="ua"] .calc-field .unit {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink-mute);
+  white-space: nowrap;
+}
+
+/* ---------- Calculator output ---------- */
+[data-topic="ua"] .calc-out {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-top: var(--rule) solid var(--border);
+  background: var(--paper);
+}
+
+[data-topic="ua"] .out-cell .out-label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.2rem;
+}
+
+[data-topic="ua"] .out-cell .out-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-topic="ua"] .out-cell.is-headline .out-value { color: var(--topic); }
+
+/* ---------- Verdict ---------- */
+[data-topic="ua"] .verdict {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-top: var(--rule) solid var(--border);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+[data-topic="ua"] .verdict strong { color: var(--ink); }
+[data-topic="ua"] .verdict[data-state="good"] { background: color-mix(in oklab, var(--good) 12%, transparent); }
+[data-topic="ua"] .verdict[data-state="good"] strong { color: var(--good); }
+[data-topic="ua"] .verdict[data-state="warn"] { background: color-mix(in oklab, var(--warn) 14%, transparent); }
+[data-topic="ua"] .verdict[data-state="warn"] strong { color: var(--warn); }
+[data-topic="ua"] .verdict[data-state="bad"] { background: var(--accent-soft); }
+[data-topic="ua"] .verdict[data-state="bad"] strong { color: var(--accent); }
+
+/* ---------- Displayed formula ---------- */
+[data-topic="ua"] .formula {
+  margin: var(--space-3) 0;
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--topic);
+  background: var(--topic-tint);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.9;
+  overflow-x: auto;
+}
+
+[data-topic="ua"] .formula .lhs { color: var(--topic); font-weight: 500; }
+[data-topic="ua"] .formula .note {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--ink-mute);
+  margin-top: 0.4rem;
+}
+
+/* ---------- Go / no-go gate ---------- */
+[data-topic="ua"] .gate {
+  margin: var(--space-4) 0;
+  border: var(--rule) solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  background: var(--surface);
+}
+
+[data-topic="ua"] .gate > .kicker { color: var(--topic); }
+[data-topic="ua"] .gate ul { margin: var(--space-1) 0 0; padding-left: 1.1rem; }
+[data-topic="ua"] .gate li { margin: 0.35rem 0; }
+
+/* ---------- Ledger ---------- */
+[data-topic="ua"] .ledger { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+[data-topic="ua"] .ledger td, [data-topic="ua"] .ledger th { padding: 0.4rem 0.6rem; }
+[data-topic="ua"] .ledger .num { font-family: var(--font-mono); text-align: right; }
+[data-topic="ua"] .ledger tr.is-total { border-top: 2px solid var(--topic-edge); font-weight: 600; }
+
+/* ---------- Print ---------- */
+@media print {
+  [data-topic="ua"] .calc,
+  [data-topic="ua"] .gate { box-shadow: none; break-inside: avoid; }
+  [data-topic="ua"] .calc-field input[type="number"] {
+    border: none;
+    border-bottom: 1px solid #999;
+    background: transparent;
+    padding-left: 0;
+  }
+  [data-topic="ua"] .verdict { background: transparent !important; }
+}

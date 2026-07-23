@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="ua">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User Acquisition — DatLearn</title>
+  <link rel="stylesheet" href="../assets/course.css">
+  <link rel="stylesheet" href="assets/ua.css">
+  <style>
+    .topic-hero { max-width: 54ch; margin-bottom: var(--space-6); }
+    .topic-hero h1 { font-size: var(--text-hero); font-weight: 700; letter-spacing: -0.01em;
+      line-height: 1.02; margin: .3rem 0 var(--space-2); }
+    .topic-hero h1 em { font-style: italic; color: var(--topic); }
+    .lesson-list { list-style: none; padding: 0; margin: var(--space-2) 0 0; display: grid; gap: var(--space-2); }
+    .lesson-list a { display: flex; gap: var(--space-3); align-items: baseline;
+      text-decoration: none; padding: var(--space-2) var(--space-3);
+      border: var(--rule) solid var(--border); border-radius: var(--radius-lg);
+      background: var(--surface); transition: border-color var(--duration) var(--ease), transform var(--duration) var(--ease); }
+    .lesson-list a:hover { border-color: var(--border-strong); transform: translateX(3px); }
+    .lesson-list a:focus-visible { outline: 2px solid var(--topic); outline-offset: 2px; }
+    .lesson-num { font-family: var(--font-mono); color: var(--topic); font-size: var(--text-sm); }
+    .lesson-title { font-size: var(--text-lg); font-weight: 600; }
+    .lesson-desc { color: var(--ink-soft); font-family: var(--font-ui); font-size: var(--text-sm); margin: .2rem 0 0; }
+    .lesson-list li.planned a { opacity: .6; border-style: dashed; pointer-events: none; }
+    .lesson-list li.next a { border-color: var(--topic-edge); }
+    .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: var(--space-3); }
+    .mini { font-family: var(--font-ui); }
+    .mini h2 { font-family: var(--font-ui); font-size: var(--text-base); font-weight:600;
+      text-transform: uppercase; letter-spacing:.08em; color: var(--ink-mute); margin: 0 0 var(--space-1); }
+    .mini ul { margin: 0; padding-left: 1.1em; color: var(--ink-soft); font-size: var(--text-sm); line-height:1.6; }
+    .mini a { text-decoration-color: var(--topic); }
+    .the-number { font-family: var(--font-mono); font-weight: 600; color: var(--topic); }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <main class="lesson">
+    <nav class="lesson-nav">
+      <a href="../index.html">← All topics</a>
+    </nav>
+
+    <header class="topic-hero">
+      <p class="kicker">Buying users for AndroidEmulator</p>
+      <h1>Spend it,<br><em>or prove you shouldn't.</em></h1>
+      <p class="hub-sub">
+        The app earns from ads alone, and the adopted strategy already says ads-only LTV is
+        <span class="the-number">20–40% of CPI</span> in every tier — so the default outcome of
+        spending the $2–5k is losing it. This workspace is not about scaling spend. It is about
+        becoming the operator who can tell, <strong>early and cheaply</strong>, whether spending is
+        justified at all — and who scales only the part that is.
+      </p>
+    </header>
+
+    <section aria-labelledby="lessons-h">
+      <h2 id="lessons-h" class="kicker">Lessons — every one ends in something you do</h2>
+      <ol class="lesson-list">
+        <li>
+          <a href="lessons/0001-the-only-number-that-matters.html">
+            <span class="lesson-num">01</span>
+            <span>
+              <span class="lesson-title">The Only Number That Matters</span>
+              <p class="lesson-desc">Max allowable CPI, from ARPDAU × retention ÷ payback — with a live calculator. Ends with your five-geo bid ceiling written down. ~12 min + 3 drills.</p>
+            </span>
+          </a>
+        </li>
+        <li class="next planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">02</span>
+            <span>
+              <span class="lesson-title">Reading your competitors' mail</span>
+              <p class="lesson-desc">Meta Ad Library, TikTok Creative Center, Google Ads Transparency Center — their live creatives, their hooks, and which ones are winning. Free, no SDK, do it tonight. <strong>(next)</strong></p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">03</span>
+            <span>
+              <span class="lesson-title">Phase 0 — making revenue the signal</span>
+              <p class="lesson-desc">MMP, <code>onPaidEvent</code>, and the event ladder. Why optimising on installs is how IAA apps lose money. (blocked on the ADR-0004 amendment)</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">04</span>
+            <span>
+              <span class="lesson-title">Your first Meta app campaign</span>
+              <p class="lesson-desc">Structure, budget, the learning phase, and the edits that silently reset it. (planned)</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">05</span>
+            <span>
+              <span class="lesson-title">Kill, hold, or scale</span>
+              <p class="lesson-desc">Reading a live campaign — and knowing when the numbers are still noise. (planned)</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">06</span>
+            <span>
+              <span class="lesson-title">The creative pipeline</span>
+              <p class="lesson-desc">IP-safe hooks from the seed catalog, testing cadence, and what a winner looks like. (planned)</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">07</span>
+            <span>
+              <span class="lesson-title">Scaling without breaking it</span>
+              <p class="lesson-desc">Value optimisation, tROAS, and budget steps that don't reset learning. (planned)</p>
+            </span>
+          </a>
+        </li>
+        <li class="planned">
+          <a href="#" aria-disabled="true">
+            <span class="lesson-num">08</span>
+            <span>
+              <span class="lesson-title">The other two channels</span>
+              <p class="lesson-desc">TikTok Smart+ and Google UAC — the highest-intent Android channel Meta cannot reach. (planned)</p>
+            </span>
+          </a>
+        </li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="print-h" style="margin-top:var(--space-6)">
+      <h2 id="print-h" class="kicker">Keep these open beside Ads Manager</h2>
+      <p class="lesson-desc" style="max-width:60ch;margin-bottom:var(--space-1)">
+        Lessons are read once. <strong>These are read while money is moving.</strong> Both print to one page.
+      </p>
+      <ol class="lesson-list">
+        <li>
+          <a href="reference/ua-math.html">
+            <span class="lesson-num">§1</span>
+            <span>
+              <span class="lesson-title">The UA maths sheet</span>
+              <p class="lesson-desc">The chain, the reference values, the decision rules, the unit conversions, and the six traps. <strong>Print it.</strong></p>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="reference/glossary.html">
+            <span class="lesson-num">§2</span>
+            <span>
+              <span class="lesson-title">UA glossary</span>
+              <p class="lesson-desc">CPI, eCPM, ARPDAU, MMP, AEO, tROAS, learning phase, significant edit, IP flag — defined once, used consistently.</p>
+            </span>
+          </a>
+        </li>
+      </ol>
+    </section>
+
+    <section class="two-col" style="margin-top:var(--space-6)">
+      <div class="mini">
+        <h2>The mission</h2>
+        <ul>
+          <li>Reach a <strong>defensible go/no-go</strong> on paid UA — not a burned budget.</li>
+          <li>Compute a bid ceiling and refuse to cross it on a good day.</li>
+          <li>Know when the honest answer is <strong>"stop, the economy isn't there yet."</strong></li>
+          <li><a href="MISSION.md">MISSION.md</a> · <a href="RESOURCES.md">RESOURCES.md</a> · <a href="NOTES.md">NOTES.md</a></li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h2>What's honest about this</h2>
+        <ul>
+          <li><strong>No emulator-specific benchmark exists.</strong> Every CPI/eCPM/retention figure here is category-level, ±50%.</li>
+          <li><strong>Phase 0 is blocked.</strong> ADR-0004 forbids attribution SDKs; the MMP needs a recorded amendment first.</li>
+          <li><strong>Play-policy exposure is unsettled.</strong> A takedown would vaporise the spend and the ad-account history.</li>
+          <li>Roughly half of IAA-only apps never close payback on Meta/TikTok. That may be our answer.</li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h2>Primary sources</h2>
+        <ul>
+          <li><a href="https://developers.google.com/admob/android/impression-level-ad-revenue">Impression-level ad revenue</a> — Google. The API Phase 0 turns on.</li>
+          <li><a href="https://pollen.vc/blog/how-to-calculate-roas/">How to calculate ROAS</a> — Pollen VC. The clearest derivation of the chain.</li>
+          <li><a href="https://www.facebook.com/ads/library/">Meta Ad Library</a> — every competitor's live creative, free.</li>
+          <li><a href="https://mobiledevmemo.com/">Mobile Dev Memo</a> — Eric Seufert, on whether IAA UA can pay back at all.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="../assets/theme.js"></script>
+</body>
+</html>

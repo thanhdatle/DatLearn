@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="ua">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The UA Maths Sheet — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/ua.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <article class="lesson">
+    <nav class="lesson-nav">
+      <a href="../../index.html">DatLearn</a><span class="sep">/</span>
+      <a href="../index.html">UA</a><span class="sep">/</span>
+      <span>Maths sheet</span>
+    </nav>
+
+    <header class="lesson-header">
+      <p class="kicker">UA · Reference · print this one</p>
+      <h1>The UA Maths Sheet</h1>
+      <p class="lesson-lede">Every formula you need to decide whether to spend, keep spending, or stop.
+      Print it and keep it beside the Ads Manager tab. If a number on your screen disagrees with a
+      number on this page, the page is not automatically wrong.</p>
+    </header>
+
+    <div class="lesson-body">
+
+      <h2>1 · The chain</h2>
+
+      <div class="formula">
+        <span class="lhs">Active days(N)</span> = 1 + Σ<sub>t=1..N</sub> r(t)<br>
+        <span class="lhs">LTV(N)</span>        = ARPDAU × Active days(N)<br>
+        <span class="lhs">ROAS(N)</span>       = LTV(N) ÷ CPI<br>
+        <span class="lhs">Max CPI</span>       = LTV(N) ÷ margin ratio
+        <span class="note">r(t) = fraction of installs still active on day t. The "1 +" is install day.</span>
+      </div>
+
+      <p>Fitting the curve from three measured points, <code>r(t) = A·t<sup>−b</sup></code>:</p>
+
+      <div class="formula">
+        b = −slope of ln r against ln t &nbsp;&nbsp;(least squares over D1, D7, D30)<br>
+        A = exp(intercept)
+        <span class="note">Two points fit exactly and tell you nothing. Three let the tail contradict
+        the head — which is precisely when you learn the curve is lying.</span>
+      </div>
+
+      <h2>2 · Reference values for this app</h2>
+
+      <p>All priors, ±50%, from <code>ua-strategy.md</code> (R15). <strong>Replace every one of these
+      with measured data the moment Phase 1 produces it.</strong></p>
+
+      <div class="table-wrap">
+        <table class="ledger">
+          <thead>
+            <tr><th>Geo tier</th><th class="num">ARPDAU</th><th class="num">CPI band</th><th class="num">LTV D90</th><th class="num">ROAS D90</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tier-3 · BR ID PH MX VN</td><td class="num">$0.005–0.012</td><td class="num">$0.15–0.40</td><td class="num">$0.04–0.09</td><td class="num">25–45%</td></tr>
+            <tr><td>Tier-2</td><td class="num">$0.025–0.05</td><td class="num">$0.80–1.50</td><td class="num">$0.20–0.35</td><td class="num">~25–35%</td></tr>
+            <tr><td>Tier-1 · US UK DE JP AU</td><td class="num">$0.06–0.12</td><td class="num">$2.00–5.00</td><td class="num">$0.45–0.90</td><td class="num">15–40%</td></tr>
+            <tr class="is-total"><td>Blended</td><td class="num">—</td><td class="num">—</td><td class="num">$0.10–0.20</td><td class="num">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Retention prior: <strong>D1 40% · D7 15% · D30 6%</strong> → ≈ <strong>7.2 active days</strong>
+      by D90 (weak ≈ 4, strong library habit ≈ 10–12).</p>
+
+      <h2>3 · The decision rules</h2>
+
+      <div class="gate">
+        <p class="kicker">Phase 1 → Phase 2 gate — all three must hold</p>
+        <ul>
+          <li><strong>D1 ≥ 35%</strong></li>
+          <li><strong>D7 ≥ 12–15%</strong></li>
+          <li><strong>D7 cumulative ad revenue ≥ 25–30% of CPI</strong></li>
+        </ul>
+        <p>Fail any one → stop and fix retention or ad density. UA scales an economy; it does not
+        create one.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Situation</th><th>Rule</th></tr></thead>
+          <tbody>
+            <tr><td>CPI ≤ Max CPI</td><td><strong>Bid.</strong> You clear your margin ratio.</td></tr>
+            <tr><td>Max CPI &lt; CPI ≤ LTV</td><td><strong>Break-even at best.</strong> You financed Meta for N days for nothing.</td></tr>
+            <tr><td>CPI &gt; LTV</td><td><strong>Stop.</strong> Volume multiplies the loss.</td></tr>
+            <tr><td>Ad set below Meta's learning threshold</td><td>Numbers are noise. Consolidate ad sets or raise budget — do not read the results.</td></tr>
+            <tr><td>Fewer than ~50 value events/week</td><td>Too early for tROAS. Stay on tCPA/AEO.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>4 · Conversions you will need constantly</h2>
+
+      <div class="formula">
+        micros → dollars: <code>getValueMicros() ÷ 1,000,000</code><br>
+        eCPM → revenue per impression: <code>eCPM ÷ 1000</code><br>
+        ARPDAU from impressions: <code>Σ (impressions/day × eCPM ÷ 1000)</code><br>
+        Daily budget for learning: <code>≈ target events/day × target CPA</code>
+        <span class="note">AdMob reports revenue in micros. 5,000 micros = $0.005.</span>
+      </div>
+
+      <h2>5 · Traps</h2>
+
+      <ul>
+        <li><strong>Optimising on installs.</strong> The network finds people who tap Install and never
+        return. Fix by wiring <code>onPaidEvent</code> → MMP → network.</li>
+        <li><strong>Test-device revenue.</strong> Bidding sources return precision <code>UNKNOWN</code>,
+        value <code>0</code>. Your plumbing can only be validated on production traffic.</li>
+        <li><strong>Editing during learning.</strong> Budget, targeting, bid-strategy and creative
+        changes reset it. Decide, then leave it alone.</li>
+        <li><strong>Reading D1 as retention.</strong> You need the area under the curve, not one point.</li>
+        <li><strong>Chasing Tier-1 for revenue.</strong> Both sides of the fraction scale ~10×. Retention
+        is the only lever that moves one side alone.</li>
+        <li><strong>Commercial ROM footage in creative.</strong> Costs the ad account, not just the ad.</li>
+      </ul>
+
+      <hr>
+      <p class="lesson-refs">Back to <a href="../index.html">UA</a> ·
+      <a href="glossary.html">Glossary</a> ·
+      <a href="../lessons/0001-the-only-number-that-matters.html">Lesson 01 (live calculator)</a></p>
+    </div>
+  </article>
+
+  <script src="../../assets/theme.js" defer></script>
+</body>
+</html>

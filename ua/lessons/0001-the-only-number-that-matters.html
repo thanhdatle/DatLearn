@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="ua">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>01 · The Only Number That Matters — UA — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/ua.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <article class="lesson">
+    <nav class="lesson-nav">
+      <a href="../../index.html">DatLearn</a><span class="sep">/</span>
+      <a href="../index.html">UA</a><span class="sep">/</span>
+      <span>Lesson 01</span>
+    </nav>
+
+    <header class="lesson-header">
+      <p class="kicker">UA · Lesson 01 · ~12 min + 3 drills</p>
+      <h1>The Only Number That Matters</h1>
+      <p class="lesson-lede">Before you open Ads Manager, before you pick a geo, before you cut a
+      single video — there is one number you must be able to compute cold: <strong>the most you are
+      allowed to pay for an install.</strong> Everything else in this course is downstream of it.</p>
+    </header>
+
+    <div class="lesson-body">
+
+      <p class="opening">Your app makes money one way: somebody opens it, sees an ad, and AdMob pays
+      you a fraction of a cent. That is the <em>entire</em> revenue model. So a user is worth exactly
+      the ads they will ever see — no more — and paid user acquisition is not marketing. It is
+      <strong>arbitrage</strong>: you buy a stranger for a known price and hope they generate more
+      than that in ad impressions before they stop opening the app.</p>
+
+      <p>The whole game is whether the second number beats the first. Most of the time, for an
+      ads-only app, it doesn't. Your own strategy document already reached that conclusion — ads-only
+      LTV is roughly <strong>20–40% of CPI in every tier</strong>.<a href="#c1" class="cite">1</a>
+      This lesson teaches you to derive that verdict yourself, for any geo, in about ninety seconds —
+      because a number you can recompute is a number you can defend, and a number you inherit is a
+      number you will quietly ignore the first time a campaign looks exciting.</p>
+
+      <aside class="sidenote">
+        <span class="num">1.</span> <code>AndroidEmulator/docs/ua-strategy.md</code>, "Scenario summary"
+        (R15). Adopted 2026-07-07. Its figures are ±50% priors from category benchmarks, not measured
+        data — which is exactly why you need the machine, not the answer.
+      </aside>
+
+      <h2>The chain, in four links</h2>
+
+      <p>Every LTV number you will ever see is this chain. There is no fifth link and no magic.</p>
+
+      <div class="formula">
+        <span class="lhs">ARPDAU</span> = ad revenue per active user, per day they open the app<br>
+        <span class="lhs">Active days</span> = 1 + r(1) + r(2) + … + r(N)&nbsp;&nbsp;<em>← the retention curve, summed</em><br>
+        <span class="lhs">LTV(N)</span> = ARPDAU × Active days<br>
+        <span class="lhs">Max CPI</span> = LTV(N) ÷ your margin ratio
+        <span class="note">N is your payback window — the day by which you insist on having your money back.</span>
+      </div>
+
+      <p>Link two is the one people get wrong. Retention is not "40% of users stay." It is a
+      <em>curve</em>, and what you need is the <strong>area under it</strong> — the total number of
+      days an average install will be active. A D1 of 40%, D7 of 15% and D30 of 6% is a decent
+      emulator prior,<a href="#c2" class="cite">2</a> and summing that curve out to day 90 gives about
+      <strong>7.2 active days per install.</strong> Not 90. Not 30. Seven.</p>
+
+      <aside class="sidenote">
+        <span class="num">2.</span> Retention curve prior from <code>ua-strategy.md</code>'s LTV model
+        (R15), sanity-checked against
+        <a href="https://appagent.com/blog/mobile-game-retention-benchmarks/">AppAgent's genre benchmarks</a> (R14).
+        The calculator below fits a power law <code>r(t) = A·t<sup>−b</sup></code> through your three
+        measured points — the standard shape for app retention: steep early decay, long shallow tail.
+        It reproduces the strategy doc's own "~7.5 cumulative active days" independently, which is a
+        good sign that both are describing the same reality.
+      </aside>
+
+      <p>That single number — <strong>7.2</strong> — is why ads-only apps struggle. Seven days of
+      someone opening your app, at a fraction of a cent per day, is not much of a budget to buy them
+      with.</p>
+
+      <h2>Compute your ceiling</h2>
+
+      <p>Change any input. The verdict updates as you type. The defaults are the Tier-3 case from your
+      strategy doc — Brazil, Indonesia, the Philippines — where the plan says to calibrate first.</p>
+
+      <section class="calc" data-calc="maxcpi">
+        <div class="calc-head">
+          <h3>Maximum allowable CPI</h3>
+          <span class="hint">Defaults = Tier-3 prior (BR/ID/PH)</span>
+        </div>
+
+        <div class="calc-grid">
+          <div class="calc-field">
+            <label for="f-arpdau">ARPDAU <span class="sub">— ad revenue per active day</span></label>
+            <div class="row">
+              <span class="unit">$</span>
+              <input type="number" id="f-arpdau" data-var="arpdau" value="0.008" step="0.001" min="0">
+            </div>
+          </div>
+          <div class="calc-field">
+            <label for="f-d1">D1 retention</label>
+            <div class="row">
+              <input type="number" id="f-d1" data-var="d1" value="40" step="1" min="0" max="100">
+              <span class="unit">%</span>
+            </div>
+          </div>
+          <div class="calc-field">
+            <label for="f-d7">D7 retention</label>
+            <div class="row">
+              <input type="number" id="f-d7" data-var="d7" value="15" step="1" min="0" max="100">
+              <span class="unit">%</span>
+            </div>
+          </div>
+          <div class="calc-field">
+            <label for="f-d30">D30 retention</label>
+            <div class="row">
+              <input type="number" id="f-d30" data-var="d30" value="6" step="0.5" min="0" max="100">
+              <span class="unit">%</span>
+            </div>
+          </div>
+          <div class="calc-field">
+            <label for="f-window">Payback window <span class="sub">— when you want it back</span></label>
+            <div class="row">
+              <input type="number" id="f-window" data-var="window" value="90" step="1" min="1" max="365">
+              <span class="unit">days</span>
+            </div>
+          </div>
+          <div class="calc-field">
+            <label for="f-ratio">Margin ratio <span class="sub">— LTV : CPI you require</span></label>
+            <div class="row">
+              <input type="number" id="f-ratio" data-var="ratio" value="3" step="0.5" min="1">
+              <span class="unit">×</span>
+            </div>
+          </div>
+          <div class="calc-field">
+            <label for="f-cpi">Market CPI <span class="sub">— what you'd actually pay</span></label>
+            <div class="row">
+              <span class="unit">$</span>
+              <input type="number" id="f-cpi" data-var="cpi" value="0.25" step="0.05" min="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-out">
+          <div class="out-cell">
+            <span class="out-label">Active days</span>
+            <span class="out-value" data-out="days">—</span>
+          </div>
+          <div class="out-cell">
+            <span class="out-label">LTV</span>
+            <span class="out-value" data-out="ltv">—</span>
+          </div>
+          <div class="out-cell is-headline">
+            <span class="out-label">Max CPI</span>
+            <span class="out-value" data-out="maxcpi">—</span>
+          </div>
+          <div class="out-cell">
+            <span class="out-label">D7 ROAS</span>
+            <span class="out-value" data-out="d7roas">—</span>
+          </div>
+          <div class="out-cell">
+            <span class="out-label">Final ROAS</span>
+            <span class="out-value" data-out="roas">—</span>
+          </div>
+        </div>
+
+        <p class="verdict" data-verdict></p>
+      </section>
+
+      <p>Sit with the default case for a moment. Tier-3, realistic CPI of $0.25, and you get back a
+      small fraction of every dollar. Now try the optimistic Tier-1 case: ARPDAU <code>0.09</code>,
+      CPI <code>2.50</code>. It does not save you. <strong>Tier-1 users are worth ~10× more and cost
+      ~10× more</strong> — the ratio barely moves. That symmetry is the single most important
+      intuition in this lesson, and it is why "let's just target the US" is not a strategy.</p>
+
+      <div class="callout">
+        <p><strong>The lever that actually moves it is retention, not geo.</strong> Set D1 to 55, D7 to
+        28, D30 to 15 — a genuinely sticky library habit — and watch the ceiling move. Geo changes both
+        sides of the fraction. Retention changes only the numerator. <em>That</em> is where the leverage
+        lives, and it is a product problem, not a media-buying one.</p>
+      </div>
+
+      <h2>Why this ceiling is the thing you will be tempted to ignore</h2>
+
+      <p>Here is the trap, and it is the specific way ads-only apps lose money. When you launch, the
+      only signal flowing back to Meta is <em>installs</em>. So you optimise for installs, and Meta —
+      which is extremely good at its job — goes and finds you the people most likely to tap "Install."
+      Those people are not the people most likely to open your app on day 30. They are cheap, they are
+      plentiful, and they are worthless.</p>
+
+      <p>The fix is to make revenue itself the signal: AdMob exposes per-impression revenue through
+      <code>OnPaidEventListener</code>, which hands you <code>getValueMicros()</code>,
+      <code>getCurrencyCode()</code> and a <code>getPrecisionType()</code>,<a href="#c3" class="cite">3</a>
+      and an MMP forwards that back to the ad network as the value it should optimise toward. That is
+      the whole point of Phase 0, and it is why Phase 0 comes before spending.</p>
+
+      <aside class="sidenote">
+        <span class="num">3.</span>
+        <a href="https://developers.google.com/admob/android/impression-level-ad-revenue">Impression-level ad revenue</a>,
+        Google (R1). Careful: test impressions from bidding sources return precision
+        <code>UNKNOWN</code> and a value of <code>0</code> — a test device can never prove your revenue
+        plumbing works. Only production traffic can.
+      </aside>
+
+      <p>You cannot start there, though. Google's own guidance is to run target-CPA first to establish
+      a baseline, and move to target-ROAS only once real value data is flowing<a href="#c4" class="cite">4</a>
+      — the same sequencing holds on Meta and TikTok. So the first weeks of spend are not for profit.
+      They are for <em>measurement</em>. Which makes the ceiling above the only thing standing between
+      you and an expensive education.</p>
+
+      <aside class="sidenote">
+        <span class="num">4.</span>
+        <a href="https://support.google.com/google-ads/answer/15995101?hl=en">Set a recommended initial Target ROAS</a>
+        and <a href="https://support.google.com/google-ads/answer/12073727?hl=en">Choose a bid strategy for your App campaign</a>,
+        Google Ads Help (R3, R2).
+      </aside>
+
+      <div class="gate">
+        <p class="kicker">The Phase 1 gate — write these down before you spend</p>
+        <p>Your strategy doc already committed to three thresholds. After the calibration spend, you
+        proceed <strong>only</strong> if all three hold:</p>
+        <ul>
+          <li><strong>D1 ≥ 35%</strong></li>
+          <li><strong>D7 ≥ 12–15%</strong></li>
+          <li><strong>D7 cumulative ad revenue ≥ 25–30% of CPI</strong></li>
+        </ul>
+        <p>Below any of them, the instruction is to stop and fix retention or ad density before
+        spending more. In the doc's own words: <em>UA scales an economy, it doesn't create one.</em>
+        The D7 ROAS output in the calculator above is exactly the third gate — watch it as you change
+        inputs.</p>
+      </div>
+
+      <h2>Drills</h2>
+
+      <section class="quiz" data-correct-msg="Right. Both sides of the fraction scale together — Tier-1 users are worth roughly 10× more and cost roughly 10× more, so the ratio barely moves. This is why geo selection is a question about cheap SIGNAL and cheap mistakes, not about finding a geo where the economics magically work.">
+        <span class="kicker">Drill 1 of 3</span>
+        <p class="quiz-q">Tier-3 gives you $0.008 ARPDAU at a $0.25 CPI. Tier-1 gives you $0.09 ARPDAU at a $2.50 CPI. Which is the better buy?</p>
+        <ul class="quiz-options" role="list">
+          <li><button class="quiz-option" data-correct="true">Neither — the ratio is similar</button></li>
+          <li><button class="quiz-option" data-msg="Tier-1 users really are worth ~10× more. But they also cost ~10× more, so you have bought a bigger version of the same fraction, not a better one. Put both into the calculator and compare Final ROAS.">Tier-1, far higher revenue</button></li>
+          <li><button class="quiz-option" data-msg="Cheap installs feel safe, and Tier-3 IS where the plan says to calibrate — but for cheap SIGNAL, not because the economics are better. Compare Final ROAS for both and you will see they land close together.">Tier-3, far cheaper installs</button></li>
+          <li><button class="quiz-option" data-msg="It is knowable, and you just computed it. Both cases return a similar fraction of every dollar spent — that is the whole point of building the ceiling before opening Ads Manager.">Impossible to say without testing</button></li>
+        </ul>
+        <p class="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="quiz" data-correct-msg="Correct. Meta optimises toward whatever event you feed it. Fed installs, it finds people who tap Install and never return — cheap, plentiful, worthless. This is the single most common way an ads-only app burns its budget, and it is why Phase 0 exists.">
+        <span class="kicker">Drill 2 of 3</span>
+        <p class="quiz-q">You launch with no MMP and optimise the campaign for installs. What has Meta actually been instructed to find for you?</p>
+        <ul class="quiz-options" role="list">
+          <li><button class="quiz-option" data-correct="true">People who tap install cheaply</button></li>
+          <li><button class="quiz-option" data-msg="That would need a retention or revenue event flowing back to Meta. With installs as the only signal, Meta has no way to know which installs stayed — it optimises what it can measure.">People who still play at D30</button></li>
+          <li><button class="quiz-option" data-msg="Ad views are revenue, and revenue is precisely the signal you have NOT given it. Without onPaidEvent wired to an MMP, Meta cannot see a single cent of your AdMob income.">People who watch the most ads</button></li>
+          <li><button class="quiz-option" data-msg="Meta targets people, not lookalikes of your goal, unless you tell it the goal. The optimisation event IS the instruction — and you set it to install.">People similar to payers</button></li>
+        </ul>
+        <p class="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="quiz" data-correct-msg="Yes — and this is the lesson's real payload. Geo scales both numerator and denominator; retention scales only the numerator. A product change that makes people come back is worth more than any targeting change, which is why the honest answer to 'should I scale?' is often 'fix the app first.'">
+        <span class="kicker">Drill 3 of 3 · the one that matters</span>
+        <p class="quiz-q">Your ceiling is far below market CPI. Which change raises the ceiling <em>without</em> also raising what you pay?</p>
+        <ul class="quiz-options" role="list">
+          <li><button class="quiz-option" data-correct="true">Users come back more often</button></li>
+          <li><button class="quiz-option" data-msg="Moving to a richer country lifts ARPDAU — and lifts CPI by a similar multiple. You have rescaled both sides of the fraction, so the ceiling relative to price barely moves.">Target a wealthier country</button></li>
+          <li><button class="quiz-option" data-msg="More budget buys more installs at the same broken ratio. If each dollar returns forty cents, spending more dollars returns proportionally more forty-cent pieces. Volume multiplies a loss.">Increase the daily budget</button></li>
+          <li><button class="quiz-option" data-msg="A longer window does let more revenue accumulate — but the curve is nearly flat past D90, so you gain little, and you finance the loss for months longer. Check it: change the window from 90 to 180 and watch how little LTV moves.">Extend the payback window</button></li>
+        </ul>
+        <p class="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <h2>Do this now</h2>
+
+      <p>This lesson is not finished when you understand it. It is finished when the number exists.</p>
+
+      <ol>
+        <li>Open the calculator above and set the <strong>margin ratio you will actually hold yourself
+        to</strong>. 3× is the conventional floor for sustainable growth;<a href="#c5" class="cite">5</a>
+        for a first calibration you may accept less, but decide the number <em>now</em>, while no money
+        is at stake.</li>
+        <li>Compute the ceiling for each of the five Phase 1 geos — <strong>BR, MX, ID, PH, VN</strong> —
+        using your strategy doc's ARPDAU priors and its $0.15–0.40 CPI band. Write the five numbers down.</li>
+        <li>Put them somewhere you will see them when a campaign is doing well and you are tempted. That
+        list is your bid ceiling, and its only job is to be obeyed on a good day.</li>
+      </ol>
+
+      <aside class="sidenote">
+        <span class="num">5.</span>
+        <a href="https://pollen.vc/blog/how-to-calculate-roas/">How to calculate ROAS</a>, Pollen VC (R11) —
+        the clearest non-vendor derivation of ROAS as LTV ÷ CPI, and of payback period as the day that
+        ratio crosses 1.
+      </aside>
+
+      <div class="callout">
+        <p><strong>Read this next, before Lesson 02:</strong>
+        <a href="https://pollen.vc/blog/how-to-calculate-roas/">Pollen VC — How to calculate ROAS</a>.
+        Twenty minutes, no vendor pitch, and it derives the same chain you just used from the other
+        direction. If one link in the chain still feels shaky, that article is where it gets fixed.</p>
+      </div>
+
+      <div class="callout">
+        <p><strong>Ask me anything about this.</strong> I am your teacher here, not just the person who
+        wrote the page. If the retention fit is unclear, if you want your <em>real</em> AdMob numbers
+        substituted for the priors, or if you want me to run the five-geo table with you — just ask. A
+        confusion you carry into Lesson 04 becomes a confusion you pay for in Ads Manager.</p>
+      </div>
+
+      <hr>
+
+      <p class="lesson-next"><strong>Next:</strong> Lesson 02 — <em>Reading your competitors' mail.</em>
+      Every ad your competitors are running right now is public. Meta Ad Library, TikTok Creative Center
+      and Google's Ads Transparency Center will show you their creatives, their hooks, and — from the
+      run dates — which ones are winning. It costs nothing, needs no SDK, and you can do it tonight
+      while ADR-0004 is still blocking Phase 0.</p>
+
+      <p class="lesson-refs">Reference: <a href="../reference/glossary.html">UA glossary</a> ·
+      <a href="../reference/ua-math.html">The UA maths sheet</a></p>
+
+    </div>
+  </article>
+
+  <script src="../../assets/theme.js" defer></script>
+  <script src="../../assets/quiz.js" defer></script>
+  <script src="../assets/calc.js" defer></script>
+</body>
+</html>

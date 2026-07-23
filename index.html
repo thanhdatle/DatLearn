@@ -40,28 +40,48 @@
        five others. Same hue in BOTH themes, like meals, so the chip reads as one
        colour across a theme toggle rather than as two different pinks.
 
-       THE WHEEL IS NOW FULL. A SEVENTH topic cannot satisfy >= 40deg separation
-       anywhere on it — every arc between placed chips is now under 80deg, so a
-       new chip would need to be >= 40deg from both ends of a gap that isn't
-       80deg wide. Don't quietly ship a seventh chip that reads as a sixth.
-       Either relax the policy to ~30deg ON PURPOSE, or add a second channel
+       THE WHEEL WAS FULL AT 40deg. A seventh topic could not satisfy >= 40deg
+       separation anywhere on it — every arc between placed chips was under
+       80deg, so a new chip would have needed to be >= 40deg from both ends of
+       a gap that isn't 80deg wide. The note that stood here listed the only two
+       honest ways out: relax the policy ON PURPOSE, or add a second channel
        (shape, weight, a mark) and stop distinguishing topics by hue alone.
-       Decide it deliberately; do not drift into it.
 
-       All measured with `node scripts/chip-contrast.mjs`, not eyeballed (kai
-       recomputed with the same WCAG relative-luminance + HSL arithmetic). */
+       DECIDED 2026-07-23, deliberately, not drifted into: THE RULE IS NOW
+       >= 30deg. The `ua` topic is the reason, and it is the first chip placed
+       under the relaxed rule.
+
+       ua (citron) 76deg   6.86:1 light  14.51:1 dark
+       ua sits at the CENTRE of the 70-83deg arc — the widest of the three
+       regions that open up at 30deg — putting it 37deg from BOTH neighbours
+       (bg3 39deg, meals 113deg) rather than hard against either. Same hue in
+       both themes, like meals and kai, so it reads as one colour across a
+       theme toggle.
+
+       Two arcs remain at the 30deg rule: 198-202deg (5deg wide) and 263-265deg
+       (3deg wide). That is room for two more topics, and then the wheel is
+       genuinely finished — at which point the second-channel option above is
+       the only one left. Re-read this note before adding topic eight.
+
+       All measured with `node scripts/chip-contrast.mjs`, not eyeballed. The
+       script now SEARCHES the colour space for a passing pair rather than
+       checking hand-picked hexes:
+         node scripts/chip-contrast.mjs --min-gap=30            (audit)
+         node scripts/chip-contrast.mjs --min-gap=30 --band=74,78 --exclude=ua */
     .topic-card.t-admob    { --chip: #0a7d65; }
     .topic-card.t-strength { --chip: #4a56a6; }
     .topic-card.t-llm      { --chip: #86198f; }
     .topic-card.t-bg3      { --chip: #8a5a00; }
     .topic-card.t-meals    { --chip: #2f7526; }
     .topic-card.t-kai      { --chip: #b3164b; }
+    .topic-card.t-ua       { --chip: #486300; }
     :root[data-theme="dark"] .topic-card.t-admob    { --chip: #2fc79f; }
     :root[data-theme="dark"] .topic-card.t-strength { --chip: #9aa2e8; }
     :root[data-theme="dark"] .topic-card.t-llm      { --chip: #e879f9; }
     :root[data-theme="dark"] .topic-card.t-bg3      { --chip: #e8b04b; }
     :root[data-theme="dark"] .topic-card.t-meals    { --chip: #86dd7a; }
     :root[data-theme="dark"] .topic-card.t-kai      { --chip: #fb9aba; }
+    :root[data-theme="dark"] .topic-card.t-ua       { --chip: #c9ff39; }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) .topic-card.t-admob    { --chip: #2fc79f; }
       :root:not([data-theme="light"]) .topic-card.t-strength { --chip: #9aa2e8; }
@@ -69,6 +89,7 @@
       :root:not([data-theme="light"]) .topic-card.t-bg3      { --chip: #e8b04b; }
       :root:not([data-theme="light"]) .topic-card.t-meals    { --chip: #86dd7a; }
       :root:not([data-theme="light"]) .topic-card.t-kai      { --chip: #fb9aba; }
+      :root:not([data-theme="light"]) .topic-card.t-ua       { --chip: #c9ff39; }
     }
   </style>
 </head>
@@ -178,6 +199,21 @@
           <div class="topic-meta">
             <span><b>1</b> lesson</span>
             <span><b>5</b> min/day</span>
+            <span>Active</span>
+          </div>
+        </a>
+
+        <a class="topic-card t-ua" href="ua/index.html">
+          <p class="kicker">User acquisition</p>
+          <span class="topic-name">UA</span>
+          <p class="topic-desc">
+            $2–5k, an ads-only app, and a strategy doc that already says paid UA
+            <em>doesn't pay back</em>. Learning to prove that cheaply — and to
+            scale only the part that survives the arithmetic.
+          </p>
+          <div class="topic-meta">
+            <span><b>1</b> lesson</span>
+            <span><b>12</b> min</span>
             <span>Active</span>
           </div>
         </a>

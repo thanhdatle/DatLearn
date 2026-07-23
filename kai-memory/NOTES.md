@@ -131,8 +131,10 @@ other.
   - **340° is inside the 336–359° crimson arc that HUB.md had already computed as the *only* remaining slot**
     ≥ 40° from all five existing topics. Nearest neighbour is llm (295°), **45° away**. Measured with the
     same WCAG/HSL arithmetic as `scripts/chip-contrast.mjs`, not eyeballed.
-  - **The wheel is now full.** A seventh topic cannot satisfy ≥ 40° separation anywhere on it. HUB.md says
-    what to do about that; decide it deliberately when it happens.
+  - **The wheel was full at the 40° rule.** A seventh topic could not satisfy ≥ 40° separation anywhere on it.
+    **Resolved 2026-07-23:** HUB.md's rule was deliberately relaxed to **≥ 30°** to admit the `ua` topic
+    (citron, 76°). `kai` is unaffected — still 44° from llm, comfortably clear under either rule. See HUB.md
+    → "Topic colours" for the decision and the two arcs that remain.
 - Reuse `.lesson-body` + `.sidenote`, `.callout`, `.quiz`, `.pull`, `.table-wrap`, `.glossary` before writing
   any new CSS. New in `kai.css`: `.song`, `.ladder`, `.step`, `.cadence`, `.say` — all print-safe.
 

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="ua">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UA Glossary — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/ua.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <article class="lesson">
+    <nav class="lesson-nav">
+      <a href="../../index.html">DatLearn</a><span class="sep">/</span>
+      <a href="../index.html">UA</a><span class="sep">/</span>
+      <span>Glossary</span>
+    </nav>
+
+    <header class="lesson-header">
+      <p class="kicker">UA · Reference · print-friendly</p>
+      <h1>UA Glossary</h1>
+      <p class="lesson-lede">The ubiquitous language for buying users. Every lesson in this topic uses
+      these terms exactly as defined here. When a term collides with the app's own domain glossary
+      (<code>AndroidEmulator/CONTEXT.md</code>), that file wins for product nouns and this one wins for
+      media-buying nouns.</p>
+    </header>
+
+    <div class="lesson-body">
+
+      <h2>The money</h2>
+      <dl class="glossary">
+        <dt>CPI — cost per install</dt>
+        <dd>What you pay for one install. Set by auction, not by you: your bid, your creative's
+        click-through, and how many others want the same person. The <em>denominator</em> of every
+        decision in this topic.</dd>
+
+        <dt>CPM — cost per mille</dt>
+        <dd>Cost per thousand impressions of your <em>ad</em>. What the auction actually charges you;
+        CPI is derived from it via click and install rates. Not to be confused with eCPM.</dd>
+
+        <dt>eCPM — effective cost per mille</dt>
+        <dd>Revenue per thousand impressions of an ad <em>inside your app</em>. The supply side. eCPM
+        varies roughly 30× by country, which is why geo dominates the revenue half of the equation.</dd>
+
+        <dt>ARPDAU</dt>
+        <dd>Average revenue per daily active user — what one user generates on one day they open the
+        app. For a pure-IAA app this is entirely ad revenue. The first link in the LTV chain.</dd>
+
+        <dt>LTV — lifetime value</dt>
+        <dd>Total revenue one install will ever generate. Always quoted with a horizon (D30, D90,
+        D180) because "lifetime" is unmeasurable. <code>LTV(N) = ARPDAU × cumulative active days by N</code>.</dd>
+
+        <dt>ROAS — return on ad spend</dt>
+        <dd>Revenue ÷ spend, at a horizon. <code>ROAS = LTV ÷ CPI</code>. ROAS of 1.0 (or 100%) means
+        you got your money back and earned nothing. D7 ROAS and D30 ROAS are the two you will live by.</dd>
+
+        <dt>Payback window</dt>
+        <dd>The day your cumulative revenue per install crosses your CPI. Choosing it is a financing
+        decision, not a marketing one: a D180 payback means lending Meta your money for six months.</dd>
+
+        <dt>Margin ratio (LTV : CPI)</dt>
+        <dd>How much more than break-even you require. 3× is the conventional floor for sustainable
+        growth. Your bid ceiling is <code>LTV ÷ ratio</code>.</dd>
+
+        <dt>IAA / IAP</dt>
+        <dd>In-app advertising / in-app purchase. This app is currently <strong>pure IAA</strong>: all
+        revenue is ad impressions, which is what makes its UA maths so tight.</dd>
+      </dl>
+
+      <h2>Measurement</h2>
+      <dl class="glossary">
+        <dt>MMP — mobile measurement partner</dt>
+        <dd>A neutral third party (AppsFlyer, Adjust) that decides which ad network gets credit for
+        each install, and forwards in-app events back to the networks. Without one, every network
+        claims the same install and you optimise on lies. <strong>Currently blocked by ADR-0004.</strong></dd>
+
+        <dt>Attribution</dt>
+        <dd>Assigning an install to the ad that caused it. On Android this uses GAID and the Play
+        Install Referrer — far cleaner than iOS, where SKAdNetwork and ATT apply. Android-only is a
+        genuine advantage here.</dd>
+
+        <dt><code>onPaidEvent</code> / impression-level ad revenue</dt>
+        <dd>AdMob's callback that fires with the revenue of each individual impression:
+        <code>getValueMicros()</code>, <code>getCurrencyCode()</code>, <code>getPrecisionType()</code>.
+        Wiring it into an MMP is what lets you optimise on revenue instead of installs. Note that test
+        impressions from bidding sources report precision <code>UNKNOWN</code> and value <code>0</code>.</dd>
+
+        <dt>Event ladder</dt>
+        <dd>The ordered chain of signals from cheap-and-frequent to rare-and-valuable:
+        <code>install → onboarding_complete → first_game_session → D1 return → D0/D3 ad revenue</code>.
+        You optimise against the deepest event that still fires often enough to teach the algorithm.</dd>
+
+        <dt>Activation event</dt>
+        <dd>The first in-app action that actually predicts retention. For this app it is
+        <strong>first game session</strong> — an install that never boots a ROM is not a user.</dd>
+      </dl>
+
+      <h2>Buying</h2>
+      <dl class="glossary">
+        <dt>Learning phase</dt>
+        <dd>The period where an ad network is still figuring out who to show your ad to. Meta's
+        threshold is roughly <strong>50 optimisation events per ad set per 7 days</strong>. Performance
+        before exit is not signal.</dd>
+
+        <dt>Significant edit</dt>
+        <dd>A change that <em>resets</em> the learning phase — large budget changes, targeting changes,
+        bid-strategy changes, creative swaps. The most expensive mistake a nervous beginner makes is
+        editing a campaign daily and never letting it finish learning.</dd>
+
+        <dt>Learning limited</dt>
+        <dd>Meta's label for an ad set that cannot gather enough events per week — usually because the
+        budget or audience is too small. It means the algorithm never got good; the numbers are noise.</dd>
+
+        <dt>AEO — app event optimisation</dt>
+        <dd>Optimising toward an in-app event rather than the install. The step up from install
+        optimisation, and the first thing that requires an MMP.</dd>
+
+        <dt>VO / tROAS — value optimisation, target ROAS</dt>
+        <dd>Optimising toward revenue <em>amount</em>, not event count. The endgame for an IAA app —
+        and unavailable until impression-level revenue is flowing. Google's own advice is to run tCPA
+        first to establish a baseline, then move to tROAS.</dd>
+
+        <dt>tCPI / tCPA</dt>
+        <dd>Target cost per install / per action. You state the price you're willing to pay and the
+        network delivers volume at roughly that cost. Where a new campaign starts.</dd>
+
+        <dt>Advantage+ / Smart+</dt>
+        <dd>Meta's and TikTok's automated app-campaign products. Broad targeting, algorithmic
+        placement, minimal manual levers. The default in 2026 — the manual controls you might reach
+        for mostly make things worse.</dd>
+
+        <dt>UAC / App campaigns</dt>
+        <dd>Google's app-install product, spanning Search, Play, YouTube and Display. The highest-intent
+        Android channel — it reaches people literally searching "gba emulator" — and the one Meta and
+        TikTok structurally cannot touch.</dd>
+
+        <dt>Broad targeting</dt>
+        <dd>Giving the algorithm no audience constraints and letting it find buyers. Now generally
+        superior to hand-built interest stacks, because the model has more signal than you do.</dd>
+      </dl>
+
+      <h2>Creative &amp; intelligence</h2>
+      <dl class="glossary">
+        <dt>Hook</dt>
+        <dd>The first 1–2 seconds. On TikTok it decides essentially everything; most creative testing
+        is really hook testing.</dd>
+
+        <dt>Creative fatigue</dt>
+        <dd>The decay in performance as your audience sees the same ad repeatedly. The reason TikTok
+        needs 3–5 fresh creatives a week — a winner has a shelf life, not a permanent slot.</dd>
+
+        <dt>UGC-style</dt>
+        <dd>Creative shot to look like organic content rather than an ad. Consistently outperforms
+        polished production on TikTok.</dd>
+
+        <dt>Spark Ads</dt>
+        <dd>TikTok's format for paying to boost an existing organic post — yours or a creator's. Keeps
+        the organic engagement and social proof attached.</dd>
+
+        <dt>Ad Library / Creative Center / Transparency Center</dt>
+        <dd>The three free public archives of competitors' live ads — Meta, TikTok and Google
+        respectively. Legal, primary-source competitive intelligence. See Lesson 02.</dd>
+
+        <dt>IP flag</dt>
+        <dd>An ad rejected for third-party intellectual property. TikTok frame-scans creatives for
+        copyrighted content. Repeat flags escalate to <strong>account suspension</strong> — you lose the
+        channel, not just the ad. For an emulator advertiser this is the single largest self-inflicted
+        risk, and the reason no commercial ROM footage ever goes in a creative.</dd>
+      </dl>
+
+      <h2>This app's specifics</h2>
+      <dl class="glossary">
+        <dt>Tier-1 / Tier-2 / Tier-3</dt>
+        <dd>Geo bands by monetisation strength. T1 = US/UK/DE/JP/AU; T3 = BR/ID/PH/MX/VN. In this
+        strategy T3 is where you calibrate cheaply, T1 is where payback might eventually exist.</dd>
+
+        <dt>Seed game</dt>
+        <dd>The redistribution-clean homebrew titles the app ships (µCity, Lan Master, Alter Ego). In UA
+        terms these are the <strong>only legally showable gameplay footage</strong> — the creative moat.</dd>
+
+        <dt>Phase 0 / 1 / 2</dt>
+        <dd>The strategy doc's sequence: instrument measurement (0), calibrate cheaply in T3 with
+        $2–5k (1), scale only where payback proves out (2).</dd>
+      </dl>
+
+      <hr>
+      <p class="lesson-refs">Back to <a href="../index.html">UA</a> ·
+      <a href="ua-math.html">The UA maths sheet</a> ·
+      <a href="../lessons/0001-the-only-number-that-matters.html">Lesson 01</a></p>
+    </div>
+  </article>
+
+  <script src="../../assets/theme.js" defer></script>
+</body>
+</html>
