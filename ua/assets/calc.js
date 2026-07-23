@@ -116,6 +116,67 @@
     return { outputs: out, verdict: verdict };
   };
 
+  /* ---------- Model: competitor creative triage ----------
+     You cannot see a competitor's spend, CTR or ROAS — no commercial ad library
+     publishes them. What you CAN see is how long a creative has survived, how
+     many variants it has, and how many countries it runs in. Longevity is the
+     proxy: nobody keeps paying for an ad that loses. Thresholds below follow the
+     media-buyer convention — under two weeks is noise, 30+ days has cleared the
+     advertiser's internal bar, 60+ is a proven winner. */
+  MODELS.triage = function (v) {
+    var days = Math.max(0, v.days);
+    var variants = Math.max(1, v.variants);
+    var geos = Math.max(1, v.geos);
+
+    /* Longevity dominates; variants and geo spread are amplifiers, not
+       substitutes. A one-day ad in nine countries is still a one-day ad. */
+    var base = days >= 60 ? 3 : days >= 30 ? 2 : days >= 14 ? 1 : 0;
+    var amp = (variants >= 3 ? 1 : 0) + (geos >= 3 ? 1 : 0);
+    var score = base * 2 + amp;
+
+    var status, state, action;
+    if (days < 14) {
+      status = 'Noise';
+      state = 'bad';
+      action = 'Under two weeks. Do not model anything on this yet — it may be killed tomorrow. ' +
+        'Log it and re-check in a fortnight. The exception is a hook you see appear across ' +
+        'several competitors at once: that is a trend, and trends are worth catching early.';
+    } else if (days < 30) {
+      status = 'Early candidate';
+      state = 'warn';
+      action = 'It survived the first cull, which most creatives do not. Worth logging in the swipe ' +
+        'file, not worth copying the angle yet.';
+    } else if (days < 60) {
+      status = 'Cleared their bar';
+      state = 'warn';
+      action = 'Thirty days of continuous spend means it beat whatever threshold they hold ads to. ' +
+        'Extract the structure — hook, promise, proof, call to action — and add it to your test queue.';
+    } else {
+      status = 'Proven winner';
+      state = 'good';
+      action = 'Two months of spend. This is the closest thing to a published performance figure you ' +
+        'will ever get for free. Understand precisely why it works before you build your own version.';
+    }
+
+    if (base > 0 && variants >= 3) {
+      action += ' ' + variants + ' variants says they are actively iterating on it — they are ' +
+        'protecting a winner, not maintaining a leftover.';
+    }
+    if (base > 0 && geos >= 3) {
+      action += ' Running in ' + geos + ' countries means the angle survives translation, ' +
+        'which is rarer than it sounds.';
+    }
+
+    return {
+      outputs: {
+        status: status,
+        score: score + ' / 8',
+        days: days + (days === 1 ? ' day' : ' days')
+      },
+      verdict: { state: state, html: '<strong>' + status + '.</strong> ' + action }
+    };
+  };
+
   /* ---------- wiring ---------- */
   function wire(section) {
     var model = MODELS[section.dataset.calc];

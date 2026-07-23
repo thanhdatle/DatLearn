@@ -36,8 +36,8 @@ everything after it is instrumentation, evidence-gathering, and the discipline t
 | # | Lesson | Skill won | Status |
 |---|--------|-----------|--------|
 | 01 | **The only number that matters** — max allowable CPI from ARPDAU × retention ÷ payback | Compute a bid ceiling and refuse to cross it | **Live** |
-| 02 | **Reading your competitors' mail** — Meta Ad Library, TikTok Creative Center, Google Ads Transparency Center | Extract a rival's live creative set and infer which ones are winning from run dates | Next |
-| 03 | **Phase 0 instrumentation** — MMP, `onPaidEvent`, the event ladder | Specify the measurement build and know why installs-optimisation loses money | Planned |
+| 02 | **Reading your competitors' mail** — Meta Ad Library, TikTok Creative Center, Google Ads Transparency Center | Extract a rival's live creative set and infer which ones are winning from run dates | **Live** |
+| 03 | **Phase 0 instrumentation** — MMP, `onPaidEvent`, the event ladder | Specify the measurement build and know why installs-optimisation loses money | Next (blocked) |
 | 04 | **Your first Meta app campaign** — structure, budget, learning phase, the edits that reset it | Launch a campaign that can actually learn | Planned |
 | 05 | **Kill, hold, or scale** — reading a live campaign, and when the numbers are still noise | Decide with a stated confidence, not a vibe | Planned |
 | 06 | **The creative pipeline** — IP-safe hooks, testing cadence, what a winner looks like | Ship 3–5 fresh creatives a week without risking the ad account | Planned |
@@ -48,6 +48,29 @@ Ordering rationale: 01 before everything because it is the gate that decides whe
 matters. 02 next because it is **free, requires no SDK work, and is unblocked** — he can do it
 tonight while ADR-0004 is still stalling Phase 0. 03 is blocked on the ADR-0004 amendment, so it
 is taught as specification rather than execution until that lands.
+
+## What Lesson 02 established (worth not re-deriving)
+
+Three findings from primary sources that shaped the lesson and should carry into 03–08:
+
+1. **Meta's Ad Library is a live snapshot, not an archive, for commercial ads.** Meta's own
+   transparency site: non-political ads are displayed while active and are *not* retained once they
+   stop. Only political/social-issue ads get the 7-year archive. This is why the lesson's deliverable
+   is a *weekly habit* plus a capture sheet, not a one-off research session.
+2. **The EU backdoor.** DSA obligations mean EU-delivered ads keep 1 year of history after last
+   impression, plus targeting and demographic reach. The Ad Library **API** returns ordinary commercial
+   ads *only* for EU/UK (`ad_type=ALL` + `ad_reached_countries` = EU/UK); everywhere else it is
+   political ads only. TikTok's comprehensive Commercial Content Library is likewise EEA/CH/UK only.
+   So: always run one pass on a EU geo even though Phase 1 is BR/MX/ID/PH/VN.
+3. **TikTok Creative Center is curated, not comprehensive** — threshold-filtered, so absence proves
+   nothing. Use it for hook patterns; use the Commercial Content Library for a specific competitor.
+
+The lesson's sharpest teaching point is the **survivorship-bias framing of the IP trap**: he *will*
+see competitors running Pokémon footage, and the library by construction cannot show the accounts
+already banned for it. Reuse that framing in Lesson 06.
+
+`calc.js` now carries a second model, `triage` (days running / versions / geos → verdict). The
+engine's reuse assumption held — Lesson 01's `maxcpi` was untouched.
 
 ## Open threads
 

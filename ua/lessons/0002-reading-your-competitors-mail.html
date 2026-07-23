@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="" data-topic="ua">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>02 · Reading Your Competitors' Mail — UA — DatLearn</title>
+  <link rel="stylesheet" href="../../assets/course.css">
+  <link rel="stylesheet" href="../assets/ua.css">
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"><span id="themeLabel">Dark</span></button>
+
+  <article class="lesson">
+    <nav class="lesson-nav">
+      <a href="../../index.html">DatLearn</a><span class="sep">/</span>
+      <a href="../index.html">UA</a><span class="sep">/</span>
+      <span>Lesson 02</span>
+    </nav>
+
+    <header class="lesson-header">
+      <p class="kicker">UA · Lesson 02 · ~14 min + 3 drills</p>
+      <h1>Reading Your Competitors' Mail</h1>
+      <p class="lesson-lede">Every ad your competitors are running right now is <strong>public, free,
+      and legal to study.</strong> You can't see their spend or their ROAS — but you can see which
+      creatives they've been paying for since March, and that turns out to be the more useful number.</p>
+    </header>
+
+    <div class="lesson-body">
+
+      <p class="opening">Lesson 01 left you with a bid ceiling and an uncomfortable conclusion: at
+      baseline assumptions, paid UA doesn't pay back. The way out is not a better bid — it's a better
+      <strong>creative</strong>, because creative is the one input that moves CPI by multiples rather
+      than percentages. And you are about to start cold, with no creative data of your own.</p>
+
+      <p>Except you don't have to start cold. Competitors have already spent real money discovering
+      which hooks work in this exact category, and three public archives will show you the survivors.
+      This lesson is the only one in the course you can complete <em>tonight</em>: no SDK, no MMP, no
+      ADR-0004 amendment, no spend.</p>
+
+      <h2>The three archives, and what each will actually give you</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Archive</th><th>Covers</th><th>Gives you</th><th>Doesn't</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="https://www.facebook.com/ads/library/">Meta Ad Library</a></td>
+              <td>Facebook + Instagram, worldwide</td>
+              <td>Every <em>currently active</em> ad: creative, copy, start date, platforms, version count</td>
+              <td>Any performance metric — no impressions, clicks, CTR or spend<a href="#c1" class="cite">1</a></td>
+            </tr>
+            <tr>
+              <td><a href="https://ads.tiktok.com/business/creativecenter/">TikTok Creative Center</a></td>
+              <td>Global, but <strong>curated</strong></td>
+              <td>Top-performing ads by industry and region, with some reported metrics</td>
+              <td>Anything below its engagement threshold — new or weak ads simply aren't indexed</td>
+            </tr>
+            <tr>
+              <td><a href="https://adstransparency.google.com/">Google Ads Transparency Center</a></td>
+              <td>Search, YouTube, Display, Play</td>
+              <td>Verified advertiser, creatives, formats, run dates, up to 13 months back — no login</td>
+              <td>Non-verified advertisers; performance data</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Google's is the one most people forget, and for an Android-only app it is the most important
+      of the three: it is the only window onto <strong>UAC and YouTube</strong>, the channel Meta and
+      TikTok structurally cannot show you and the one that reaches people literally searching
+      <em>"gba emulator"</em>.</p>
+
+      <aside class="sidenote">
+        <span class="num">1.</span> Meta publishes no performance data for commercial ads —
+        <a href="https://transparency.meta.com/researchtools/ad-library-tools/">Ad Library tools</a>,
+        Meta Transparency Center (R7). This is not a gap in your research skills; the number does not
+        exist publicly. Everything below is about inferring performance from the data that <em>is</em>
+        published.
+      </aside>
+
+      <div class="callout">
+        <p><strong>The trap that catches everyone once.</strong> For commercial ads, Meta's Ad Library
+        shows only what is <em>active right now</em> — Meta's own documentation says non-political ads
+        are displayed in the Ad Library while active and are not retained after they stop running.
+        Only political and social-issue ads get the seven-year archive. <strong>So a paused ad
+        vanishes, along with the evidence that it ever ran.</strong> The library is a live snapshot,
+        not a history book, and that single fact dictates the working method below: you must sample it
+        on a cadence, or you are only ever seeing this week.</p>
+      </div>
+
+      <h2>The signal you actually have: longevity</h2>
+
+      <p>You cannot see spend. You can see <strong>how long a creative has survived</strong> — and
+      that is a genuine performance signal, because ad platforms starve losing creatives of delivery
+      within a couple of weeks, and no one keeps paying for an ad that loses. The convention among
+      media buyers is roughly:<a href="#c2" class="cite">2</a></p>
+
+      <ul>
+        <li><strong>Under 14 days</strong> — noise. It may be dead by Friday.</li>
+        <li><strong>30+ days</strong> — it cleared whatever internal bar that advertiser holds.</li>
+        <li><strong>60+ days</strong> — a proven winner. Study it properly.</li>
+      </ul>
+
+      <p>Two secondary signals sharpen it. <strong>Variant count</strong> — Meta shows when one ad has
+      multiple versions — tells you they're actively iterating, which means they're protecting a
+      winner rather than leaving an old ad switched on. And <strong>geo spread</strong> tells you the
+      angle survives translation, which is rarer than it sounds and matters enormously to you, since
+      your Phase 1 geos span five countries and three languages.</p>
+
+      <aside class="sidenote">
+        <span class="num">2.</span> Longevity-as-proxy is practitioner convention rather than published
+        research — see
+        <a href="https://adlibrary.com/posts/competitive-creative-analysis-guide">competitive creative analysis</a>
+        and <a href="https://adspyder.io/blog/competitor-best-performing-ad-format/">identifying a competitor's best format</a>
+        (R18). Treat the day-count thresholds as rules of thumb, not physics. The underlying logic —
+        advertisers stop paying for losers — is sound; the exact cut-offs are folklore.
+      </aside>
+
+      <section class="calc" data-calc="triage">
+        <div class="calc-head">
+          <h3>Creative triage</h3>
+          <span class="hint">Enter what the ad library shows you</span>
+        </div>
+
+        <div class="calc-grid">
+          <div class="calc-field">
+            <label for="t-days">Days running <span class="sub">— today minus its start date</span></label>
+            <div class="row">
+              <input type="number" id="t-days" data-var="days" value="45" step="1" min="0">
+              <span class="unit">days</span>
+            </div>
+          </div>
+          <div class="calc-field">
+            <label for="t-variants">Versions <span class="sub">— Meta shows the count</span></label>
+            <div class="row">
+              <input type="number" id="t-variants" data-var="variants" value="3" step="1" min="1">
+              <span class="unit">×</span>
+            </div>
+          </div>
+          <div class="calc-field">
+            <label for="t-geos">Countries <span class="sub">— from the country filter</span></label>
+            <div class="row">
+              <input type="number" id="t-geos" data-var="geos" value="4" step="1" min="1">
+              <span class="unit">geos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-out">
+          <div class="out-cell">
+            <span class="out-label">Running</span>
+            <span class="out-value" data-out="days">—</span>
+          </div>
+          <div class="out-cell is-headline">
+            <span class="out-label">Verdict</span>
+            <span class="out-value" data-out="status">—</span>
+          </div>
+          <div class="out-cell">
+            <span class="out-label">Signal</span>
+            <span class="out-value" data-out="score">—</span>
+          </div>
+        </div>
+
+        <p class="verdict" data-verdict></p>
+      </section>
+
+      <h2>The EU backdoor</h2>
+
+      <p>Here is the trick that most people running BR/ID/PH campaigns never discover. Under the
+      Digital Services Act, ads delivered to the EU carry obligations the rest of the world doesn't —
+      and Meta keeps EU-delivered ads accessible <strong>for one year after their last
+      impression</strong>, with targeting parameters and demographic reach breakdowns attached. The
+      same asymmetry runs through the other platforms: Meta's Ad Library <em>API</em> only returns
+      ordinary commercial ads when you point it at EU or UK countries,<a href="#c3" class="cite">3</a>
+      and TikTok's genuinely comprehensive archive — the
+      <a href="https://library.tiktok.com/ads">Commercial Content Library</a> — covers the EEA,
+      Switzerland and the UK only.</p>
+
+      <aside class="sidenote">
+        <span class="num">3.</span> The Ad Library API is scoped to political and social-issue ads
+        globally, <em>plus</em> all ad types for EU/UK. The <code>ad_type=ALL</code> parameter returns
+        ordinary product ads only when <code>ad_reached_countries</code> is an EU member state or the
+        UK (R19). For everything else, the visual library is the tool — which is why the routine below
+        is manual and time-boxed rather than automated.
+      </aside>
+
+      <p>So even though you will never advertise in Germany, <strong>look at your competitors' German
+      ads.</strong> That is where the history lives, where the audience data lives, and where the only
+      programmatic access lives. A competitor who runs the same creative in DE and BR has just told
+      you, for free, who they think it appeals to.</p>
+
+      <div class="callout">
+        <p><strong>The IP trap — read this twice.</strong> You are about to open Meta Ad Library and
+        see emulator apps running <em>Pokémon and Mario gameplay</em>. Every instinct will say: they're
+        doing it, it's clearly allowed, and it's clearly working. It is none of those things. You are
+        looking at <strong>survivorship bias in its purest form</strong> — the library shows ads that
+        are running <em>right now</em>, so by construction you cannot see the accounts that were
+        already banned for exactly this. TikTok frame-scans creatives for copyrighted content and
+        escalates from rejection to account suspension (R6). Your own strategy doc names this as the
+        thing that kills emulator advertisers. Study their <em>structure</em> — the hook, the pacing,
+        the promise — and rebuild it with µCity, Lan Master and Alter Ego. Never their footage.</p>
+      </div>
+
+      <h2>The routine — twenty minutes, once a week</h2>
+
+      <p>Because the Meta library is a live snapshot, this only works as a habit. A single session
+      tells you what is running today; six weekly sessions tell you what <em>survives</em>, which is
+      the thing you actually want to know.</p>
+
+      <ol>
+        <li><strong>Fix your target list.</strong> Start with
+        <a href="https://play.google.com/store/apps/details?id=com.game.console.emulator">Gamu</a> —
+        your own strategy doc already treats it as the reference point for the ROM link-out direction —
+        plus RetroArch and two or three of the "Retro Games / Super Emulator" Play listings. Five
+        advertisers is plenty.</li>
+        <li><strong>Meta Ad Library</strong> → search the advertiser → set country to <em>each</em> of
+        BR, ID, PH, and then DE. Record every ad's start date, format, hook, and version count.</li>
+        <li><strong>Google Ads Transparency Center</strong> → same advertisers → 30-day window, then
+        stretch it to the full 13 months. This is your only view of their UAC and YouTube activity.</li>
+        <li><strong>TikTok</strong> → Creative Center for the category's winning hook patterns; the
+        Commercial Content Library for a specific competitor's complete EU history.</li>
+        <li><strong>Triage each ad</strong> with the calculator above, and keep only what scores. Then
+        write down, for the survivors, the one thing that matters: <em>what is the promise in the first
+        two seconds?</em></li>
+      </ol>
+
+      <p>Everything lands in one file — the <a href="../reference/competitor-teardown.html">teardown
+      sheet</a>, which is built to be printed and filled in by hand or copied into a spreadsheet. The
+      dated rows are the point: they are how a snapshot becomes a history.</p>
+
+      <h2>Drills</h2>
+
+      <section class="quiz" data-correct-msg="Correct. Meta retains only political and social-issue ads; commercial ads are shown while active and disappear when paused. That is why this is a weekly habit rather than a one-off research session — the archive you want does not exist, so you have to build it yourself by sampling.">
+        <span class="kicker">Drill 1 of 3</span>
+        <p class="quiz-q">You find a brilliant competitor ad, plan to study it properly next month, and don't record it. What is the risk?</p>
+        <ul class="quiz-options" role="list">
+          <li><button class="quiz-option" data-correct="true">It vanishes when they pause it</button></li>
+          <li><button class="quiz-option" data-msg="Access is not the problem — the Ad Library needs no login and no ad account. The problem is that the record itself does not persist for commercial ads.">You may lose library access</button></li>
+          <li><button class="quiz-option" data-msg="Meta does not notify advertisers who viewed their ads in the library. Competitor research there is genuinely anonymous. The risk is data loss, not exposure.">They get told you looked</button></li>
+          <li><button class="quiz-option" data-msg="Nothing is rate-limited in the visual library. But a paused commercial ad is removed entirely, so 'next month' may be too late — there is no archive to go back to.">The data becomes rate limited</button></li>
+        </ul>
+        <p class="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="quiz" data-correct-msg="Right — and it is the counterintuitive move that makes this lesson worth doing. EU-delivered ads carry DSA obligations: a year of retention after last impression, targeting parameters, demographic reach, and the only API access to ordinary commercial ads. Your competitor's German ads tell you more than their Brazilian ones, even though you will never buy Germany.">
+        <span class="kicker">Drill 2 of 3</span>
+        <p class="quiz-q">You will only ever advertise in BR, MX, ID, PH and VN. Why filter a competitor to Germany?</p>
+        <ul class="quiz-options" role="list">
+          <li><button class="quiz-option" data-correct="true">EU ads carry far more data</button></li>
+          <li><button class="quiz-option" data-msg="German CPIs are indeed higher, but you can read that from any benchmark table. The reason to look at DE specifically is the DSA disclosure regime attached to EU-delivered ads.">German CPIs predict yours</button></li>
+          <li><button class="quiz-option" data-msg="Creative quality is not region-dependent in that way, and a polished German ad is no more instructive than a Brazilian one. What differs is the DISCLOSURE — retention, targeting and reach data.">German creative is better made</button></li>
+          <li><button class="quiz-option" data-msg="It is not about who else is bidding. The EU view exists because the Digital Services Act compels disclosure that no other region requires.">Fewer competitors bid there</button></li>
+        </ul>
+        <p class="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="quiz" data-correct-msg="Exactly. The library only shows ads running right now, so the banned accounts are invisible by construction — you are sampling the survivors and inferring that the tactic is safe. It is the same error as concluding parachutes are unnecessary by interviewing people who landed. Take the structure; never the footage.">
+        <span class="kicker">Drill 3 of 3 · the one that matters</span>
+        <p class="quiz-q">Three emulator apps are running Pokémon footage in their ads today. What have you actually learned?</p>
+        <ul class="quiz-options" role="list">
+          <li><button class="quiz-option" data-correct="true">Only that these three survive</button></li>
+          <li><button class="quiz-option" data-msg="It shows no such thing. Enforcement is complaint- and scan-driven and often lags for months; an ad running today may be gone tomorrow along with the whole ad account. Presence in the library is not permission.">That the practice is permitted</button></li>
+          <li><button class="quiz-option" data-msg="You cannot see performance for commercial ads at all — no impressions, no CTR, no spend. And even if it converts brilliantly, an account suspension costs you the channel, not just the ad.">That the footage converts well</button></li>
+          <li><button class="quiz-option" data-msg="Enforcement is real and escalating — TikTok frame-scans for copyrighted content. What you are seeing is a survivorship sample, not evidence that no one gets caught.">That enforcement has stopped</button></li>
+        </ul>
+        <p class="quiz-feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <h2>Do this now</h2>
+
+      <p>Twenty minutes, tonight, and you will have more category-specific creative evidence than your
+      strategy document currently contains.</p>
+
+      <ol>
+        <li>Open <a href="https://www.facebook.com/ads/library/">Meta Ad Library</a>, set country to
+        <strong>Brazil</strong>, and search <strong>Gamu</strong>. Then repeat with country set to
+        <strong>Germany</strong> and note what extra information appears.</li>
+        <li>Run every ad you find through the triage calculator above. Keep only the ones that clear
+        30 days.</li>
+        <li>Fill in the first five rows of the <a href="../reference/competitor-teardown.html">teardown
+        sheet</a> — and <strong>date the entry</strong>, because next week's snapshot is what makes it
+        evidence rather than a screenshot.</li>
+        <li>Put a recurring 20-minute slot in your calendar. Same day each week. Six weeks of this is a
+        genuine creative strategy; one session is trivia.</li>
+      </ol>
+
+      <div class="callout">
+        <p><strong>Read this next:</strong>
+        <a href="https://transparency.meta.com/researchtools/ad-library-tools/">Meta's own Ad Library tools page</a>.
+        Short, primary, and it states the retention rules directly — worth reading once so the
+        snapshot-not-archive point comes from Meta rather than from me.</p>
+      </div>
+
+      <div class="callout">
+        <p><strong>Ask me anything about this.</strong> If you want, paste me what you find in the Ad
+        Library and I'll help you triage it — reading a competitor's creative set is a skill that gets
+        much faster with one round of feedback. I can also help you turn the survivors into an IP-safe
+        test queue for Lesson 06.</p>
+      </div>
+
+      <hr>
+
+      <p class="lesson-next"><strong>Next:</strong> Lesson 03 — <em>Phase 0: making revenue the
+      signal.</em> The MMP, <code>onPaidEvent</code>, and the event ladder that lets you optimise
+      toward money instead of installs. Still gated on the ADR-0004 amendment, so it will be taught as
+      a specification you can hand to yourself — and the moment that amendment lands, you build it.</p>
+
+      <p class="lesson-refs">Reference: <a href="../reference/competitor-teardown.html">Competitor teardown sheet</a> ·
+      <a href="../reference/glossary.html">UA glossary</a> ·
+      <a href="../reference/ua-math.html">The UA maths sheet</a> ·
+      <a href="0001-the-only-number-that-matters.html">Lesson 01</a></p>
+
+    </div>
+  </article>
+
+  <script src="../../assets/theme.js" defer></script>
+  <script src="../../assets/quiz.js" defer></script>
+  <script src="../assets/calc.js" defer></script>
+</body>
+</html>

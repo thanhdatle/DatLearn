@@ -62,6 +62,18 @@ vendor blogs are benchmark aggregates and rot fast — treat every number from t
   date ranges and formats.
   **Use for:** the channel Meta Ad Library cannot see — what competitors run on UAC and YouTube.
 
+- **R7b.** [Meta Ad Library tools — Transparency Center](https://transparency.meta.com/researchtools/ad-library-tools/)
+  Meta's own statement of what the library retains: non-political ads are shown **while active** and
+  are not retained after they stop; political/social-issue ads are kept **7 years**; EU-delivered ads
+  stay accessible for **1 year after last impression**.
+  **Use for:** the load-bearing fact behind Lesson 02 — the library is a snapshot, so you must sample
+  it on a cadence and keep your own archive.
+
+- **R8b.** [TikTok Commercial Content Library](https://library.tiktok.com/ads)
+  TikTok's DSA transparency database — *every* paid ad served in the EEA, Switzerland and the UK,
+  comprehensive rather than curated. The counterpart to Creative Center's threshold-filtered gallery.
+  **Use for:** a specific competitor's complete TikTok history, when Creative Center shows nothing.
+
 - **R10.** [Sensor Tower](https://sensortower.com/) · [Appfigures](https://appfigures.com/) · [data.ai](https://www.data.ai/)
   Third-party *estimates* of competitor installs, revenue and ad-network mix. Paid, and modelled —
   directionally useful, never quotable as fact.
@@ -86,6 +98,20 @@ vendor blogs are benchmark aggregates and rot fast — treat every number from t
 - **R14.** [AppAgent — Mobile game retention benchmarks](https://appagent.com/blog/mobile-game-retention-benchmarks/)
   D1/D7/D30 retention curves by genre — the multiplier that turns ARPDAU into LTV.
   **Use for:** judging whether the emulator's measured retention is good, average or fatal.
+
+- **R18.** [Competitive creative analysis — practitioner's guide](https://adlibrary.com/posts/competitive-creative-analysis-guide)
+  · [Identifying a competitor's best-performing format](https://adspyder.io/blog/competitor-best-performing-ad-format/)
+  The longevity heuristic: ads still running at 30+ days have cleared the advertiser's internal bar,
+  60+ marks a proven winner, under 14 days is noise. Variant count as the second signal.
+  **Use for:** Lesson 02's triage thresholds. **Caveat:** this is practitioner convention, not published
+  research, and both sources are vendor blogs. The logic (advertisers stop paying for losers) is sound;
+  the exact day cut-offs are folklore and are taught as such.
+
+- **R19.** [Meta Ad Library API](https://www.facebook.com/ads/library/api)
+  Scoped to political and social-issue ads globally, **plus all ad types for EU/UK**. `ad_type=ALL`
+  returns ordinary commercial ads only when `ad_reached_countries` is an EU member state or the UK.
+  **Use for:** knowing what can and cannot be automated — outside the EU, competitor research is
+  manual by design, which is why Lesson 02's routine is a time-boxed weekly habit.
 
 ## Our own documents (the ground truth this workspace serves)
 
